@@ -1,0 +1,23 @@
+<svg viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg" width="240" height="60" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <style>
+      .num { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 44px; font-weight: 800; fill: #f2f2f0; }
+      .jk { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 44px; font-weight: 800; }
+      .j { fill: #f2f2f0; }
+      .k { fill: #d4ff00; }
+      .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; fill: #808080; letter-spacing: 1px; text-transform: uppercase; }
+    </style>
+  </defs>
+
+  <!-- "401" -->
+  <text x="0" y="44" class="num">401</text>
+
+  <!-- "jK" with K in acid green -->
+  <text x="78" y="44" class="jk">
+    <tspan class="j">j</tspan><tspan class="k">K</tspan>
+  </text>
+
+  <!-- "NFT" tag -->
+  <rect x="158" y="16" width="74" height="24" fill="none" stroke="#808080" stroke-width="1" rx="4"/>
+  <text x="195" y="30" class="tag" text-anchor="middle">NFT</text>
+</svg>

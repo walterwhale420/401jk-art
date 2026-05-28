@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>401jK NFT Collection — Art exposes the con</title>
+  <meta name="description" content="The 401jK NFT collection: 32 pieces across 3 series, each exposing the rigged retirement system. Browse the art, meet the artists, and enter the monthly raffle.">
+
+  <!-- Relative paths only: works at nft.401jk.fun root or 401jk.fun/nft/ -->
+  <link rel="icon" type="image/png" href="brand/favicon.png">
+  <link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="401jK NFT Collection — Art exposes the con">
+  <meta property="og:description" content="32 pieces across 3 series, each exposing the rigged retirement system. Browse the art and enter the monthly raffle.">
+  <meta property="og:image" content="brand/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <!-- ====================================================== NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#top" class="logo" aria-label="401jK NFT home">
+        <img src="brand/logo.png" alt="401jK NFT" style="height: 40px; width: auto;">
+      </a>
+      <ul class="nav-links">
+        <li><a href="#lines">Series</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#raffle">Raffle</a></li>
+        <li><a href="#winners">Winners</a></li>
+        <li><a href="https://401jk.fun" class="nav-buy">Buy $401jK</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <nav class="drawer" id="drawer" aria-label="Mobile navigation">
+    <a href="#lines">Series</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#raffle">Raffle</a>
+    <a href="#winners">Winners</a>
+    <a href="https://401jk.fun">Buy $401jK &rarr;</a>
+  </nav>
+
+  <!-- ====================================================== HERO -->
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <span class="terminal-badge">ls 401jk/nft --wave 1</span>
+      <h1>Retirement is rigged.<br><span class="green">The art knows.</span></h1>
+      <p class="hero-sub" id="hero-intro">Loading the collection&hellip;</p>
+      <div class="hero-actions">
+        <a href="#gallery" class="btn btn-primary">Explore the collection</a>
+        <a id="hero-me" class="btn btn-outline" role="button">View on MagicEden</a>
+      </div>
+      <div class="readout" id="readout" aria-label="Collection at a glance"></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================================================== LINES -->
+    <section class="section" id="lines">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">The series</span>
+          <h2 class="section-title">Different artists, one movement</h2>
+          <p class="section-lead">Every series in this collection was built by a community member, in their own style, on their own terms: Pop-art Legends, Reframed Rebellions, and The Jester's Tarot. Different artists, one fight.</p>
+        </div>
+        <div class="lines" id="lines-list"></div>
+      </div>
+    </section>
+
+    <!-- ==================================================== GALLERY -->
+    <section class="section section-alt" id="gallery">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">The gallery</span>
+          <h2 class="section-title">All 32 pieces</h2>
+          <p class="section-lead">Mint 1 in full. Filter by series, then click any piece to read its story and see it up close. (Filtering by mint arrives as the collection grows.)</p>
+        </div>
+        <div class="filters" id="filters" role="group" aria-label="Filter pieces by series"></div>
+        <div class="grid" id="grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ==================================================== RAFFLE -->
+    <section class="section" id="raffle">
+      <div class="wrap raffle-grid">
+        <div class="reveal">
+          <span class="raffle-draft" id="raffle-draft" hidden></span>
+          <span class="eyebrow" id="raffle-eyebrow">The raffle</span>
+          <h2 class="section-title" id="raffle-title"></h2>
+          <p class="section-lead" id="raffle-intro"></p>
+          <p class="raffle-note" id="raffle-note"></p>
+        </div>
+        <div class="steps" id="steps"></div>
+      </div>
+    </section>
+
+    <!-- ==================================================== WINNERS -->
+    <section class="section section-alt" id="winners">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">The winners</span>
+          <h2 class="section-title">The wall of winners</h2>
+          <p class="section-lead">One winner, every month. As each draw lands, it gets posted here with a link to the announcement and the winner's reaction.</p>
+        </div>
+        <div id="winners-body"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====================================================== FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="contract-block reveal" style="margin-bottom:40px;">
+        <div>
+          <div class="contract-label">$401jK contract — Solana</div>
+          <div class="contract-addr" id="ca">Cz7LGKdZPpAxonXx23ZYPW3RtDQvjcf17ZDCZEzFpump</div>
+        </div>
+        <button class="copy-btn" id="copy-btn" aria-label="Copy contract address">
+          <span id="copy-label">Copy</span>
+        </button>
+      </div>
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="logo">
+            <img src="brand/logo.png" alt="401jK NFT" style="height: 40px; width: auto;">
+          </div>
+          <p class="footer-tagline">A community collection. No creator profit, all proceeds to the community wallet. Art exposes the con.</p>
+        </div>
+        <nav class="socials" aria-label="Social and links">
+          <a href="https://x.com/401_JK" class="social" target="_blank" rel="noopener">X / Twitter</a>
+          <a href="https://www.reddit.com/r/401jK/" class="social" target="_blank" rel="noopener">Reddit</a>
+          <a href="#" class="social">Telegram</a>
+          <a href="https://401jk.fun" class="social">401jk.fun &rarr;</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 401jK community. Not financial advice. Retirement is a joke.</span>
+        <span><a href="https://401jk.fun">Back to 401jk.fun</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====================================================== LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-title" aria-hidden="true">
+    <div class="lb-panel" data-accent="green">
+      <button class="lb-close" id="lb-close" aria-label="Close">&times;</button>
+      <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous piece">&#8249;</button>
+      <button class="lb-nav lb-next" id="lb-next" aria-label="Next piece">&#8250;</button>
+      <figure class="lb-figure">
+        <img id="lb-img" src="" alt="">
+        <span class="lb-counter" id="lb-counter"></span>
+      </figure>
+      <div class="lb-meta">
+        <div class="lb-tags">
+          <span class="lb-tag accent" id="lb-tag-line"></span>
+          <span class="lb-tag" id="lb-tag-id"></span>
+        </div>
+        <h2 class="lb-title" id="lb-title"></h2>
+        <div class="lb-artist" id="lb-artist"></div>
+        <p class="lb-desc" id="lb-desc"></p>
+        <div class="lb-foot">
+          <a id="lb-me" class="btn btn-outline btn-sm" role="button">View line on MagicEden</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
