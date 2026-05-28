@@ -234,7 +234,7 @@
     lb.desc.textContent = n.description;
     lb.tagLine.textContent = `Series ${n.line} · ${lineName(n.line)}`;
     lb.tagId.textContent = `#${n.id}`;
-    wireMagicEden(lb.me, state.lineById.get(n.line)?.magicEdenUrl, 'View series on MagicEden');
+    wireMagicEden(lb.me, n.magicEdenUrl, 'View NFT on MagicEden');
     lb.counter.textContent = `${state.lbIndex + 1} / ${state.visible.length}`;
   }
 
@@ -278,6 +278,18 @@
     $('#raffle-title').textContent = r.headline || '';
     $('#raffle-intro').textContent = r.intro || '';
 
+    const prizeEl = $('#raffle-prize');
+    if (r.prizeDetail) {
+      const faqUrl = r.raffleFaqUrl || null;
+      const linkHtml = faqUrl
+        ? `<a href="${faqUrl}" class="inline-link">Raffle FAQ</a>`
+        : `<span class="inline-link soon" title="Coming soon">Raffle FAQ</span>`;
+      prizeEl.innerHTML = `${r.prizeDetail} See the ${linkHtml} for full details.`;
+      prizeEl.hidden = false;
+    } else {
+      prizeEl.hidden = true;
+    }
+
     const steps = $('#steps');
     steps.innerHTML = '';
     (r.steps || []).forEach((s, i) => {
@@ -287,7 +299,9 @@
         <div><h3>${s.title}</h3><p>${s.body}</p></div>`;
       steps.appendChild(el);
     });
-    if (r.rulesNote) $('#raffle-note').textContent = r.rulesNote;
+    const noteEl = $('#raffle-note');
+    if (r.rulesNote) { noteEl.textContent = r.rulesNote; noteEl.hidden = false; }
+    else { noteEl.hidden = true; }
   }
 
   /* --------------------------------------------------------------- winners */
@@ -303,7 +317,7 @@
       empty.innerHTML = `
         <div class="stamp"><span class="pulse" aria-hidden="true"></span>Awaiting first draw</div>
         <h3>First winner drawn <span class="date">${dateLabel}</span>.</h3>
-        <p>The wall of winners starts here. Every month from ${dateLabel}, a new name gets added, with a link to the announcement and, when they post one, their reaction. Hold a piece, stay entered, watch this space.</p>`;
+        <p>The wall of winners starts here. Every month from ${dateLabel}, the winning NFT and wallet get added here, with a link to the announcement and proof of prize pay-out. Watch this space.</p>`;
       root.appendChild(empty);
       return;
     }
