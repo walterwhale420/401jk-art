@@ -1,30 +1,30 @@
 {
-  "_readme": "PLACEHOLDER content. Replace the copy below with the official raffle rules when finalized. While 'status' is 'placeholder', the site shows a small 'Draft' badge and a 'rules coming soon' note. Set 'status' to 'live' to remove them.",
-  "status": "placeholder",
+  "_readme": "Raffle data. Set 'status' to 'live' to remove the Draft badge. Set 'raffleFaqUrl' to a real URL when the Raffle FAQ page is live (currently shows a disabled 'soon' link).",
+  "status": "live",
   "eyebrow": "The 401jK Raffle",
   "headline": "Loyalty, finally repaid before the parade",
-  "intro": "Every month, the 401jK community gives back to the people who hold the line. No paperwork, no forty-year wait — just a clean monthly draw and a prize paid straight to your wallet. Here's the gist while the official rules are finalized.",
+  "intro": "Every month, the 401jK community gives back to the people who hold the line. No paperwork, no forty-year wait — just a clean monthly draw and a prize paid straight to your wallet. Here's the gist:",
+  "prizeDetail": "Each month, one winning NFT is drawn. The prize is 15,000 $401jK tokens, paid directly into the wallet holding the winning NFT at the time of the draw.",
+  "raffleFaqUrl": null,
   "cadence": "Every month",
   "firstDraw": "2026-07",
   "firstDrawLabel": "July 2026",
   "steps": [
     {
       "title": "Hold the bag",
-      "body": "Hold at least one 401jK NFT in your Solana wallet to be eligible. (Placeholder rule — exact eligibility, including any $401jK threshold, will be confirmed in the official rules.)"
+      "body": "Get your 401jK NFT and hold it in your wallet at the time of the raffle."
     },
     {
       "title": "You're entered",
-      "body": "Every eligible wallet is automatically entered in that month's draw. No forms, no permission slips, no asking the system nicely."
+      "body": "Every 401jK NFT is automatically entered in each month's draw. No forms, no permission slips, no asking the system nicely."
     },
     {
       "title": "We draw",
-      "body": "Starting July 2026, one winner is drawn each month using a transparent, verifiable method. The more the collection grows, the bigger the pot."
+      "body": "Starting July 2026, one winner is drawn on the first Sunday of each month. Transparent. Verifiable. No insiders."
     },
     {
       "title": "Winner announced",
       "body": "The winner is posted publicly on X and Reddit, and the prize is sent directly to their wallet. Receipts on-chain, story in the open."
     }
-  ],
-  "prizeNote": "Prize details are announced with each monthly draw.",
-  "rulesNote": "Full official rules drop soon. This section is a draft — terms, eligibility, and prize structure are subject to change before the first draw."
+  ]
 }
