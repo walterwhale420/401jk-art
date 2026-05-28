@@ -1,5 +1,5 @@
 {
-  "_readme": "EDITING GUIDE \u2014 (1) To activate MagicEden buttons, replace every 'PLACEHOLDER' magicEdenUrl with the real URL (per line, and collectionMagicEdenUrl for the global button). Until then the buttons render as a disabled 'soon' state. (2) To add a future mint, append NFT objects with the correct 'line' and a new 'mint' number, then run scripts/build-images.py to generate their webp images. (3) Titles/descriptions are public-facing copy; 'alt' is accessibility text describing the actual image.",
+  "_readme": "EDITING GUIDE — (1) To activate MagicEden buttons, replace every 'PLACEHOLDER' magicEdenUrl with the real URL (per line, and collectionMagicEdenUrl for the global button). Until then the buttons render as a disabled 'soon' state. (2) To add a future mint, append NFT objects with the correct 'line' and a new 'mint' number, then run scripts/build-images.py to generate their webp images. (3) Titles/descriptions are public-facing copy; 'alt' is accessibility text describing the actual image.",
   "collection": {
     "name": "401jK NFT Collection",
     "chain": "Solana",
@@ -14,7 +14,7 @@
       "tagline": "Art exposes the con",
       "artist": "Eric",
       "accent": "green",
-      "aesthetic": "Pop art \u00b7 bold colour \u00b7 satirical portraits",
+      "aesthetic": "Pop art · bold colour · satirical portraits",
       "description": "A pop-art rebellion remixing history's icons with 401jK's satirical punchline. Each portrait transforms a cultural legend into a co-conspirator exposing the absurdity of the retirement system. Bright, bold, and brutally honest, because even the greats knew the rigged system is a joke played on us.",
       "magicEdenUrl": "PLACEHOLDER"
     },
@@ -24,7 +24,7 @@
       "tagline": "Old battles, new enemies",
       "artist": "Walter Whale",
       "accent": "orange",
-      "aesthetic": "Classical art \u00b7 dramatic historical scenes recontextualised",
+      "aesthetic": "Classical art · dramatic historical scenes recontextualised",
       "description": "A dramatic fusion of classical art and modern financial revolt. Reframes humanity's defining uprisings through 401jK's lens. Each piece exposes how little has changed: elites still write the rules, and the rest of us are expected to applaud. This is rebellion retold.",
       "magicEdenUrl": "PLACEHOLDER"
     },
@@ -34,8 +34,8 @@
       "tagline": "Read the signs",
       "artist": "Shadow",
       "accent": "purple",
-      "aesthetic": "Tarot symbolism \u00b7 defiant Jester archetypes",
-      "description": "Reimagines tarot as a 401jK journey from chaos to clarity. Through defiant Jester cards, explores nonconformity, corruption, collapse, transformation, and the choice to take back your own path. Symbolic, satirical, and surprisingly on point.",
+      "aesthetic": "Tarot symbolism · defiant Jester archetypes",
+      "description": "A series that reimagines tarot as a 401jK journey from chaos to clarity. Through defiant Jester cards, explores nonconformity, corruption, collapse, transformation, and the choice to take back your own path. Symbolic, satirical, and surprisingly on point.",
       "magicEdenUrl": "PLACEHOLDER"
     }
   ],
@@ -71,7 +71,7 @@
       "title": "Nikola Tesla",
       "artist": "Eric",
       "alt": "A distorted, glitch-art image of Nikola Tesla with his magnifying transmitter, featuring a quote about electricity and hate.",
-      "description": "Nikola Tesla (1856-1943) was the Serbian-American inventor who gave the world alternating current (the electrical system still powering civilization) and died nearly broke after being outmaneuvered by the men who profited from his genius. \"If your hate could be turned into electricity, it would light up the whole world.\" The 401jK runs on exactly that energy: channeling the frustration of a rigged system into something that can't be switched off.",
+      "description": "Nikola Tesla (1856-1943) was the Serbian-American inventor who gave the world alternating current (the electrical system still powering civilization) and died nearly broke after being outmaneuvered by the men who profited from his genius. \"If your hate could be turned into electricity, it would light up the whole world.\" The 401jK runs on exactly that energy: channeling the frustration at a rigged system into something that can't be switched off.",
       "thumb": "img/thumb/0103.webp",
       "view": "img/view/0103.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -83,7 +83,7 @@
       "title": "Ralph Waldo Emerson",
       "artist": "Eric",
       "alt": "A neon, distorted portrait of Ralph Waldo Emerson wearing futuristic sunglasses, with a quote about cause and effect.",
-      "description": "Ralph Waldo Emerson (1803-1882) was the American philosopher and poet who made self-reliance a doctrine and told a generation that their own mind was sufficient authority. \"Shallow men believe in luck. Strong men believe in cause and effect.\" The 401jK is cause and effect: a movement built on the simple logic that when you stop trusting the system's rules, you stop being bound by them.",
+      "description": "Ralph Waldo Emerson (1803-1882) was the American philosopher and poet who made self-reliance a doctrine and told a generation that their own mind was sufficient authority. \"Shallow men believe in luck. Strong men believe in cause and effect.\" 401jK is cause and effect: a movement built on the simple logic that when you stop trusting the system's rules, you stop being bound by them.",
       "thumb": "img/thumb/0104.webp",
       "view": "img/view/0104.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -119,7 +119,7 @@
       "title": "Harriet Tubman",
       "artist": "Eric",
       "alt": "A gold-toned glitch-art portrait of Harriet Tubman wearing modern sunglasses, with a quote about snakes.",
-      "description": "Harriet Tubman (c.1822-1913) was the woman who escaped enslavement and came back (thirteen times) to lead others to freedom when she could have simply disappeared into safety. \"Never wound a snake; kill it.\" The 401jK doesn't poke the retirement system and hope it changes. It builds the exit route. Harriet would understand.",
+      "description": "Harriet Tubman (c.1822-1913) was the woman who escaped enslavement and came back thirteen times to lead others to freedom when she could have simply disappeared into safety. \"Never wound a snake; kill it.\" 401jK doesn't poke the retirement system and hope it changes. It builds the exit route. Harriet would understand.",
       "thumb": "img/thumb/0107.webp",
       "view": "img/view/0107.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -131,7 +131,7 @@
       "title": "Marie Curie",
       "artist": "Eric",
       "alt": "A blue glitch-art silhouette of Marie Curie in a laboratory setting, featuring a quote about progress.",
-      "description": "Marie Curie (1867-1934) was the physicist who won the Nobel Prize twice (in two different sciences) in an era that didn't think women belonged in either one, and rewrote the laws of matter while the system pretended she wasn't in the room. \"I was taught that the way of progress is neither swift nor easy.\" The 401jK was never a shortcut. It's the long game, played by people who refuse to wait for permission.",
+      "description": "Marie Curie (1867-1934) was the physicist who won the Nobel Prize twice (in two different sciences) in an era that didn't think women belonged in either one. She rewrote the laws of matter while the system pretended she wasn't in the room. \"I was taught that the way of progress is neither swift nor easy.\" 401jK was never a shortcut. It's the long game, played by people who refuse to wait for permission.",
       "thumb": "img/thumb/0108.webp",
       "view": "img/view/0108.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -143,7 +143,7 @@
       "title": "Emmeline Pankhurst",
       "artist": "Eric",
       "alt": "A purple glitch-art historical photo of Emmeline Pankhurst addressing a crowd, featuring a quote about broken windows.",
-      "description": "Emmeline Pankhurst (1858-1928) was the British activist who led the suffragette movement at a time when polite protest had failed for decades, and decided that disruption was the only language the system understood. \"The argument of the broken window pane is the most valuable argument in modern politics.\" The 401jK breaks windows. Not glass: narratives. The retirement myth has been left unbroken for too long.",
+      "description": "Emmeline Pankhurst (1858-1928) was the British activist who led the suffragette movement after decades of polite protest got women nowhere. She decided disruption was the only language the system understood. \"The argument of the broken window pane is the most valuable argument in modern politics.\" The 401jK runs on the same idea. Asking nicely never fixed a rigged system. Disruption does.",
       "thumb": "img/thumb/0109.webp",
       "view": "img/view/0109.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -155,7 +155,7 @@
       "title": "Henry David Thoreau",
       "artist": "Eric",
       "alt": "A green-tinted portrait of Henry David Thoreau wearing modern meme-style sunglasses against a patterned background.",
-      "description": "Henry David Thoreau (1817-1862) was the American philosopher and author who walked into the woods to prove a point: that a life deliberately chosen on your own terms is worth more than any salary or title the system could offer. \"I have great faith in a seed - convince me you have one, and I am prepared to expect wonders.\" The 401jK is a seed. Small, stubborn, and irreverent. The wonders are already in motion.",
+      "description": "Henry David Thoreau (1817-1862) was the American philosopher and author who walked into the woods to prove a point: that a life deliberately chosen on your own terms is worth more than any salary or title the system could offer. \"I have great faith in a seed - convince me you have one, and I am prepared to expect wonders.\" 401jK is a seed. Small, stubborn, and irreverent. The wonders are already in motion.",
       "thumb": "img/thumb/0110.webp",
       "view": "img/view/0110.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -167,7 +167,7 @@
       "title": "Liberty Leading the People",
       "artist": "Walter Whale",
       "alt": "A satirical edit of the painting 'Liberty Leading the People', featuring the central figure wearing meme sunglasses and holding a '401JK' flag.",
-      "description": "Reimagination of 'Liberty Leading the People' by Eug\u00e8ne Delacroix, 1830. The painting shows Liberty leading the people during the July Revolution, and now she leads the 401jK community. Same fight. New enemy: a system that makes you wait forty years for permission to retire.",
+      "description": "Reimagining of 'Liberty Leading the People' by Eugène Delacroix, 1830. The painting shows Liberty leading the people during the July Revolution, and now she leads the 401jK community. Same fight. New enemy: a system that makes you wait forty years for permission to retire.",
       "thumb": "img/thumb/0201.webp",
       "view": "img/view/0201.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -179,7 +179,7 @@
       "title": "Surrender of Lord Cornwallis",
       "artist": "Walter Whale",
       "alt": "An edited classical painting of military figures where the central leader wears meme sunglasses and two flags display '401JK'.",
-      "description": "Reimagination of 'Surrender of Lord Cornwallis' by John Trumbull, 1820. The painting shows the mighty British empire laying down its arms to a ragtag colonial army it swore could never win. Now the 401jK community is the underdog, facing down the rigged financial system. And just as then, the underdog will win against all odds.",
+      "description": "Reimagining of 'Surrender of Lord Cornwallis' by John Trumbull, 1820. The painting shows the mighty British empire laying down its arms to a ragtag colonial army it swore could never win. Now the 401jK community is the underdog, facing down the rigged financial system. And just as then, the underdog will win against all odds.",
       "thumb": "img/thumb/0202.webp",
       "view": "img/view/0202.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -191,7 +191,7 @@
       "title": "The Spirit of '76",
       "artist": "Walter Whale",
       "alt": "A modified version of the painting 'The Spirit of '76', with the flag bearer holding a '401JK' flag.",
-      "description": "Reimagination of 'The Spirit of '76' by Archibald Willard, 1876. The painting shows three battered musicians marching on through smoke, refusing to stop the beat, and now they drum for the 401jK movement. We keep marching. We keep memeing. The beat doesn't stop.",
+      "description": "Reimagining of 'The Spirit of '76' by Archibald Willard, 1876. The painting shows three battered musicians marching on through smoke, refusing to stop the beat, and now they drum for the 401jK movement. We keep marching. We keep memeing. The beat doesn't stop.",
       "thumb": "img/thumb/0203.webp",
       "view": "img/view/0203.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -203,7 +203,7 @@
       "title": "Washington at Trenton",
       "artist": "Walter Whale",
       "alt": "An edited classical portrait of George Washington wearing meme sunglasses and a large gold chain with a '401jK' pendant.",
-      "description": "Reimagination of 'General George Washington at Trenton' by John Trumbull, 1792. The painting shows Washington calm before a battle everyone said he'd lose, the night that turned a dying cause around, and now he stands for the 401jK. Same long odds. New impossible crossing: opting out of a rigged retirement.",
+      "description": "Reimagining of 'General George Washington at Trenton' by John Trumbull, 1792. The original shows Washington calm before a battle everyone said he'd lose, on the night that turned a dying cause around. Now he stands for the 401jK movement. Same long odds. New impossible crossing: opting out of a rigged retirement.",
       "thumb": "img/thumb/0204.webp",
       "view": "img/view/0204.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -215,7 +215,7 @@
       "title": "The Storming of the Bastille",
       "artist": "Walter Whale",
       "alt": "An altered painting of the Storming of the Bastille, featuring revolutionaries wearing meme sunglasses and a '401JK' flag.",
-      "description": "Reimagination of 'The Storming of the Bastille' by Jean-Pierre Hou\u00ebl, 1789. The painting shows an armed Paris mob tearing down a symbol of royal tyranny on July 14, 1789, the spark that lit the French Revolution, and now the 401jK flag flies over the breach. The fortress changed. The fight didn't.",
+      "description": "Reimagining of 'The Storming of the Bastille' by Jean-Pierre Houël, 1789. The original shows an armed Paris mob tearing down a symbol of royal tyranny on July 14, 1789, the spark that lit the French Revolution. Now the 401jK flag flies over the breach. The fortress changed. The fight didn't.",
       "thumb": "img/thumb/0205.webp",
       "view": "img/view/0205.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -227,7 +227,7 @@
       "title": "Reply of the Zaporozhian Cossacks",
       "artist": "Walter Whale",
       "alt": "A humorous edit of the painting 'Reply of the Zaporozhian Cossacks', where multiple figures wear meme sunglasses and a '401JK' flag flies in the background.",
-      "description": "Reimagination of 'Reply of the Zaporozhian Cossacks' by Ilya Repin, 1891. The painting shows a crowd of Cossacks laughing uproariously as they compose the most gloriously defiant letter in history to a Sultan who demanded their surrender, and now they write it to the financial system. Different empire. Same answer.",
+      "description": "Reimagining of 'Reply of the Zaporozhian Cossacks' by Ilya Repin, 1891. The original shows a crowd of Cossacks roaring with laughter as they compose the most gloriously defiant and obscene letter in history, a reply to a Sultan who demanded their surrender. The 401jK community writes that letter to the financial system now, one meme at a time. Different empire. Same defiance.",
       "thumb": "img/thumb/0206.webp",
       "view": "img/view/0206.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -236,10 +236,10 @@
       "id": "0017-0207",
       "line": 2,
       "mint": 1,
-      "title": "Ko\u015bciuszko at Rac\u0142awice",
+      "title": "Kościuszko at Racławice",
       "artist": "Walter Whale",
       "alt": "A modified historical battle painting featuring soldiers in meme sunglasses, a '401JK' flag, and a banner reading 'OCCUPY RETIREMENT'.",
-      "description": "Reimagination of 'Ko\u015bciuszko at the Battle of Rac\u0142awice' by Jan Matejko, 1888. The painting shows Polish peasant farmers (armed with nothing but scythes) routing a professional army against every sensible prediction, led by a general who bet everything on people the system had written off. The 401jK community is the kosynierzy. The scythe is the meme.",
+      "description": "Reimagining of 'Kościuszko at the Battle of Racławice' by Jan Matejko, 1888. The painting shows Polish peasant farmers, armed with nothing but scythes, crushing a professional army against every sensible prediction. Their general bet everything on the people the system had written off. The 401jK community are the farmers rebelling against the system. And memes are our scythes.",
       "thumb": "img/thumb/0207.webp",
       "view": "img/view/0207.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -251,7 +251,7 @@
       "title": "Storming the Winter Palace",
       "artist": "Walter Whale",
       "alt": "An edited painting of a colonial-era battle where key commanders wear meme sunglasses and a flag reads '401JK'.",
-      "description": "Reimagination of 'Storming the Winter Palace' by Vladimir Serov, 1938. The painting shows the night the Bolsheviks took history's wheel and ended an order that everyone said was permanent, and now the 401jK flag rises above the breach. Systems built on extraction and inequality end. This one just hasn't been told yet.",
+      "description": "Reimagining of 'Storming the Winter Palace' by Vladimir Serov, 1938. The painting shows the night the Bolsheviks took history's wheel and ended an order everyone swore would last forever. The 401jK community storms a different palace now: the rigged retirement system that calls itself permanent. Systems built on extraction and inequality will collapse. This one just hasn't been told yet.",
       "thumb": "img/thumb/0208.webp",
       "view": "img/view/0208.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -263,7 +263,7 @@
       "title": "Oath of the Thirty-Three",
       "artist": "Walter Whale",
       "alt": "An edited painting of soldiers celebrating around a '401JK' flag, with several figures wearing meme sunglasses.",
-      "description": "Reimagination of 'El Juramento de los Treinta y Tres Orientales' by Juan Manuel Blanes, 1877. The painting shows thirty-three Uruguayan patriots raising their swords in an oath to liberate their homeland against every practical calculation, and now the 401jK community takes its own oath. Not with swords. With conviction. Same fire.",
+      "description": "Reimagining of 'El Juramento de los Treinta y Tres Orientales' by Juan Manuel Blanes, 1877. The painting shows thirty-three Uruguayan patriots raising their swords to swear they would free their homeland against all odds. The 401jK community is the thirty-three: small, outnumbered, and sworn to the fight anyway. Not with swords. With conviction. Same fire.",
       "thumb": "img/thumb/0209.webp",
       "view": "img/view/0209.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -275,7 +275,7 @@
       "title": "Blessing the Flag of Revolution",
       "artist": "Walter Whale",
       "alt": "A modified painting of an assembly in an ornate church, where a bishop and others wear meme sunglasses and hold a '401JK' flag.",
-      "description": "Reimagination of 'The Bishop of Old Patras Germanos Blesses the Flag of Revolution' by Theodoros Vryzakis, 1865. The painting shows the moment the Greek War of Independence began, a bishop lifting a flag and an entire people choosing, in that instant, to fight for their freedom, and now the 401jK flag is blessed by the same defiance. Old enough to be a painting. Young enough to matter today.",
+      "description": "Reimagining of 'The Bishop of Old Patras Germanos Blesses the Flag of Revolution' by Theodoros Vryzakis, 1865. The original shows a bishop lifting the flag of revolution and an entire people choosing, in that instant, to stop complying and start fighting for their freedom. The 401jK community makes the same choice. Different century. Same refusal to live on someone else's terms.",
       "thumb": "img/thumb/0210.webp",
       "view": "img/view/0210.webp",
       "magicEdenUrl": "PLACEHOLDER"
@@ -359,7 +359,7 @@
       "title": "The Tower",
       "artist": "Shadow",
       "alt": "A cosmic tarot card titled 'THE TOWER' showing a stone tower struck by a red force, with a floating jester hat and goggles above.",
-      "description": "The Tower falls without asking for your calendar. Structures built on false promise (the pension guarantee, the retirement timeline, the \"just keep contributing\" doctrine) don't decline gracefully. They collapse. And when they do, the Jester loses the hat, loses the goggles, loses the costume, and finds out what was underneath was enough all along. The 401jK is what you build after: on ground you chose, with materials you understand.",
+      "description": "The Tower falls without asking for your calendar. Structures built on false promises (the pension guarantee, the retirement timeline, the \"just keep contributing\" doctrine) don't decline gracefully. They collapse. And when they do, the Jester loses the hat, loses the goggles, loses the costume, and finds out what was underneath was enough all along. The 401jK is what you build after: on ground you chose, with materials you understand.",
       "thumb": "img/thumb/0307.webp",
       "view": "img/view/0307.webp",
       "magicEdenUrl": "PLACEHOLDER"
