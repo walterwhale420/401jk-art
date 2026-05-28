@@ -1,0 +1,4 @@
+{
+  "_readme": "Append one object to 'winners' each month (newest first). The site renders newest-to-oldest automatically. Object shape: { \"month\": \"2026-07\", \"label\": \"July 2026\", \"handle\": \"@winner\", \"prize\": \"e.g. 5 SOL\", \"announcementUrl\": \"https://x.com/...\" or a Reddit post URL, \"platform\": \"x\" or \"reddit\", \"reactionEmbedUrl\": \"optional X/Reddit post URL to embed inline, or null\" }. While 'winners' is empty, the site shows a 'first draw' coming-soon state using firstDraw from raffle.json.",
+  "winners": []
+}

@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>401jK — Retirement is a Joke</title>
+  <meta name="description" content="401jK is a Solana meme coin. Break the retirement system. Resist &amp; Retire.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================
+       TOKENS
+    ========================================= */
+    :root {
+      --bg:             oklch(8% 0.01 290);
+      --surface:        oklch(12% 0.012 290);
+      --surface-muted:  oklch(16% 0.01 290);
+      --border:         oklch(23% 0.012 290);
+      --border-subtle:  oklch(18% 0.01 290);
+
+      --green:          oklch(86% 0.34 124);   /* Acid Green */
+      --green-glow:     oklch(86% 0.34 124 / 0.25);
+      --green-tint:     oklch(86% 0.34 124 / 0.1);
+      --gold:           oklch(77% 0.31 50);    /* Radioactive Orange */
+      --purple:         oklch(58% 0.34 292);   /* Electric Purple */
+      --red:            oklch(71% 0.33 352);   /* Hot Pink */
+      --teal:           oklch(83% 0.27 196);   /* Neon Cyan */
+      --orange:         oklch(92% 0.26 105);   /* UV Yellow */
+
+      --text-primary:   oklch(95% 0.005 290);
+      --text-body:      oklch(80% 0.007 290);
+      --text-muted:     oklch(62% 0.008 290);
+
+      --font-display:   'Space Grotesk', 'Inter', sans-serif;
+      --font-body:      'Inter', sans-serif;
+      --font-mono:      'JetBrains Mono', 'Fira Code', monospace;
+
+      --ease:           cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-fast:      cubic-bezier(0.16, 1, 0.3, 1);
+
+      --nav-h: 60px;
+    }
+
+    /* =========================================
+       RESET
+    ========================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text-body);
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; }
+
+    /* =========================================
+       NAV
+    ========================================= */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: var(--nav-h);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      padding-inline: clamp(16px, 4vw, 40px);
+      transition: box-shadow 200ms var(--ease);
+    }
+    .nav.scrolled { box-shadow: 0 1px 32px oklch(0% 0 0 / 0.5); }
+    .nav-inner {
+      width: 100%;
+      max-width: 1280px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .logo em { color: var(--green); font-style: normal; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
+      transition: color 120ms;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links .nav-buy {
+      background: var(--green);
+      color: var(--bg);
+      font-weight: 700;
+      padding: 7px 18px;
+      border-radius: 7px;
+      transition: transform 130ms var(--ease), box-shadow 130ms var(--ease);
+    }
+    .nav-links .nav-buy:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px var(--green-glow);
+      color: var(--bg);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 8px;
+      margin-right: -8px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 1px;
+      transition: transform 220ms var(--ease), opacity 220ms;
+    }
+    .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .drawer {
+      display: none;
+      position: fixed;
+      inset: var(--nav-h) 0 auto 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px clamp(16px, 4vw, 40px);
+      z-index: 99;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .drawer.open { display: flex; }
+    .drawer a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-body);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      transition: color 120ms;
+    }
+    .drawer a:last-child { border-bottom: none; color: var(--green); font-weight: 700; }
+    .drawer a:hover { color: var(--green); }
+
+    /* =========================================
+       HERO
+    ========================================= */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding-block: calc(var(--nav-h) + 64px) 80px;
+      padding-inline: clamp(16px, 4vw, 40px);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Grid texture */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border-subtle) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+      background-size: 52px 52px;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    /* Green ambient glow */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 35%;
+      left: 40%;
+      width: 700px;
+      height: 340px;
+      background: radial-gradient(ellipse at 30% 40%, oklch(71% 0.33 352 / 0.06) 0%, transparent 55%), radial-gradient(ellipse at 70% 60%, oklch(86% 0.34 124 / 0.05) 0%, transparent 55%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1280px;
+      margin-inline: auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Terminal badge */
+    .terminal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: oklch(10% 0.01 290);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--green);
+      letter-spacing: 0.04em;
+      margin-bottom: 28px;
+    }
+    .terminal-badge::before {
+      content: '$';
+      color: var(--text-muted);
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 9.5vw, 8rem);
+      font-weight: 800;
+      line-height: 0.93;
+      letter-spacing: -0.035em;
+      color: var(--text-primary);
+      text-wrap: balance;
+      margin-bottom: 20px;
+    }
+    .hero-headline .green { color: var(--green); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 54ch;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 56px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      padding: 12px 26px;
+      border-radius: 8px;
+      border: none;
+      transition: transform 130ms var(--ease), box-shadow 130ms var(--ease), background 130ms;
+    }
+    .btn-primary {
+      background: var(--green);
+      color: var(--bg);
+    }
+    .btn-primary:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 24px var(--green-glow);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--green);
+      border: 1.5px solid var(--green);
+      font-weight: 600;
+    }
+    .btn-outline:hover {
+      background: var(--green-tint);
+      transform: scale(1.02);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1.5px solid var(--border);
+      font-weight: 500;
+    }
+    .btn-ghost:hover {
+      border-color: var(--text-muted);
+      color: var(--text-body);
+    }
+
+    /* Data ticker */
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+    .ticker-track {
+      display: flex;
+      gap: 60px;
+      width: max-content;
+      animation: ticker-scroll 32s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .ticker-item .val  { color: var(--text-primary); }
+    .ticker-item .up   { color: var(--green); }
+    .ticker-item .dn   { color: var(--red); }
+    .ticker-item .cy   { color: var(--teal); }
+    .ticker-item .uv   { color: var(--orange); }
+    .ticker-item .vio  { color: var(--purple); }
+
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* =========================================
+       SECTION SCAFFOLDING
+    ========================================= */
+    .section {
+      padding-block: clamp(64px, 10vw, 128px);
+      padding-inline: clamp(16px, 4vw, 40px);
+    }
+    .section-alt { background: var(--surface); }
+
+    .wrap {
+      max-width: 1280px;
+      margin-inline: auto;
+    }
+
+    .section-header { margin-bottom: clamp(36px, 5vw, 56px); }
+
+    .eyebrow {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      text-wrap: balance;
+      line-height: 1.05;
+    }
+
+    /* =========================================
+       MANIFESTO
+    ========================================= */
+    .manifesto-list {
+      display: grid;
+      gap: clamp(36px, 5vw, 56px);
+    }
+
+    .manifesto-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .m-num {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 6vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      color: var(--border);
+      user-select: none;
+      transition: color 350ms var(--ease);
+      padding-top: 4px;
+    }
+    .manifesto-item:hover .m-num { color: oklch(28% 0.02 292); }
+
+    .m-content h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .m-content p {
+      color: var(--text-body);
+      font-size: 1.0625rem;
+      max-width: 66ch;
+      line-height: 1.72;
+    }
+
+    /* =========================================
+       TOKEN
+    ========================================= */
+    .contract-block {
+      background: oklch(9% 0.01 290);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .contract-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .contract-addr {
+      font-family: var(--font-mono);
+      font-size: clamp(0.72rem, 1.3vw, 0.9375rem);
+      font-weight: 500;
+      color: var(--green);
+      letter-spacing: 0.015em;
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--green);
+      color: var(--bg);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 7px;
+      border: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: transform 130ms var(--ease), box-shadow 130ms var(--ease), background 200ms;
+    }
+    .copy-btn:hover { transform: scale(1.04); box-shadow: 0 0 16px var(--green-glow); }
+    .copy-btn.copied { background: oklch(60% 0.28 124); }
+
+    .token-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .token-stat {
+      background: var(--surface);
+      border-radius: 10px;
+      padding: clamp(16px, 2.5vw, 24px);
+      text-align: center;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 2.1rem);
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+    }
+
+    .platform-chips {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .chip-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-right: 4px;
+    }
+    .chip {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 5px 13px;
+      border-radius: 20px;
+      transition: border-color 130ms, color 130ms;
+    }
+    .chip:hover { border-color: var(--green); color: var(--green); }
+
+    /* =========================================
+       HOW TO BUY
+    ========================================= */
+    .steps { display: grid; gap: 10px; }
+
+    .step {
+      background: var(--surface-muted);
+      border-radius: 10px;
+      border-top: 2px solid var(--step-color, var(--border));
+      padding: 24px 28px;
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 20px;
+      align-items: start;
+      transition: transform 180ms var(--ease), box-shadow 180ms var(--ease);
+    }
+    .step:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px oklch(0% 0 0 / 0.25);
+    }
+    .step-num {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--step-color, var(--text-muted));
+      padding-top: 4px;
+    }
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 1.075rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .step-body {
+      font-size: 0.9375rem;
+      color: var(--text-body);
+      line-height: 1.62;
+      max-width: 66ch;
+    }
+    .step-warning {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 12px;
+      background: oklch(71% 0.33 352 / 0.1);
+      border: 1px solid oklch(71% 0.33 352 / 0.35);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--red);
+      line-height: 1.5;
+      word-break: break-all;
+      overflow-wrap: anywhere;
+    }
+
+    /* =========================================
+       MEMES
+    ========================================= */
+    .meme-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    /* Specific layout overrides */
+    .meme-tile { position: relative; border-radius: 10px; overflow: hidden; cursor: pointer; }
+    .meme-tile:nth-child(5) { grid-column: span 2; }
+    .meme-tile:nth-child(9) { grid-column: span 2; }
+
+    .meme-inner {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+      transition: transform 200ms var(--ease);
+    }
+    .meme-tile:nth-child(5) .meme-inner,
+    .meme-tile:nth-child(9) .meme-inner {
+      aspect-ratio: 2/1;
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 20px;
+      padding: 24px 28px;
+    }
+
+    .meme-tile:hover .meme-inner { transform: scale(1.03); }
+
+    .meme-icon { font-size: 2.4rem; line-height: 1; flex-shrink: 0; }
+    .meme-tile:nth-child(5) .meme-icon,
+    .meme-tile:nth-child(9) .meme-icon { font-size: 3rem; }
+
+    .meme-text {}
+    .meme-name {
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+    .meme-tile:nth-child(5) .meme-name,
+    .meme-tile:nth-child(9) .meme-name { font-size: 1.1rem; }
+
+    .meme-sub {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      margin-top: 4px;
+      opacity: 0.65;
+    }
+
+    .meme-shine {
+      position: absolute;
+      inset: 0;
+      background: oklch(86% 0.34 124 / 0);
+      transition: background 200ms var(--ease);
+    }
+    .meme-tile:hover .meme-shine { background: oklch(86% 0.34 124 / 0.1); }
+
+    /* =========================================
+       ROADMAP
+    ========================================= */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      position: relative;
+    }
+    /* Connector line */
+    .roadmap-grid::before {
+      content: '';
+      position: absolute;
+      top: 22px;
+      left: calc(25% / 2);
+      right: calc(25% / 2);
+      height: 1px;
+      background: linear-gradient(90deg,
+        var(--green) 0%,
+        var(--green) 25%,
+        var(--gold) 25%,
+        var(--gold) 50%,
+        var(--border) 50%,
+        var(--border) 100%
+      );
+    }
+
+    .phase {
+      padding: 48px 20px 24px;
+      position: relative;
+    }
+
+    .phase-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--surface-muted);
+      margin-bottom: 20px;
+    }
+    .phase.done .phase-dot {
+      background: var(--green);
+      border-color: var(--green);
+      box-shadow: 0 0 10px oklch(86% 0.34 124 / 0.5);
+    }
+    .phase.active .phase-dot {
+      background: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 10px oklch(77% 0.31 50 / 0.5);
+    }
+
+    .phase-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+    .phase.done .phase-eyebrow { color: var(--green); }
+    .phase.active .phase-eyebrow { color: var(--gold); }
+
+    .phase-title {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .phase-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .phase-list li {
+      font-size: 0.8375rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 8px;
+    }
+    .phase-list li::before { content: '–'; flex-shrink: 0; color: var(--border); }
+    .phase.done  .phase-list li::before { color: oklch(86% 0.34 124 / 0.5); }
+    .phase.active .phase-list li::before { color: oklch(77% 0.31 50 / 0.5); }
+
+    /* =========================================
+       GLOBAL STATS
+    ========================================= */
+    .stats-callout {
+      background: var(--surface-muted);
+      border-radius: 12px;
+      padding: clamp(24px, 4vw, 40px);
+      margin-bottom: 28px;
+    }
+    .stats-callout p {
+      max-width: 60ch;
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .age-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legend-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .legend-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* =========================================
+       PARTNERS
+    ========================================= */
+    .partners-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 20px 48px;
+    }
+    .partner {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color 150ms;
+    }
+    .partner:hover { color: var(--text-primary); }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+    .footer {
+      background: oklch(6% 0.008 290);
+      border-top: 1px solid var(--border);
+      padding-block: 64px 36px;
+      padding-inline: clamp(16px, 4vw, 40px);
+    }
+    .footer-inner { max-width: 1280px; margin-inline: auto; }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo { font-size: 1.75rem; }
+    .footer-tagline {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 6px;
+    }
+
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .social {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: border-color 130ms, color 130ms;
+    }
+    .social:hover { border-color: var(--green); color: var(--green); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .disclaimer {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 74ch;
+    }
+    .punchline {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    /* =========================================
+       SCROLL ANIMATION
+    ========================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 480ms var(--ease), transform 480ms var(--ease);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+    @media (max-width: 900px) {
+      .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
+      .roadmap-grid::before { display: none; }
+      .phase { padding-top: 28px; }
+      .meme-grid { grid-template-columns: repeat(3, 1fr); }
+      .meme-tile:nth-child(5) { grid-column: span 3; }
+      .meme-tile:nth-child(9) { grid-column: span 3; }
+      .meme-tile:nth-child(5) .meme-inner,
+      .meme-tile:nth-child(9) .meme-inner { aspect-ratio: 3/1; }
+    }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .token-stats { grid-template-columns: 1fr; gap: 8px; }
+      .token-stat { padding: 16px 20px; }
+      .contract-block { flex-direction: column; align-items: flex-start; padding: 20px; }
+      .copy-btn { width: 100%; justify-content: center; }
+      .manifesto-item { grid-template-columns: 56px 1fr; gap: 16px; }
+      .roadmap-grid { grid-template-columns: 1fr; }
+      .meme-grid { grid-template-columns: repeat(2, 1fr); }
+      .meme-tile:nth-child(5) { grid-column: span 2; }
+      .meme-tile:nth-child(5) .meme-inner { aspect-ratio: 2/1; }
+      .meme-tile:nth-child(9) { grid-column: span 1; }
+      .meme-tile:nth-child(9) .meme-inner { aspect-ratio: 1; flex-direction: column; gap: 10px; justify-content: center; }
+      .step { grid-template-columns: 1fr; gap: 4px; }
+      .step-num { display: none; }
+      .footer-top { flex-direction: column; }
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+    }
+
+    @media (max-width: 420px) {
+      .meme-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* =========================================
+       REDUCED MOTION
+    ========================================= */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .ticker-track { animation: none; }
+      .step:hover, .meme-tile:hover .meme-inner,
+      .btn-primary:hover, .btn-outline:hover,
+      .nav-links .nav-buy:hover, .copy-btn:hover { transform: none; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =================== NAV =================== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo" aria-label="401jK home">401<em>jK</em></a>
+      <ul class="nav-links">
+        <li><a href="#memes">Memes</a></li>
+        <li><a href="#token">Token</a></li>
+        <li><a href="#stats">Global Stats</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#buy">Staking</a></li>
+        <li><a href="#buy" class="nav-buy">Buy $401jK</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <nav class="drawer" id="drawer" aria-label="Mobile navigation">
+    <a href="#memes"  onclick="closeMenu()">Memes</a>
+    <a href="#token"  onclick="closeMenu()">Token</a>
+    <a href="#stats"  onclick="closeMenu()">Global Stats</a>
+    <a href="#roadmap" onclick="closeMenu()">Roadmap</a>
+    <a href="#buy"    onclick="closeMenu()">Staking</a>
+    <a href="#buy"    onclick="closeMenu()">Buy $401jK &rarr;</a>
+  </nav>
+
+  <!-- =================== HERO =================== -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="terminal-badge" style="color:var(--teal);">./401jK_manifesto.sh</div>
+      <h1 class="hero-headline">
+        Retirement<br>
+        is a Joke.<br>
+        <span style="color:var(--red);">Resist &amp;</span> <span style="color:var(--green);">Retire.</span>
+      </h1>
+      <p class="hero-sub">Technology was supposed to grant us freedom. Instead, governments raised the retirement age — again. We built a different exit: blockchain, memes, and collective action.</p>
+      <div class="hero-actions">
+        <a href="#buy"        class="btn btn-primary">Buy $401jK</a>
+        <a href="#manifesto"  class="btn btn-outline">Read the Manifesto</a>
+        <a href="#"           class="btn btn-ghost">White Paper</a>
+      </div>
+      <div class="ticker-wrap" aria-label="Live stats ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span class="ticker-item">US RETIREMENT AGE <span class="val dn">&#8593;67 YRS</span></span>
+          <span class="ticker-item">TICKER <span class="val up">$401JK</span></span>
+          <span class="ticker-item">BLOCKCHAIN <span class="val cy">SOLANA</span></span>
+          <span class="ticker-item">TOTAL SUPPLY <span class="val uv">1,000,000,000</span></span>
+          <span class="ticker-item">WORKERS WITH PENSION <span class="val dn">&#8595;15%</span></span>
+          <span class="ticker-item">BOOMERS WITH PENSION <span class="val vio">88%</span></span>
+          <span class="ticker-item">STAKING <span class="val up">LIVE</span></span>
+          <span class="ticker-item">MERCH <span class="val cy">AVAILABLE</span></span>
+          <!-- duplicate for seamless loop -->
+          <span class="ticker-item">US RETIREMENT AGE <span class="val dn">&#8593;67 YRS</span></span>
+          <span class="ticker-item">TICKER <span class="val up">$401JK</span></span>
+          <span class="ticker-item">BLOCKCHAIN <span class="val cy">SOLANA</span></span>
+          <span class="ticker-item">TOTAL SUPPLY <span class="val uv">1,000,000,000</span></span>
+          <span class="ticker-item">WORKERS WITH PENSION <span class="val dn">&#8595;15%</span></span>
+          <span class="ticker-item">BOOMERS WITH PENSION <span class="val vio">88%</span></span>
+          <span class="ticker-item">STAKING <span class="val up">LIVE</span></span>
+          <span class="ticker-item">MERCH <span class="val cy">AVAILABLE</span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =================== MANIFESTO =================== -->
+  <section class="section section-alt" id="manifesto">
+    <div class="wrap">
+      <div class="section-header reveal">
+        <span class="eyebrow">The Manifesto</span>
+        <h2 class="section-title">Break the System</h2>
+      </div>
+      <div class="manifesto-list">
+
+        <div class="manifesto-item reveal">
+          <span class="m-num" aria-hidden="true" style="color:var(--red);">01</span>
+          <div class="m-content">
+            <h3>We Were Sold a Dream</h3>
+            <p>Grind for decades, stash your earnings in a 401(k), and retire in peace. That was the deal. Every generation from Boomers to Zoomers was handed this same promise — and every generation watched it get quietly redefined. Retirement age goes up. Pension plans disappear. The finish line keeps moving.</p>
+          </div>
+        </div>
+
+        <div class="manifesto-item reveal">
+          <span class="m-num" aria-hidden="true" style="color:var(--purple);">02</span>
+          <div class="m-content">
+            <h3>Technology Should Free Us</h3>
+            <p>Productivity has compounded for decades. Automation was supposed to mean more leisure, not more labor. Instead, governments responded by raising retirement ages — using the gains of technology to extend the working years of the people who built it. The math stopped making sense a long time ago.</p>
+          </div>
+        </div>
+
+        <div class="manifesto-item reveal">
+          <span class="m-num" aria-hidden="true" style="color:var(--gold);">03</span>
+          <div class="m-content">
+            <h3>We Built a Different Exit</h3>
+            <p>Through blockchain, memes, and collective action, $401jK is a protest and a portfolio. We are not financial advisors. We are people who read the terms and conditions and decided to write our own. The system made retirement a joke. We made the joke into a token.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== TOKEN =================== -->
+  <section class="section" id="token">
+    <div class="wrap">
+      <div class="section-header reveal">
+        <span class="eyebrow">On-Chain</span>
+        <h2 class="section-title">The Token</h2>
+      </div>
+
+      <div class="contract-block reveal">
+        <div>
+          <div class="contract-label">Contract Address — Solana</div>
+          <div class="contract-addr" id="ca">Cz7LGKdZPpAxonXx23ZYPW3RtDQvjcf17ZDCZEzFpump</div>
+        </div>
+        <button class="copy-btn" id="copy-btn" onclick="copyCA()" aria-label="Copy contract address">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span id="copy-label">Copy Address</span>
+        </button>
+      </div>
+
+      <div class="token-stats reveal">
+        <div class="token-stat">
+          <div class="stat-label">Ticker</div>
+          <div class="stat-value">$401JK</div>
+        </div>
+        <div class="token-stat">
+          <div class="stat-label">Blockchain</div>
+          <div class="stat-value">Solana</div>
+        </div>
+        <div class="token-stat">
+          <div class="stat-label">Total Supply</div>
+          <div class="stat-value">1&thinsp;000&thinsp;000&thinsp;000</div>
+        </div>
+      </div>
+
+      <div class="platform-chips reveal">
+        <span class="chip-label">View on</span>
+        <a href="#" class="chip">Solscan</a>
+        <a href="#" class="chip">DexScreener</a>
+        <a href="#" class="chip">DexTools</a>
+        <a href="#" class="chip">GMGN</a>
+        <a href="#" class="chip">RugCheck</a>
+      </div>
+
+      <div class="reveal" style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="#buy"  class="btn btn-primary">How to Buy</a>
+        <a href="#"     class="btn btn-outline">Staking is Live</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== HOW TO BUY =================== -->
+  <section class="section section-alt" id="buy">
+    <div class="wrap">
+      <div class="section-header reveal">
+        <span class="eyebrow">Step by Step</span>
+        <h2 class="section-title">How to Buy</h2>
+      </div>
+      <div class="steps">
+
+        <div class="step reveal" style="--step-color: var(--green);">
+          <div class="step-num">01</div>
+          <div>
+            <div class="step-title">Install Phantom Wallet</div>
+            <div class="step-body">Download the Phantom wallet browser extension or mobile app. It's the most widely used Solana wallet and takes about two minutes to set up from scratch.</div>
+          </div>
+        </div>
+
+        <div class="step reveal" style="--step-color: var(--teal);">
+          <div class="step-num">02</div>
+          <div>
+            <div class="step-title">Buy SOL in Phantom</div>
+            <div class="step-body">Purchase Solana (SOL) directly inside Phantom with a card or bank transfer. Grab a little extra — you'll need a small amount of SOL to cover network fees on your swap.</div>
+          </div>
+        </div>
+
+        <div class="step reveal" style="--step-color: var(--gold);">
+          <div class="step-num">03</div>
+          <div>
+            <div class="step-title">Find the REAL $401JK</div>
+            <div class="step-body">Scammers clone popular tickers constantly. Never search by name — always paste the contract address directly.</div>
+            <div class="step-warning">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:1px"><path d="m10.29 3.86-8.6 14.9A2 2 0 0 0 3.43 22h17.14a2 2 0 0 0 1.74-3l-8.6-14.9a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              NEVER search by name. ALWAYS paste: Cz7LGKdZPpAxonXx23ZYPW3RtDQvjcf17ZDCZEzFpump
+            </div>
+          </div>
+        </div>
+
+        <div class="step reveal" style="--step-color: var(--purple);">
+          <div class="step-num">04</div>
+          <div>
+            <div class="step-title">Swap SOL for $401jK</div>
+            <div class="step-body">Open Jupiter or Raydium, paste the contract address, set slippage to 1–3%, and confirm the swap. You're now part of the retirement resistance.</div>
+          </div>
+        </div>
+
+        <div class="step reveal" style="--step-color: var(--orange);">
+          <div class="step-num">05</div>
+          <div>
+            <div class="step-title">You're In. Now Stake.</div>
+            <div class="step-body">Staking is live. Hold $401jK, earn rewards, and join the community channels to stay current on roadmap milestones, exchange listings, and governance votes.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== MEMES =================== -->
+  <section class="section" id="memes">
+    <div class="wrap">
+      <div class="section-header reveal">
+        <span class="eyebrow">Community</span>
+        <h2 class="section-title">The Meme Gallery</h2>
+      </div>
+
+      <div class="meme-grid reveal" role="list">
+
+        <div class="meme-tile" role="listitem" style="background:oklch(16% 0.1 124);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">📈</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--green);">Number<br>Go Up</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <div class="meme-tile" role="listitem" style="background:oklch(16% 0.1 50);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">🐷</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--gold);">Piggy<br>R.I.P.</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <div class="meme-tile" role="listitem" style="background:oklch(14% 0.1 292);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">🚀</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--purple);">Stonks<br>Only Up</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <div class="meme-tile" role="listitem" style="background:oklch(15% 0.1 352);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">🔥</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--red);">1099<br>Season</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <!-- Wide tile spanning 2 cols -->
+        <div class="meme-tile" role="listitem" style="background:oklch(11% 0.13 124);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">🏦</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--green);font-size:1.2rem;">They Raised the Age Again</div>
+              <div class="meme-sub" style="color:oklch(86% 0.34 124 / 0.55);">67 &rarr; 68 &rarr; &infin;</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <div class="meme-tile" role="listitem" style="background:oklch(15% 0.1 196);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">🌊</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--teal);">We Are<br>All Degens</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <div class="meme-tile" role="listitem" style="background:oklch(15% 0.1 105);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">💀</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--orange);">My 401k<br>in 2022</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <div class="meme-tile" role="listitem" style="background:oklch(16% 0.1 124);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">🎰</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--green);">Market<br>Open</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <!-- Wide tile spanning 2 cols -->
+        <div class="meme-tile" role="listitem" style="background:oklch(13% 0.12 292);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">👴</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--purple);font-size:1.1rem;">Working Until 80</div>
+              <div class="meme-sub" style="color:oklch(58% 0.34 292 / 0.65);">at least the office has free coffee</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <div class="meme-tile" role="listitem" style="background:oklch(15% 0.1 352);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">😤</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--red);">I'll Sleep<br>When Rich</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <div class="meme-tile" role="listitem" style="background:oklch(15% 0.1 50);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">🧾</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--gold);">Tax<br>Harvesting</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+        <div class="meme-tile" role="listitem" style="background:oklch(14% 0.1 196);">
+          <div class="meme-inner">
+            <div class="meme-icon" aria-hidden="true">🪙</div>
+            <div class="meme-text">
+              <div class="meme-name" style="color:var(--teal);">Touch<br>Grass Later</div>
+            </div>
+          </div>
+          <div class="meme-shine"></div>
+        </div>
+
+      </div>
+
+      <div class="reveal" style="text-align:center;">
+        <a href="#" class="btn btn-outline">Explore All Memes</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== ROADMAP =================== -->
+  <section class="section section-alt" id="roadmap">
+    <div class="wrap">
+      <div class="section-header reveal">
+        <span class="eyebrow">Phases</span>
+        <h2 class="section-title">Roadmap</h2>
+      </div>
+      <div class="roadmap-grid reveal">
+
+        <div class="phase done">
+          <div class="phase-dot" aria-label="Completed"></div>
+          <div class="phase-eyebrow">Phase 01 — Done</div>
+          <div class="phase-title">Launch &amp; Community</div>
+          <ul class="phase-list">
+            <li>Token launch on Solana</li>
+            <li>Community channels live</li>
+            <li>CoinGecko listing</li>
+            <li>Manifesto published</li>
+            <li>RugCheck verified</li>
+          </ul>
+        </div>
+
+        <div class="phase active">
+          <div class="phase-dot" aria-label="In progress"></div>
+          <div class="phase-eyebrow">Phase 02 — Active</div>
+          <div class="phase-title">Growth &amp; Partnerships</div>
+          <ul class="phase-list">
+            <li>KCEX listing</li>
+            <li>XT Exchange listing</li>
+            <li>AscendEX listing</li>
+            <li>Messier partnership</li>
+            <li>HelloMoon integration</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-dot" aria-label="Upcoming"></div>
+          <div class="phase-eyebrow">Phase 03 — Upcoming</div>
+          <div class="phase-title">Ecosystem</div>
+          <ul class="phase-list">
+            <li>Staking rewards</li>
+            <li>Merch store</li>
+            <li>Global retirement map</li>
+            <li>Meme creation tools</li>
+            <li>Memeory game</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-dot" aria-label="Future"></div>
+          <div class="phase-eyebrow">Phase 04 — Future</div>
+          <div class="phase-title">The Revolution</div>
+          <ul class="phase-list">
+            <li>Tier-1 exchange listings</li>
+            <li>Global retail campaign</li>
+            <li>Governance launch</li>
+            <li>Cross-chain bridge</li>
+            <li>Retirement. Seriously.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== GLOBAL STATS =================== -->
+  <section class="section" id="stats">
+    <div class="wrap">
+      <div class="section-header reveal">
+        <span class="eyebrow">The Data</span>
+        <h2 class="section-title">Global Retirement Ages</h2>
+      </div>
+      <div class="stats-callout reveal">
+        <p>Governments worldwide are raising retirement ages. We track the system we're all living inside. The full interactive map — showing retirement ages by country from 60 to 70+ — is available at <a href="https://401jk.fun" style="color:var(--green);">401jk.fun</a>.</p>
+        <div class="age-legend">
+          <div class="legend-item">
+            <div class="legend-swatch" style="background:var(--green);"></div>
+            <span class="legend-label">60–62 years</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-swatch" style="background:var(--gold);"></div>
+            <span class="legend-label">63–65 years</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-swatch" style="background:var(--orange);"></div>
+            <span class="legend-label">66–67 years</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-swatch" style="background:var(--red);"></div>
+            <span class="legend-label">68–70+ years</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <a href="https://401jk.fun" class="btn btn-outline" style="width:fit-content;">View Interactive Map &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== PARTNERS =================== -->
+  <section class="section section-alt">
+    <div class="wrap">
+      <div class="section-header reveal" style="text-align:center;">
+        <span class="eyebrow">Ecosystem</span>
+        <h2 class="section-title" style="text-align:center;">Partners</h2>
+      </div>
+      <div class="partners-row reveal" role="list" aria-label="Strategic partners">
+        <span class="partner" role="listitem">Messier</span>
+        <span class="partner" role="listitem">KCEX</span>
+        <span class="partner" role="listitem">HelloMoon</span>
+        <span class="partner" role="listitem">XT</span>
+        <span class="partner" role="listitem">CoinGecko</span>
+        <span class="partner" role="listitem">AscendEX</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== FOOTER =================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="logo footer-logo">401<em>jK</em></div>
+          <div class="footer-tagline">retirement content that doesn't make you cry</div>
+        </div>
+        <nav class="socials" aria-label="Social media">
+          <a href="#" class="social">X / Twitter</a>
+          <a href="#" class="social">Telegram</a>
+          <a href="#" class="social">Instagram</a>
+          <a href="#" class="social">TikTok</a>
+          <a href="#" class="social">YouTube</a>
+          <a href="#" class="social">Reddit</a>
+          <a href="#" class="social">Spotify</a>
+          <a href="#" class="social">Facebook</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p class="disclaimer">
+          401jK is a meme coin built on the Solana blockchain. It has no intrinsic value and is meant purely for entertainment purposes. Do not invest more than you are comfortable losing. Nothing on this page constitutes financial, investment, or legal advice.
+        </p>
+        <p class="punchline">*(Your retirement is still a joke though.)*</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ---- NAV ---- */
+    const hamburger = document.getElementById('hamburger');
+    const drawer    = document.getElementById('drawer');
+    const nav       = document.getElementById('nav');
+
+    hamburger.addEventListener('click', () => {
+      const open = drawer.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
+    });
+    function closeMenu() {
+      drawer.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    /* Nav scroll shadow */
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* ---- COPY CONTRACT ---- */
+    function copyCA() {
+      const addr = document.getElementById('ca').textContent.trim();
+      const btn  = document.getElementById('copy-btn');
+      const lbl  = document.getElementById('copy-label');
+      navigator.clipboard.writeText(addr).then(() => {
+        lbl.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          lbl.textContent = 'Copy Address';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    /* ---- SCROLL REVEAL ---- */
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        /* stagger siblings within same parent */
+        const parent   = entry.target.parentElement;
+        const siblings = [...parent.querySelectorAll('.reveal:not(.in)')];
+        const idx      = siblings.indexOf(entry.target);
+        const delay    = Math.min(idx * 55, 280);
+        setTimeout(() => entry.target.classList.add('in'), delay);
+        revealObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+    revealEls.forEach(el => revealObs.observe(el));
+  </script>
+</body>
+</html>
