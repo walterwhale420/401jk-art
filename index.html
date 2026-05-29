@@ -35,6 +35,7 @@
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#raffle">Raffle</a></li>
         <li><a href="#winners">Winners</a></li>
+        <li><a href="#faq">FAQ</a></li>
         <li><a href="https://401jk.fun" class="nav-buy">Buy $401jK</a></li>
       </ul>
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="drawer">
@@ -47,6 +48,7 @@
     <a href="#gallery">Gallery</a>
     <a href="#raffle">Raffle</a>
     <a href="#winners">Winners</a>
+    <a href="#faq">FAQ</a>
     <a href="https://401jk.fun">Buy $401jK &rarr;</a>
   </nav>
 
@@ -56,6 +58,10 @@
       <span class="terminal-badge">ls 401jk/nft --wave 1</span>
       <h1>Retirement is rigged.<br><span class="green">The art knows.</span></h1>
       <p class="hero-sub" id="hero-intro">Loading the collection&hellip;</p>
+      <div class="launch-announce" aria-label="Launch announcement">
+        <span class="launch-dot"></span>
+        <span>NFT Launch on <strong>June 6th at 12:00 PM UTC</strong>. Stay tuned for details.</span>
+      </div>
       <div class="hero-actions">
         <a href="#gallery" class="btn btn-primary">Explore the collection</a>
         <a id="hero-me" class="btn btn-outline" role="button">View on MagicEden</a>
@@ -118,6 +124,96 @@
     </section>
   </main>
 
+  <!-- ====================================================== RAFFLE FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">The raffle FAQ</span>
+        <h2 class="section-title">Everything you need to know</h2>
+        <p class="section-lead">No trust required — the draw is on-chain and anyone can verify it.</p>
+      </div>
+      <div class="faq-list" id="faq-list">
+
+        <div class="faq-group reveal">
+          <h3 class="faq-group-title">Qualifying &amp; Entries</h3>
+          <details class="faq-item">
+            <summary>How do I qualify for the raffle?</summary>
+            <p>Just hold a 401jK NFT. That's it. No sign-ups, no claiming, no staking. Every NFT in the collection is automatically entered every month.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can I hold several NFTs in the same wallet?</summary>
+            <p>Yes, and it works in your favor. Each NFT counts as one entry. Hold three NFTs, you get three shots at the monthly 15,000 401jK token prize.</p>
+          </details>
+        </div>
+
+        <div class="faq-group reveal">
+          <h3 class="faq-group-title">The Draw</h3>
+          <details class="faq-item">
+            <summary>How is the winner determined?</summary>
+            <p>At 12:00 PM UTC on the first Sunday of each month, we take a snapshot of the Solana blockchain. The winner is determined by the first Solana block hash after that snapshot — converted to a number, with a simple modulo calculation to land on a winning NFT. The mod team confirms the winning NFT and the wallet that held it at snapshot time, and the prize is sent directly from the community wallet.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How exactly do you calculate the winner?</summary>
+            <p>We take the first Solana block hash after 12:00 PM UTC (first Sunday of each month) and convert it to a number (hex). Divide that number by the total number of NFTs and take the remainder — a number from 0 to N−1 — then add 1 to land on an NFT from 1 to N. If the collection grows, we just divide by the new total. The math always lands inside the real NFT range.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How can I verify the draw is fair?</summary>
+            <p>Every step is on-chain and public. The snapshot block, the hash, and the calculation are all verifiable by anyone. You don't have to take our word for it — you can check it yourself.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can the same NFT win several times?</summary>
+            <p>Yes. Previous winners stay eligible. It's random every time, so there's no cooldown and no rotation. The same NFT could win back to back.</p>
+          </details>
+        </div>
+
+        <div class="faq-group reveal">
+          <h3 class="faq-group-title">Timing &amp; Edge Cases</h3>
+          <details class="faq-item">
+            <summary>What if I sell my NFT after the winner is drawn?</summary>
+            <p>You keep the prize. What matters is the wallet that held the NFT at snapshot time — not the wallet that holds it after. If your NFT wins and you sell it the next day, the tokens still come to you.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What if I buy an NFT just after it has won?</summary>
+            <p>You missed this month's prize, but you're immediately eligible for every draw going forward. Winning history has no effect on future draws.</p>
+          </details>
+        </div>
+
+        <div class="faq-group reveal">
+          <h3 class="faq-group-title">Winning</h3>
+          <details class="faq-item">
+            <summary>What do I have to do if my NFT wins?</summary>
+            <p>Nothing. The prize is sent directly to the wallet that held the winning NFT at snapshot time. No claims, no forms.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What should I do when I win?</summary>
+            <p>Be happy. Post about it on X and tag <a href="https://x.com/401_JK" target="_blank" rel="noopener" class="text-link">@401_JK</a>. And hold your bag.</p>
+          </details>
+        </div>
+
+        <div class="faq-group reveal">
+          <h3 class="faq-group-title">The Program</h3>
+          <details class="faq-item">
+            <summary>For how long will the monthly raffle continue?</summary>
+            <p>The first 12 months are fixed and fully funded. After that, we'll assess what's in the community wallet and decide whether to continue. The intention is to keep going as long as the funds support it — but the first year is guaranteed.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Who gets the money from NFT sales and transaction fees?</summary>
+            <p>Everything goes into the community wallet, which funds the raffles. The artists behind this collection donated their time and work to the community. There's no cut going to a team or a foundation.</p>
+          </details>
+        </div>
+
+        <div class="faq-group reveal">
+          <h3 class="faq-group-title">The Collection</h3>
+          <details class="faq-item">
+            <summary>Will there be more NFTs in the future?</summary>
+            <p>Yes. The collection is designed to grow — new series depending on interest. If you're an artist and want to create your own series within the 401jK universe, reach out to <a href="https://x.com/401_JK" target="_blank" rel="noopener" class="text-link">@401_JK</a> or <a href="https://x.com/Walter_Whale420" target="_blank" rel="noopener" class="text-link">@Walter_Whale420</a> on X.</p>
+          </details>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ====================================================== FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
@@ -157,9 +253,9 @@
       <button class="lb-close" id="lb-close" aria-label="Close">&times;</button>
       <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous piece">&#8249;</button>
       <button class="lb-nav lb-next" id="lb-next" aria-label="Next piece">&#8250;</button>
+      <span class="lb-counter" id="lb-counter"></span>
       <figure class="lb-figure">
         <img id="lb-img" src="" alt="">
-        <span class="lb-counter" id="lb-counter"></span>
       </figure>
       <div class="lb-meta">
         <div class="lb-tags">

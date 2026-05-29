@@ -222,6 +222,11 @@
     $('#lb-close').focus();
   }
 
+  const ARTIST_X = {
+    'Shadow':      'https://x.com/OthersideShad0w',
+    'Walter Whale': 'https://x.com/Walter_Whale420',
+  };
+
   function paintLightbox() {
     const n = state.visible[state.lbIndex];
     if (!n) return;
@@ -230,7 +235,10 @@
     lb.img.src = n.view;
     lb.img.alt = n.alt;
     lb.title.textContent = n.title;
-    lb.artist.innerHTML = `Artist <b>${n.artist}</b>`;
+    const xUrl = ARTIST_X[n.artist];
+    lb.artist.innerHTML = xUrl
+      ? `Artist <a class="lb-artist-link" href="${xUrl}" target="_blank" rel="noopener noreferrer"><b>${n.artist}</b></a>`
+      : `Artist <b>${n.artist}</b>`;
     lb.desc.textContent = n.description;
     lb.tagLine.textContent = `Series ${n.line} · ${lineName(n.line)}`;
     lb.tagId.textContent = `#${n.id}`;
