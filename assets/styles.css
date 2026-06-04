@@ -430,7 +430,9 @@ button { font-family: inherit; cursor: pointer; color: inherit; }
 .faq-item > p { padding: 0 20px 18px; color: var(--text-body); line-height: 1.72; font-size: 0.97rem; margin: 0; }
 
 @media (min-width: 700px) {
-  .faq-list { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 48px; }
+  .faq-list { display: block; column-count: 2; column-gap: 48px; }
+  .faq-list .faq-group { break-inside: avoid; margin-bottom: 40px; }
+  .faq-list .faq-group:last-child { margin-bottom: 0; }
 }
 
 /* ------------------------------------------------------------------- REVEAL */
