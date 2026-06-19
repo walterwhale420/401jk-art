@@ -35,6 +35,7 @@
               mask-image: radial-gradient(ellipse 90% 100% at 50% 0%, #000 30%, transparent 100%);
     }
     .watch-header .wrap { position: relative; z-index: 1; }
+    .watch-header .terminal-badge::before { content: none; }
 
     .watch-h1 {
       font-family: var(--font-display);
@@ -93,7 +94,7 @@
 
     .watch-row {
       display: grid;
-      grid-template-columns: 52px 52px 1fr minmax(190px, 220px) minmax(190px, 220px);
+      grid-template-columns: 52px 52px auto 1fr 1fr;
       column-gap: 16px;
       align-items: center;
       padding: 13px 10px;
@@ -288,7 +289,7 @@
     <div class="wrap">
       <span class="terminal-badge">// NFT WATCH</span>
       <h1 class="watch-h1">On-chain.<br><span class="green">Every piece.</span></h1>
-      <p class="watch-lead">Every 401jK NFT — its mint address and the wallet currently holding it. Ownership data is read directly from the Solana blockchain and refreshed daily. Click any thumbnail to see full details, or any address to verify on Solscan.</p>
+      <p class="watch-lead">Every 401jK NFT with its mint address and the wallet currently holding it. Ownership data is read directly from the Solana blockchain and refreshed daily. Click any thumbnail to see full details, or any address to verify on Solscan.</p>
       <div class="watch-status">
         <span class="dot"></span>
         <span id="watch-updated">Loading…</span>
