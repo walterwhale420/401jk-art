@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NFT Watch — 401jK</title>
+  <meta name="description" content="Live on-chain holder tracking for every 401jK NFT. See the wallet currently holding each piece and verify directly on Solscan.">
+  <meta name="robots" content="noindex">
+
+  <link rel="icon" type="image/png" href="../brand/favicon.png">
+  <link rel="apple-touch-icon" href="../brand/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/styles.css">
+  <style>
+    /* ── PAGE HEADER ── */
+    .watch-header {
+      padding-top: calc(var(--nav-h) + 64px);
+      padding-bottom: clamp(40px, 5vw, 64px);
+      padding-inline: clamp(16px, 4vw, 40px);
+      position: relative;
+      overflow: hidden;
+    }
+    .watch-header::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none; opacity: 0.2;
+      background-image:
+        linear-gradient(var(--border-subtle) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+      background-size: 54px 54px;
+      -webkit-mask-image: radial-gradient(ellipse 90% 100% at 50% 0%, #000 30%, transparent 100%);
+              mask-image: radial-gradient(ellipse 90% 100% at 50% 0%, #000 30%, transparent 100%);
+    }
+    .watch-header .wrap { position: relative; z-index: 1; }
+
+    .watch-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: var(--text-primary);
+      line-height: 0.97;
+      margin-bottom: 20px;
+    }
+    .watch-h1 .green { color: var(--green); }
+
+    .watch-lead {
+      font-size: clamp(1rem, 1.6vw, 1.125rem);
+      color: var(--text-body);
+      max-width: 62ch;
+      line-height: 1.72;
+    }
+
+    .watch-status {
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+    .watch-status .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 0 var(--green-glow);
+      animation: pulse 2.4s ease infinite;
+      flex-shrink: 0;
+    }
+
+    /* ── WATCH SECTION ── */
+    .watch-section {
+      padding-block: clamp(48px, 7vw, 80px);
+      padding-inline: clamp(16px, 4vw, 40px);
+    }
+
+    /* ── SERIES FILTER OVERRIDES ── */
+    .filter[data-line="0"][aria-pressed="true"] { background: var(--green);   border-color: var(--green);   color: var(--bg); }
+    .filter[data-line="1"][aria-pressed="true"] { background: var(--green);   border-color: var(--green);   color: var(--bg); }
+    .filter[data-line="2"][aria-pressed="true"] { background: var(--orange);  border-color: var(--orange);  color: var(--bg); }
+    .filter[data-line="3"][aria-pressed="true"] { background: var(--purple);  border-color: var(--purple);  color: oklch(95% 0.005 290); }
+
+    /* ── ROW LIST ── */
+    .watch-list {
+      display: flex;
+      flex-direction: column;
+      margin-top: 24px;
+    }
+
+    .watch-row {
+      display: grid;
+      grid-template-columns: 52px 52px 1fr minmax(190px, 220px) minmax(190px, 220px);
+      column-gap: 16px;
+      row-gap: 0;
+      align-items: center;
+      padding: 13px 10px;
+      margin-inline: -10px;
+      border-top: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      transition: background 140ms;
+    }
+    .watch-row:last-child { border-bottom: 1px solid var(--border-subtle); }
+    .watch-row:hover { background: var(--surface); }
+
+    /* NFT number — 2-digit, green, large */
+    .watch-num {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--green);
+      line-height: 1;
+      text-align: right;
+      user-select: none;
+    }
+
+    /* Thumbnail */
+    .watch-thumb {
+      width: 48px; height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      display: block;
+      flex-shrink: 0;
+    }
+
+    /* Title + series label */
+    .watch-info { min-width: 0; }
+    .watch-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .watch-series {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-top: 4px;
+    }
+    .watch-series[data-line="1"] { color: var(--green); }
+    .watch-series[data-line="2"] { color: var(--orange); }
+    .watch-series[data-line="3"] { color: var(--purple); }
+
+    /* Address block (mint / held-by) */
+    .addr-block { min-width: 0; }
+    .addr-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+    .addr-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 6px 10px;
+    }
+    .addr-val {
+      font-family: var(--font-mono);
+      font-size: 0.775rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      white-space: nowrap;
+      flex: 1;
+    }
+    .addr-btn, .addr-ext {
+      display: flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      background: none; border: none;
+      color: var(--text-muted);
+      border-radius: 5px;
+      flex-shrink: 0;
+      transition: color 130ms, background 130ms;
+      text-decoration: none;
+    }
+    .addr-btn:hover, .addr-ext:hover { color: var(--green); background: var(--green-tint); }
+    .addr-btn.copied { color: var(--cyan); }
+    .addr-btn svg, .addr-ext svg { width: 13px; height: 13px; display: block; }
+
+    /* Placeholder when holder unknown */
+    .addr-val.unknown { color: var(--text-muted); font-style: italic; }
+
+    /* Loading state */
+    .watch-loading {
+      display: flex; align-items: center; gap: 12px;
+      padding: 56px 0;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .watch-loading .spin {
+      width: 16px; height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .watch-row {
+        grid-template-columns: 44px 44px 1fr;
+        grid-template-rows: auto auto;
+        row-gap: 10px;
+        padding: 14px 10px;
+      }
+      .addr-block { grid-column: 1 / -1; }
+    }
+    @media (max-width: 540px) {
+      .watch-num  { font-size: 1.45rem; }
+      .watch-thumb { width: 40px; height: 40px; }
+      .addr-val  { font-size: 0.72rem; }
+      .watch-row { column-gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════ NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../" class="logo" aria-label="401jK Art — back to collection">
+        <img src="../brand/logo.png" alt="401jK NFT" style="height:40px;width:auto;">
+      </a>
+      <ul class="nav-links">
+        <li><a href="../#launch">Launch</a></li>
+        <li><a href="../#lines">Series</a></li>
+        <li><a href="../#gallery">Gallery</a></li>
+        <li><a href="../#raffle">Raffle</a></li>
+        <li><a href="../#winners">Winners</a></li>
+        <li><a href="../#faq">FAQ</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <nav class="drawer" id="drawer" aria-label="Mobile navigation">
+    <a href="../#launch">Launch</a>
+    <a href="../#lines">Series</a>
+    <a href="../#gallery">Gallery</a>
+    <a href="../#raffle">Raffle</a>
+    <a href="../#winners">Winners</a>
+    <a href="../#faq">FAQ</a>
+    <a href="../">← Back to collection</a>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════════ HEADER -->
+  <header class="watch-header">
+    <div class="wrap">
+      <span class="terminal-badge">// NFT WATCH</span>
+      <h1 class="watch-h1">On-chain.<br><span class="green">Every piece.</span></h1>
+      <p class="watch-lead">Every 401jK NFT — its mint address and the wallet currently holding it. Ownership data is read directly from the Solana blockchain and refreshed daily. Click any address to verify on Solscan, or copy it to your clipboard.</p>
+      <div class="watch-status">
+        <span class="dot"></span>
+        <span id="watch-updated">Loading…</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════ TABLE -->
+  <section class="watch-section section-alt">
+    <div class="wrap">
+      <div class="filters" id="filters" role="group" aria-label="Filter by series"></div>
+      <div id="watch-body">
+        <div class="watch-loading"><span class="spin"></span>Fetching on-chain data…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════ FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="logo">
+            <img src="../brand/logo.png" alt="401jK NFT" style="height:40px;width:auto;">
+          </div>
+          <p class="footer-tagline">A community collection. No creator profit, all proceeds to the community wallet. Art exposes the con.</p>
+        </div>
+        <nav class="socials" aria-label="Social and links">
+          <a href="https://x.com/401_JK" class="social" target="_blank" rel="noopener">X / Twitter</a>
+          <a href="https://www.reddit.com/r/401jK/" class="social" target="_blank" rel="noopener">Reddit</a>
+          <a href="https://t.me/+L3Q-9JBweq1kMWY0" class="social" target="_blank" rel="noopener">Telegram</a>
+          <a href="https://401jk.fun" class="social">401jk.fun &rarr;</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 401jK community. Not financial advice. Retirement is a joke.</span>
+        <span><a href="../">← Back to collection</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Nav scroll + hamburger ──────────────────────────────────────────────
+    const navEl = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      navEl.classList.toggle('scrolled', window.scrollY > 8);
+    }, { passive: true });
+
+    const ham    = document.getElementById('hamburger');
+    const drawer = document.getElementById('drawer');
+    ham.addEventListener('click', () => {
+      const open = ham.getAttribute('aria-expanded') === 'true';
+      ham.setAttribute('aria-expanded', String(!open));
+      drawer.classList.toggle('open', !open);
+    });
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      ham.setAttribute('aria-expanded', 'false');
+      drawer.classList.remove('open');
+    }));
+
+    // ── SVG icons ──────────────────────────────────────────────────────────
+    const COPY_ICON = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="5" y="5" width="9" height="9" rx="1.5"/>
+      <path d="M3 11H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1"/>
+    </svg>`;
+    const CHECK_ICON = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="2 9 6 13 14 3"/>
+    </svg>`;
+    const EXT_ICON = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V9"/>
+      <polyline points="10 1 15 1 15 6"/>
+      <line x1="15" y1="1" x2="7" y2="9"/>
+    </svg>`;
+
+    // ── Helpers ────────────────────────────────────────────────────────────
+    function trunc(addr) {
+      return addr.slice(0, 5) + '…' + addr.slice(-5);
+    }
+
+    function makeAddrBlock(label, addr, solscanPath) {
+      const wrap = document.createElement('div');
+      wrap.className = 'addr-block';
+
+      const lbl = document.createElement('div');
+      lbl.className = 'addr-label';
+      lbl.textContent = label;
+
+      const row = document.createElement('div');
+      row.className = 'addr-row';
+
+      const val = document.createElement('span');
+      val.className = 'addr-val';
+      val.textContent = trunc(addr);
+      val.title = addr;
+
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'addr-btn';
+      copyBtn.innerHTML = COPY_ICON;
+      copyBtn.setAttribute('aria-label', `Copy ${label}`);
+      copyBtn.dataset.addr = addr;
+
+      const extLink = document.createElement('a');
+      extLink.className = 'addr-ext';
+      extLink.href = `https://solscan.io/${solscanPath}/${addr}`;
+      extLink.target = '_blank';
+      extLink.rel = 'noopener';
+      extLink.setAttribute('aria-label', 'View on Solscan');
+      extLink.innerHTML = EXT_ICON;
+
+      row.append(val, copyBtn, extLink);
+      wrap.append(lbl, row);
+      return wrap;
+    }
+
+    function makeUnknownBlock(label) {
+      const wrap = document.createElement('div');
+      wrap.className = 'addr-block';
+      wrap.innerHTML = `
+        <div class="addr-label">${label}</div>
+        <div class="addr-row"><span class="addr-val unknown">Unknown</span></div>
+      `;
+      return wrap;
+    }
+
+    function formatDate(iso) {
+      const d = new Date(iso);
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+           + ' · '
+           + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
+    }
+
+    // ── Wire copy buttons ──────────────────────────────────────────────────
+    function wireCopy(container) {
+      container.querySelectorAll('.addr-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(btn.dataset.addr);
+          } catch {
+            // Clipboard API unavailable — skip silently
+          }
+          btn.innerHTML = CHECK_ICON;
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.innerHTML = COPY_ICON;
+            btn.classList.remove('copied');
+          }, 1800);
+        });
+      });
+    }
+
+    // ── Main ───────────────────────────────────────────────────────────────
+    async function init() {
+      const [colRes, holRes] = await Promise.all([
+        fetch('../data/collection.json'),
+        fetch('../data/holders.json'),
+      ]);
+      const collection = await colRes.json();
+      const holders    = await holRes.json();
+
+      // Updated-at line
+      document.getElementById('watch-updated').textContent =
+        'Holder data as of ' + formatDate(holders.updatedAt);
+
+      // Build line lookup
+      const lineMap = {};
+      collection.lines.forEach(l => { lineMap[l.id] = l; });
+
+      // ── Filters ──────────────────────────────────────────────────────────
+      const filtersEl  = document.getElementById('filters');
+      let activeFilter = 0;   // 0 = All
+
+      const filterDefs = [
+        { label: 'All', line: 0, count: collection.nfts.length },
+        ...collection.lines.map(l => ({
+          label: l.name,
+          line:  l.id,
+          count: collection.nfts.filter(n => n.line === l.id).length,
+        })),
+      ];
+
+      filterDefs.forEach(f => {
+        const btn = document.createElement('button');
+        btn.className = 'filter';
+        btn.setAttribute('aria-pressed', f.line === 0 ? 'true' : 'false');
+        btn.setAttribute('data-line', String(f.line));
+        btn.innerHTML = `${f.label} <span class="ct">${f.count}</span>`;
+        btn.addEventListener('click', () => {
+          activeFilter = f.line;
+          filtersEl.querySelectorAll('.filter').forEach(b =>
+            b.setAttribute('aria-pressed', 'false'));
+          btn.setAttribute('aria-pressed', 'true');
+          renderRows();
+        });
+        filtersEl.appendChild(btn);
+      });
+
+      // ── Render rows ───────────────────────────────────────────────────────
+      const bodyEl = document.getElementById('watch-body');
+      const allNfts = collection.nfts;
+
+      function renderRows() {
+        const visible = activeFilter === 0
+          ? allNfts
+          : allNfts.filter(n => n.line === activeFilter);
+
+        bodyEl.innerHTML = '';
+
+        if (visible.length === 0) {
+          bodyEl.innerHTML = '<div class="watch-loading">No NFTs found.</div>';
+          return;
+        }
+
+        const list = document.createElement('div');
+        list.className = 'watch-list';
+
+        visible.forEach(nft => {
+          // Global sequential number (1-indexed)
+          const num   = String(allNfts.indexOf(nft) + 1).padStart(2, '0');
+          const line  = lineMap[nft.line];
+          const owner = holders.holders[nft.mintAddress]?.owner ?? null;
+
+          // ── Row ──
+          const row = document.createElement('div');
+          row.className = 'watch-row';
+          row.setAttribute('data-line', nft.line);
+
+          // Number
+          const numEl = document.createElement('div');
+          numEl.className = 'watch-num';
+          numEl.textContent = num;
+          numEl.setAttribute('aria-label', `NFT ${num}`);
+
+          // Thumbnail
+          const img = document.createElement('img');
+          img.className = 'watch-thumb';
+          img.src      = '../' + nft.thumb;
+          img.alt      = nft.alt || nft.title;
+          img.loading  = 'lazy';
+          img.width    = 48;
+          img.height   = 48;
+
+          // Info
+          const info = document.createElement('div');
+          info.className = 'watch-info';
+          const name = document.createElement('div');
+          name.className = 'watch-name';
+          name.title = nft.title;
+          name.textContent = nft.title;
+          const series = document.createElement('div');
+          series.className = 'watch-series';
+          series.setAttribute('data-line', nft.line);
+          series.textContent = line ? line.name : '';
+          info.append(name, series);
+
+          // Address blocks
+          const mintBlock   = makeAddrBlock('MINT',    nft.mintAddress, 'token');
+          const walletBlock = owner
+            ? makeAddrBlock('HELD BY', owner, 'account')
+            : makeUnknownBlock('HELD BY');
+
+          row.append(numEl, img, info, mintBlock, walletBlock);
+          list.appendChild(row);
+        });
+
+        bodyEl.appendChild(list);
+        wireCopy(bodyEl);
+      }
+
+      renderRows();
+    }
+
+    init().catch(err => {
+      console.error(err);
+      document.getElementById('watch-body').innerHTML =
+        '<div class="watch-loading" style="color:var(--orange)">Failed to load data — please refresh.</div>';
+      document.getElementById('watch-updated').textContent = 'Could not load data.';
+    });
+  </script>
+</body>
+</html>

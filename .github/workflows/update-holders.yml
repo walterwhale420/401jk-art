@@ -1,0 +1,46 @@
+name: Update NFT holders
+
+# Refreshes data/holders.json with the current on-chain holder of every 401jK
+# NFT. Runs daily; can also be triggered manually from the Actions tab.
+# Committing the updated JSON triggers Vercel to redeploy automatically.
+
+on:
+  schedule:
+    - cron: "17 6 * * *" # daily at 06:17 UTC (off-peak; avoids :00 congestion)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-holders
+  cancel-in-progress: false
+
+jobs:
+  update-holders:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Refresh holders
+        # Optional: set repo secret SOLANA_RPC_URL to use a private RPC instead
+        # of the rate-limited public endpoint.
+        env:
+          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
+        run: node scripts/update-holders.mjs
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- data/holders.json; then
+            echo "No holder changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/holders.json
+          git commit -m "chore: update NFT holders [skip ci]"
+          git push
