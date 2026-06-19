@@ -95,7 +95,6 @@
       display: grid;
       grid-template-columns: 52px 52px 1fr minmax(190px, 220px) minmax(190px, 220px);
       column-gap: 16px;
-      row-gap: 0;
       align-items: center;
       padding: 13px 10px;
       margin-inline: -10px;
@@ -106,7 +105,7 @@
     .watch-row:last-child { border-bottom: 1px solid var(--border-subtle); }
     .watch-row:hover { background: var(--surface); }
 
-    /* NFT number — 2-digit, green, large */
+    /* NFT number */
     .watch-num {
       font-family: var(--font-display);
       font-size: 1.85rem;
@@ -118,17 +117,42 @@
       user-select: none;
     }
 
-    /* Thumbnail */
+    /* Thumbnail — button wrapper for accessibility */
+    .watch-thumb-btn {
+      display: block;
+      padding: 0;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .watch-thumb-btn::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 8px;
+      border: 1.5px solid transparent;
+      transition: border-color 160ms, box-shadow 160ms;
+      pointer-events: none;
+    }
+    .watch-thumb-btn:hover::after {
+      border-color: var(--green);
+      box-shadow: 0 0 14px var(--green-glow);
+    }
+    .watch-thumb-btn:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
     .watch-thumb {
       width: 48px; height: 48px;
       border-radius: 8px;
       object-fit: cover;
       border: 1px solid var(--border);
       display: block;
-      flex-shrink: 0;
+      transition: transform 200ms var(--ease);
     }
+    .watch-thumb-btn:hover .watch-thumb { transform: scale(1.06); }
 
-    /* Title + series label */
+    /* Title + series */
     .watch-info { min-width: 0; }
     .watch-name {
       font-size: 0.875rem;
@@ -150,7 +174,7 @@
     .watch-series[data-line="2"] { color: var(--orange); }
     .watch-series[data-line="3"] { color: var(--purple); }
 
-    /* Address block (mint / held-by) */
+    /* Address block */
     .addr-block { min-width: 0; }
     .addr-label {
       font-family: var(--font-mono);
@@ -190,11 +214,9 @@
     .addr-btn:hover, .addr-ext:hover { color: var(--green); background: var(--green-tint); }
     .addr-btn.copied { color: var(--cyan); }
     .addr-btn svg, .addr-ext svg { width: 13px; height: 13px; display: block; }
-
-    /* Placeholder when holder unknown */
     .addr-val.unknown { color: var(--text-muted); font-style: italic; }
 
-    /* Loading state */
+    /* Loading */
     .watch-loading {
       display: flex; align-items: center; gap: 12px;
       padding: 56px 0;
@@ -224,8 +246,9 @@
     @media (max-width: 540px) {
       .watch-num  { font-size: 1.45rem; }
       .watch-thumb { width: 40px; height: 40px; }
-      .addr-val  { font-size: 0.72rem; }
-      .watch-row { column-gap: 10px; }
+      .watch-thumb-btn { width: 40px; height: 40px; }
+      .addr-val   { font-size: 0.72rem; }
+      .watch-row  { column-gap: 10px; }
     }
   </style>
 </head>
@@ -265,7 +288,7 @@
     <div class="wrap">
       <span class="terminal-badge">// NFT WATCH</span>
       <h1 class="watch-h1">On-chain.<br><span class="green">Every piece.</span></h1>
-      <p class="watch-lead">Every 401jK NFT — its mint address and the wallet currently holding it. Ownership data is read directly from the Solana blockchain and refreshed daily. Click any address to verify on Solscan, or copy it to your clipboard.</p>
+      <p class="watch-lead">Every 401jK NFT — its mint address and the wallet currently holding it. Ownership data is read directly from the Solana blockchain and refreshed daily. Click any thumbnail to see full details, or any address to verify on Solscan.</p>
       <div class="watch-status">
         <span class="dot"></span>
         <span id="watch-updated">Loading…</span>
@@ -307,8 +330,36 @@
     </div>
   </footer>
 
-  <script>
-    // ── Nav scroll + hamburger ──────────────────────────────────────────────
+  <!-- ═══════════════════════════════════════════════════════════ LIGHTBOX -->
+  <!-- Identical HTML to main site — shared styles from assets/styles.css -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-title" aria-hidden="true">
+    <div class="lb-panel" data-accent="green">
+      <button class="lb-close" id="lb-close" aria-label="Close">&times;</button>
+      <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous piece">&#8249;</button>
+      <button class="lb-nav lb-next" id="lb-next" aria-label="Next piece">&#8250;</button>
+      <span class="lb-counter" id="lb-counter"></span>
+      <figure class="lb-figure">
+        <img id="lb-img" src="" alt="">
+      </figure>
+      <div class="lb-meta">
+        <div class="lb-tags">
+          <span class="lb-tag accent" id="lb-tag-line"></span>
+          <span class="lb-tag" id="lb-tag-id"></span>
+        </div>
+        <h2 class="lb-title" id="lb-title"></h2>
+        <div class="lb-artist" id="lb-artist"></div>
+        <p class="lb-desc" id="lb-desc"></p>
+        <div class="lb-foot">
+          <a id="lb-me" class="btn btn-outline btn-sm" role="button">View NFT on MagicEden</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initLightbox, openLightboxFor, setLightboxData } from '../assets/lightbox.js';
+
+    // ── Nav scroll + hamburger ──────────────────────────────────────────
     const navEl = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       navEl.classList.toggle('scrolled', window.scrollY > 8);
@@ -326,7 +377,7 @@
       drawer.classList.remove('open');
     }));
 
-    // ── SVG icons ──────────────────────────────────────────────────────────
+    // ── SVG icons ────────────────────────────────────────────────────────
     const COPY_ICON = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <rect x="5" y="5" width="9" height="9" rx="1.5"/>
       <path d="M3 11H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1"/>
@@ -340,10 +391,8 @@
       <line x1="15" y1="1" x2="7" y2="9"/>
     </svg>`;
 
-    // ── Helpers ────────────────────────────────────────────────────────────
-    function trunc(addr) {
-      return addr.slice(0, 5) + '…' + addr.slice(-5);
-    }
+    // ── Helpers ──────────────────────────────────────────────────────────
+    function trunc(addr) { return addr.slice(0, 5) + '…' + addr.slice(-5); }
 
     function makeAddrBlock(label, addr, solscanPath) {
       const wrap = document.createElement('div');
@@ -385,8 +434,7 @@
       wrap.className = 'addr-block';
       wrap.innerHTML = `
         <div class="addr-label">${label}</div>
-        <div class="addr-row"><span class="addr-val unknown">Unknown</span></div>
-      `;
+        <div class="addr-row"><span class="addr-val unknown">Unknown</span></div>`;
       return wrap;
     }
 
@@ -397,27 +445,21 @@
            + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
     }
 
-    // ── Wire copy buttons ──────────────────────────────────────────────────
     function wireCopy(container) {
       container.querySelectorAll('.addr-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
-          try {
-            await navigator.clipboard.writeText(btn.dataset.addr);
-          } catch {
-            // Clipboard API unavailable — skip silently
-          }
+          try { await navigator.clipboard.writeText(btn.dataset.addr); } catch { /* skip */ }
           btn.innerHTML = CHECK_ICON;
           btn.classList.add('copied');
-          setTimeout(() => {
-            btn.innerHTML = COPY_ICON;
-            btn.classList.remove('copied');
-          }, 1800);
+          setTimeout(() => { btn.innerHTML = COPY_ICON; btn.classList.remove('copied'); }, 1800);
         });
       });
     }
 
-    // ── Main ───────────────────────────────────────────────────────────────
+    // ── Main ─────────────────────────────────────────────────────────────
     async function init() {
+      initLightbox();
+
       const [colRes, holRes] = await Promise.all([
         fetch('../data/collection.json'),
         fetch('../data/holders.json'),
@@ -425,23 +467,29 @@
       const collection = await colRes.json();
       const holders    = await holRes.json();
 
-      // Updated-at line
+      // Prefix all image paths so they resolve from this subdirectory.
+      // The lightbox reads nft.view directly, so this keeps both in sync.
+      collection.nfts.forEach(n => {
+        n.thumb = '../' + n.thumb;
+        n.view  = '../' + n.view;
+      });
+
+      // Give the lightbox the line metadata it needs for accents + names
+      const lineById = new Map(collection.lines.map(l => [l.id, l]));
+      setLightboxData(lineById);
+
+      // Updated-at
       document.getElementById('watch-updated').textContent =
         'Holder data as of ' + formatDate(holders.updatedAt);
 
-      // Build line lookup
-      const lineMap = {};
-      collection.lines.forEach(l => { lineMap[l.id] = l; });
-
-      // ── Filters ──────────────────────────────────────────────────────────
+      // Filters
       const filtersEl  = document.getElementById('filters');
-      let activeFilter = 0;   // 0 = All
+      let activeFilter = 0;
 
       const filterDefs = [
         { label: 'All', line: 0, count: collection.nfts.length },
         ...collection.lines.map(l => ({
-          label: l.name,
-          line:  l.id,
+          label: l.name, line: l.id,
           count: collection.nfts.filter(n => n.line === l.id).length,
         })),
       ];
@@ -454,26 +502,24 @@
         btn.innerHTML = `${f.label} <span class="ct">${f.count}</span>`;
         btn.addEventListener('click', () => {
           activeFilter = f.line;
-          filtersEl.querySelectorAll('.filter').forEach(b =>
-            b.setAttribute('aria-pressed', 'false'));
+          filtersEl.querySelectorAll('.filter').forEach(b => b.setAttribute('aria-pressed', 'false'));
           btn.setAttribute('aria-pressed', 'true');
           renderRows();
         });
         filtersEl.appendChild(btn);
       });
 
-      // ── Render rows ───────────────────────────────────────────────────────
-      const bodyEl = document.getElementById('watch-body');
+      const bodyEl  = document.getElementById('watch-body');
       const allNfts = collection.nfts;
 
       function renderRows() {
+        // The set the user is currently browsing — also used for lightbox prev/next
         const visible = activeFilter === 0
-          ? allNfts
+          ? allNfts.slice()
           : allNfts.filter(n => n.line === activeFilter);
 
         bodyEl.innerHTML = '';
-
-        if (visible.length === 0) {
+        if (!visible.length) {
           bodyEl.innerHTML = '<div class="watch-loading">No NFTs found.</div>';
           return;
         }
@@ -482,12 +528,10 @@
         list.className = 'watch-list';
 
         visible.forEach(nft => {
-          // Global sequential number (1-indexed)
-          const num   = String(allNfts.indexOf(nft) + 1).padStart(2, '0');
-          const line  = lineMap[nft.line];
-          const owner = holders.holders[nft.mintAddress]?.owner ?? null;
+          const num     = String(allNfts.indexOf(nft) + 1).padStart(2, '0');
+          const line    = lineById.get(nft.line);
+          const owner   = holders.holders[nft.mintAddress]?.owner ?? null;
 
-          // ── Row ──
           const row = document.createElement('div');
           row.className = 'watch-row';
           row.setAttribute('data-line', nft.line);
@@ -498,14 +542,20 @@
           numEl.textContent = num;
           numEl.setAttribute('aria-label', `NFT ${num}`);
 
-          // Thumbnail
+          // Thumbnail button — opens the shared lightbox
+          const thumbBtn = document.createElement('button');
+          thumbBtn.className = 'watch-thumb-btn';
+          thumbBtn.setAttribute('aria-label', `View details for ${nft.title}`);
+          thumbBtn.addEventListener('click', () => openLightboxFor(nft.id, visible));
+
           const img = document.createElement('img');
           img.className = 'watch-thumb';
-          img.src      = '../' + nft.thumb;
-          img.alt      = nft.alt || nft.title;
-          img.loading  = 'lazy';
-          img.width    = 48;
-          img.height   = 48;
+          img.src     = nft.thumb;   // already prefixed with ../
+          img.alt     = nft.alt || nft.title;
+          img.loading = 'lazy';
+          img.width   = 48;
+          img.height  = 48;
+          thumbBtn.appendChild(img);
 
           // Info
           const info = document.createElement('div');
@@ -526,7 +576,7 @@
             ? makeAddrBlock('HELD BY', owner, 'account')
             : makeUnknownBlock('HELD BY');
 
-          row.append(numEl, img, info, mintBlock, walletBlock);
+          row.append(numEl, thumbBtn, info, mintBlock, walletBlock);
           list.appendChild(row);
         });
 
