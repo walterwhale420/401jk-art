@@ -1,8 +1,9 @@
-name: Update NFT holders
+name: Update NFT holders and trades
 
-# Refreshes data/holders.json with the current on-chain holder of every 401jK
-# NFT. Runs daily; can also be triggered manually from the Actions tab.
-# Committing the updated JSON triggers Vercel to redeploy automatically.
+# Refreshes data/holders.json (current on-chain holder) and data/trades.json
+# (last Magic Eden secondary sale) for every 401jK NFT. Runs daily; can also be
+# triggered manually from the Actions tab. Committing the updated JSON triggers
+# Vercel to redeploy automatically.
 
 on:
   schedule:
@@ -33,14 +34,20 @@ jobs:
           SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
         run: node scripts/update-holders.mjs
 
+      - name: Refresh trades
+        # Last secondary sale per NFT from Magic Eden's public API (no key).
+        # Non-zero exit on transient ME errors must not fail the holder commit.
+        continue-on-error: true
+        run: node scripts/update-trades.mjs
+
       - name: Commit if changed
         run: |
-          if git diff --quiet -- data/holders.json; then
-            echo "No holder changes."
+          if git diff --quiet -- data/holders.json data/trades.json; then
+            echo "No holder or trade changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/holders.json
-          git commit -m "chore: update NFT holders [skip ci]"
+          git add data/holders.json data/trades.json
+          git commit -m "chore: update NFT holders and trades [skip ci]"
           git push
