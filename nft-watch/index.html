@@ -583,7 +583,41 @@
 
         bodyEl.appendChild(list);
         wireCopy(bodyEl);
+        calibrateColumns();
       }
+
+      function calibrateColumns() {
+        const rows = bodyEl.querySelectorAll('.watch-row');
+        if (!rows.length) return;
+
+        // On mobile the grid is a different 3-column layout — clear any
+        // inline override and let the media query handle it.
+        if (window.innerWidth <= 860) {
+          rows.forEach(r => { r.style.gridTemplateColumns = ''; });
+          return;
+        }
+
+        // Measure the rendered widths of each column type across all rows,
+        // then apply a single consistent value so every row aligns.
+        let maxInfoW = 0;
+        let maxAddrW = 0;
+        rows.forEach(row => {
+          const info  = row.querySelector('.watch-info');
+          const addrs = row.querySelectorAll('.addr-block');
+          if (info) maxInfoW = Math.max(maxInfoW, info.offsetWidth);
+          addrs.forEach(a => { maxAddrW = Math.max(maxAddrW, a.offsetWidth); });
+        });
+        if (!maxInfoW) return;
+
+        const cols = `52px 52px ${maxInfoW}px ${maxAddrW}px ${maxAddrW}px`;
+        rows.forEach(r => { r.style.gridTemplateColumns = cols; });
+      }
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(calibrateColumns, 120);
+      }, { passive: true });
 
       renderRows();
     }
