@@ -94,7 +94,7 @@
 
     .watch-row {
       display: grid;
-      grid-template-columns: 52px 52px max-content max-content max-content;
+      grid-template-columns: 52px 52px max-content max-content max-content max-content max-content;
       column-gap: 16px;
       align-items: center;
       padding: 13px 10px;
@@ -217,6 +217,72 @@
     .addr-btn svg, .addr-ext svg { width: 13px; height: 13px; display: block; }
     .addr-val.unknown { color: var(--text-muted); font-style: italic; }
 
+    /* Last sold + last price cells */
+    .meta-block { min-width: 0; }
+    .meta-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+    .meta-rel {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .meta-abs {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      white-space: nowrap;
+    }
+    .meta-none { font-size: 0.82rem; color: var(--text-muted); font-style: italic; white-space: nowrap; }
+    .price-val {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--green);
+      white-space: nowrap;
+    }
+    .price-val.none { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 500; color: var(--text-muted); }
+
+    /* Sortable header row (desktop only) */
+    .watch-head {
+      display: none;
+      grid-template-columns: 52px 52px max-content max-content max-content max-content max-content;
+      column-gap: 16px;
+      align-items: end;
+      padding: 0 10px 12px;
+      margin-inline: -10px;
+    }
+    .col-h {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--text-muted);
+    }
+    button.col-h {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: none; border: none; padding: 0;
+      cursor: pointer;
+      transition: color 130ms;
+    }
+    button.col-h:hover { color: var(--text-body); }
+    button.col-h[aria-sort="ascending"],
+    button.col-h[aria-sort="descending"] { color: var(--green); }
+    .col-h .sort-arrow { font-size: 0.7rem; opacity: 0.45; }
+    button.col-h[aria-sort="ascending"]  .sort-arrow,
+    button.col-h[aria-sort="descending"] .sort-arrow { opacity: 1; }
+    .col-h.num-h { justify-self: end; }
+    .col-h.price-h { /* aligns under price values */ }
+
     /* Loading */
     .watch-loading {
       display: flex; align-items: center; gap: 12px;
@@ -235,14 +301,21 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ── RESPONSIVE ── */
+    /* Desktop: show the sortable header, drop redundant per-row labels. */
+    @media (min-width: 861px) {
+      .watch-head { display: grid; }
+      .watch-row .addr-label,
+      .watch-row .meta-label { display: none; }
+    }
     @media (max-width: 860px) {
       .watch-row {
-        grid-template-columns: 44px 44px 1fr;
+        grid-template-columns: 44px 44px 1fr !important;
         grid-template-rows: auto auto;
         row-gap: 10px;
         padding: 14px 10px;
       }
-      .addr-block { grid-column: 1 / -1; }
+      .addr-block,
+      .meta-block { grid-column: 1 / -1; }
     }
     @media (max-width: 540px) {
       .watch-num  { font-size: 1.45rem; }
@@ -446,6 +519,54 @@
            + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
     }
 
+    // Relative label, e.g. "3d ago" / "5h ago" / "2mo ago".
+    function relTime(iso) {
+      const s = Math.max(0, Math.floor((Date.now() - Date.parse(iso)) / 1000));
+      if (s < 60) return 'just now';
+      const m = Math.floor(s / 60);   if (m < 60) return m + 'm ago';
+      const h = Math.floor(m / 60);   if (h < 24) return h + 'h ago';
+      const d = Math.floor(h / 24);   if (d < 30) return d + 'd ago';
+      const mo = Math.floor(d / 30);  if (mo < 12) return mo + 'mo ago';
+      return Math.floor(mo / 12) + 'y ago';
+    }
+
+    // US notation, MMM: "Jun 20, 2026".
+    function formatDateUS(iso) {
+      return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    // "2 SOL", "1.5 SOL", "0.401 SOL" — trim trailing zeros.
+    function formatPrice(sol) {
+      return parseFloat(Number(sol).toFixed(4)) + ' SOL';
+    }
+
+    // LAST SOLD cell — relative + absolute date, or "No trades yet".
+    function makeSoldBlock(trade) {
+      const wrap = document.createElement('div');
+      wrap.className = 'meta-block';
+      if (trade) {
+        wrap.innerHTML = `
+          <div class="meta-label">LAST SOLD</div>
+          <div class="meta-rel">${relTime(trade.date)}</div>
+          <div class="meta-abs">${formatDateUS(trade.date)}</div>`;
+      } else {
+        wrap.innerHTML = `
+          <div class="meta-label">LAST SOLD</div>
+          <div class="meta-none">No trades yet</div>`;
+      }
+      return wrap;
+    }
+
+    // LAST PRICE cell — "2 SOL", or "--".
+    function makePriceBlock(trade) {
+      const wrap = document.createElement('div');
+      wrap.className = 'meta-block';
+      wrap.innerHTML = trade
+        ? `<div class="meta-label">LAST PRICE</div><div class="price-val">${formatPrice(trade.priceSol)}</div>`
+        : `<div class="meta-label">LAST PRICE</div><div class="price-val none">--</div>`;
+      return wrap;
+    }
+
     function wireCopy(container) {
       container.querySelectorAll('.addr-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
@@ -461,12 +582,15 @@
     async function init() {
       initLightbox();
 
-      const [colRes, holRes] = await Promise.all([
+      const [colRes, holRes, trdRes] = await Promise.all([
         fetch('../data/collection.json'),
         fetch('../data/holders.json'),
+        fetch('../data/trades.json').catch(() => null),
       ]);
       const collection = await colRes.json();
       const holders    = await holRes.json();
+      // trades.json may be absent/unreachable — degrade to "no trades".
+      const trades = (trdRes && trdRes.ok ? await trdRes.json().catch(() => null) : null)?.trades || {};
 
       // Prefix all image paths so they resolve from this subdirectory.
       // The lightbox reads nft.view directly, so this keeps both in sync.
@@ -513,11 +637,92 @@
       const bodyEl  = document.getElementById('watch-body');
       const allNfts = collection.nfts;
 
+      // Stable 1-based number per NFT (collection order) — for display + sort.
+      const numberOf = new Map(allNfts.map((n, i) => [n, i + 1]));
+      const tradeOf  = (n) => trades[n.mintAddress] || null;
+
+      // Sort state — default: NFT number ascending.
+      let sortKey = 'num';   // 'num' | 'sold' | 'price'
+      let sortDir = 'asc';   // 'asc' | 'desc'
+
+      function compareNfts(a, b) {
+        const an = numberOf.get(a), bn = numberOf.get(b);
+        const dir = sortDir === 'asc' ? 1 : -1;
+
+        if (sortKey === 'num') return (an - bn) * dir;
+
+        // sold / price: untraded pieces always sink to the bottom, ordered
+        // among themselves by NFT number ascending — regardless of direction.
+        const at = tradeOf(a), bt = tradeOf(b);
+        if (!at && !bt) return an - bn;
+        if (!at) return 1;
+        if (!bt) return -1;
+
+        if (sortKey === 'sold') {
+          const da = Date.parse(at.date), db = Date.parse(bt.date);
+          if (da !== db) return (da - db) * dir;
+          if (at.priceSol !== bt.priceSol) return bt.priceSol - at.priceSol; // tie → highest price first
+          return an - bn;                                                    // then number ascending
+        }
+        // price
+        if (at.priceSol !== bt.priceSol) return (at.priceSol - bt.priceSol) * dir;
+        const da = Date.parse(at.date), db = Date.parse(bt.date);
+        if (da !== db) return db - da;   // tie → most recent first
+        return an - bn;                  // then number ascending
+      }
+
+      function onSort(key) {
+        if (sortKey === key) {
+          sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortKey = key;
+          sortDir = key === 'num' ? 'asc' : 'desc'; // dates/prices default high→low
+        }
+        renderRows();
+      }
+
+      function buildHeader() {
+        const head = document.createElement('div');
+        head.className = 'watch-head';
+        const arrow = (k) => sortKey === k
+          ? `<span class="sort-arrow">${sortDir === 'asc' ? '▲' : '▼'}</span>`
+          : `<span class="sort-arrow">↕</span>`;
+        const ariaSort = (k) => sortKey === k ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none';
+
+        const sortBtn = (key, label, cls) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'col-h' + (cls ? ' ' + cls : '');
+          b.innerHTML = `${label}${arrow(key)}`;
+          b.setAttribute('aria-sort', ariaSort(key));
+          b.addEventListener('click', () => onSort(key));
+          return b;
+        };
+        const staticH = (label) => {
+          const s = document.createElement('span');
+          s.className = 'col-h';
+          s.textContent = label;
+          return s;
+        };
+
+        head.append(
+          sortBtn('num', '#', 'num-h'),
+          document.createElement('span'),  // thumbnail column (empty)
+          staticH('NFT'),
+          staticH('MINT'),
+          staticH('HELD BY'),
+          sortBtn('sold', 'LAST SOLD'),
+          sortBtn('price', 'LAST PRICE', 'price-h'),
+        );
+        return head;
+      }
+
       function renderRows() {
-        // The set the user is currently browsing — also used for lightbox prev/next
-        const visible = activeFilter === 0
+        // Current filter view, sorted — also drives lightbox prev/next order.
+        const visible = (activeFilter === 0
           ? allNfts.slice()
-          : allNfts.filter(n => n.line === activeFilter);
+          : allNfts.filter(n => n.line === activeFilter)
+        ).sort(compareNfts);
 
         bodyEl.innerHTML = '';
         if (!visible.length) {
@@ -525,13 +730,16 @@
           return;
         }
 
+        bodyEl.appendChild(buildHeader());
+
         const list = document.createElement('div');
         list.className = 'watch-list';
 
         visible.forEach(nft => {
-          const num     = String(allNfts.indexOf(nft) + 1).padStart(2, '0');
+          const num     = String(numberOf.get(nft)).padStart(2, '0');
           const line    = lineById.get(nft.line);
           const owner   = holders.holders[nft.mintAddress]?.owner ?? null;
+          const trade   = tradeOf(nft);
 
           const row = document.createElement('div');
           row.className = 'watch-row';
@@ -571,13 +779,15 @@
           series.textContent = line ? line.name : '';
           info.append(name, series);
 
-          // Address blocks
+          // Address blocks + trade cells (order must match the header)
           const mintBlock   = makeAddrBlock('MINT',    nft.mintAddress, 'token');
           const walletBlock = owner
             ? makeAddrBlock('HELD BY', owner, 'account')
             : makeUnknownBlock('HELD BY');
+          const soldBlock  = makeSoldBlock(trade);
+          const priceBlock = makePriceBlock(trade);
 
-          row.append(numEl, thumbBtn, info, mintBlock, walletBlock);
+          row.append(numEl, thumbBtn, info, mintBlock, walletBlock, soldBlock, priceBlock);
           list.appendChild(row);
         });
 
@@ -586,31 +796,40 @@
         calibrateColumns();
       }
 
+      // One injected rule keeps every row AND the header column-aligned.
+      const colStyle = document.createElement('style');
+      document.head.appendChild(colStyle);
+
       function calibrateColumns() {
+        // Mobile uses a different stacked grid (media query) — no override.
+        if (window.innerWidth <= 860) { colStyle.textContent = ''; return; }
+
+        // Reset to natural max-content widths before measuring, so re-sorts /
+        // filter changes don't measure a previously-forced (stale) width.
+        colStyle.textContent = '';
+
         const rows = bodyEl.querySelectorAll('.watch-row');
+        const head = bodyEl.querySelector('.watch-head');
         if (!rows.length) return;
 
-        // On mobile the grid is a different 3-column layout — clear any
-        // inline override and let the media query handle it.
-        if (window.innerWidth <= 860) {
-          rows.forEach(r => { r.style.gridTemplateColumns = ''; });
-          return;
-        }
+        // Per-column max content width across every row + the header labels.
+        // Columns: 0 num, 1 thumb (both fixed 52px), 2 NFT, 3 mint, 4 held, 5 sold, 6 price.
+        const w = [52, 52, 0, 0, 0, 0, 0];
+        const measure = (el) => {
+          for (let c = 2; c < 7; c++) {
+            const ch = el.children[c];
+            if (ch) w[c] = Math.max(w[c], ch.offsetWidth);
+          }
+        };
+        rows.forEach(measure);
+        if (head) measure(head);
+        if (!w[2]) return;
 
-        // Measure the rendered widths of each column type across all rows,
-        // then apply a single consistent value so every row aligns.
-        let maxInfoW = 0;
-        let maxAddrW = 0;
-        rows.forEach(row => {
-          const info  = row.querySelector('.watch-info');
-          const addrs = row.querySelectorAll('.addr-block');
-          if (info) maxInfoW = Math.max(maxInfoW, info.offsetWidth);
-          addrs.forEach(a => { maxAddrW = Math.max(maxAddrW, a.offsetWidth); });
-        });
-        if (!maxInfoW) return;
-
-        const cols = `52px 52px ${maxInfoW}px ${maxAddrW}px ${maxAddrW}px`;
-        rows.forEach(r => { r.style.gridTemplateColumns = cols; });
+        // MINT + HELD BY share one width (identical structure → same column).
+        const addr = Math.max(w[3], w[4]);
+        const cols = `52px 52px ${w[2]}px ${addr}px ${addr}px ${w[5]}px ${w[6]}px`;
+        colStyle.textContent =
+          `.watch-list .watch-row, #watch-body .watch-head { grid-template-columns: ${cols}; }`;
       }
 
       let resizeTimer;
