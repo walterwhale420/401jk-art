@@ -2,7 +2,7 @@
    401jK NFT Collection — app.js  (ES module; lightbox logic in lightbox.js)
    ========================================================================= */
 import {
-  isLive, wireMagicEden,
+  isLive, wireTensor,
   initLightbox, openLightboxFor, setLightboxData,
 } from './lightbox.js';
 
@@ -69,10 +69,10 @@ function renderLines() {
       <p class="line-desc">${line.description}</p>
       <div class="line-actions">
         <button class="btn-line act-browse" type="button">Browse series <span class="arr">&rarr;</span></button>
-        <a class="btn-line act-me" role="button">View on MagicEden</a>
+        <a class="btn-line act-me" role="button">View on Tensor</a>
       </div>`;
     left.querySelector('.act-browse').addEventListener('click', () => setFilter(String(line.id), true));
-    wireMagicEden(left.querySelector('.act-me'), line.magicEdenUrl, 'View on MagicEden');
+    wireTensor(left.querySelector('.act-me'), line.tensorUrl, 'View on Tensor');
 
     const right = document.createElement('div');
     right.className = 'line-strip';
@@ -339,7 +339,7 @@ async function init() {
     setLightboxData(state.lineById);
 
     renderReadout(collection);
-    wireMagicEden($('#hero-me'), collection.collection.magicEdenUrl, 'View on MagicEden');
+    wireTensor($('#hero-me'), collection.collection.tensorUrl, 'View on Tensor');
     $('#hero-intro').textContent = collection.collection.intro;
     renderLines();
     renderFilters();

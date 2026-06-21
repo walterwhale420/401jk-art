@@ -9,7 +9,7 @@ export const PLACEHOLDER = 'PLACEHOLDER';
 export const isLive = (url) =>
   typeof url === 'string' && url && url !== PLACEHOLDER && /^https?:\/\//i.test(url);
 
-export function wireMagicEden(el, url, baseLabel) {
+export function wireTensor(el, url, baseLabel) {
   if (isLive(url)) {
     el.setAttribute('href', url);
     el.setAttribute('target', '_blank');
@@ -19,7 +19,7 @@ export function wireMagicEden(el, url, baseLabel) {
   } else {
     el.setAttribute('aria-disabled', 'true');
     el.setAttribute('href', '#');
-    el.setAttribute('title', 'MagicEden listing coming soon');
+    el.setAttribute('title', 'Tensor listing coming soon');
     el.innerHTML = `${baseLabel} <span style="opacity:.6">&middot; soon</span>`;
     el.addEventListener('click', (e) => e.preventDefault());
   }
@@ -107,7 +107,7 @@ function paintLightbox() {
   lb.desc.textContent    = n.description;
   lb.tagLine.textContent = `Series ${n.line} · ${lineName(n.line)}`;
   lb.tagId.textContent   = `#${n.id}`;
-  wireMagicEden(lb.me, n.magicEdenUrl, 'View NFT on MagicEden');
+  wireTensor(lb.me, n.tensorUrl, 'View NFT on Tensor');
   lb.counter.textContent = `${state.lbIndex + 1} / ${state.visible.length}`;
 }
 
