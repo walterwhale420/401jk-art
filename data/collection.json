@@ -1,11 +1,11 @@
 {
-  "_readme": "EDITING GUIDE — (1) To activate MagicEden buttons, replace every 'PLACEHOLDER' magicEdenUrl with the real URL (per line, and collectionMagicEdenUrl for the global button). Until then the buttons render as a disabled 'soon' state. (2) To add a future mint, append NFT objects with the correct 'line' and a new 'mint' number, then run scripts/build-images.py to generate their webp images. (3) Titles/descriptions are public-facing copy; 'alt' is accessibility text describing the actual image.",
+  "_readme": "EDITING GUIDE — (1) To activate Tensor buttons, replace every 'PLACEHOLDER' tensorUrl with the real URL (per line, and collection-level tensorUrl for the global button). Individual NFT URLs follow the pattern: https://www.tensor.trade/item/<mintAddress>. Until then the buttons render as a disabled 'soon' state. (2) To add a future mint, append NFT objects with the correct 'line' and a new 'mint' number, then run scripts/build-images.py to generate their webp images. (3) Titles/descriptions are public-facing copy; 'alt' is accessibility text describing the actual image.",
   "collection": {
     "name": "401jK NFT Collection",
     "chain": "Solana",
     "wave": "Wave 1",
     "intro": "401jK explores the cracks in the system we were told would take care of us. Through satire, history, rebellion, and defiance, each series captures a different way people wake up, opt out, and retire on their own terms. As the collection grows, so does the story, because freedom isn't one path, one look, or one finish line.",
-    "magicEdenUrl": "https://magiceden.io/marketplace/401jk"
+    "tensorUrl": "PLACEHOLDER"
   },
   "lines": [
     {
@@ -16,7 +16,7 @@
       "accent": "green",
       "aesthetic": "Pop art · bold colour · satirical portraits",
       "description": "A pop-art rebellion remixing history's icons with 401jK's satirical punchline. Each portrait transforms a cultural legend into a co-conspirator exposing the absurdity of the retirement system. Bright, bold, and brutally honest, because even the greats knew the rigged system is a joke played on us.",
-      "magicEdenUrl": "https://magiceden.io/marketplace/401jk"
+      "tensorUrl": "PLACEHOLDER"
     },
     {
       "id": 2,
@@ -26,7 +26,7 @@
       "accent": "orange",
       "aesthetic": "Classical art · dramatic historical scenes recontextualised",
       "description": "A dramatic fusion of classical art and modern financial revolt. Reframes humanity's defining uprisings through 401jK's lens. Each piece exposes how little has changed: elites still write the rules, and the rest of us are expected to applaud. This is rebellion retold.",
-      "magicEdenUrl": "https://magiceden.io/marketplace/401jk"
+      "tensorUrl": "PLACEHOLDER"
     },
     {
       "id": 3,
@@ -36,7 +36,7 @@
       "accent": "purple",
       "aesthetic": "Tarot symbolism · defiant Jester archetypes",
       "description": "A series that reimagines tarot as a 401jK journey from chaos to clarity. Through defiant Jester cards, explores nonconformity, corruption, collapse, transformation, and the choice to take back your own path. Symbolic, satirical, and surprisingly on point.",
-      "magicEdenUrl": "https://magiceden.io/marketplace/401jk"
+      "tensorUrl": "PLACEHOLDER"
     }
   ],
   "nfts": [
@@ -51,7 +51,7 @@
       "thumb": "img/thumb/0101.webp",
       "view": "img/view/0101.webp",
       "mintAddress": "2QxZS87i7f8Fk7KxJzvaEjZKXnu7zoD9LdSh7QNG1eiP",
-      "magicEdenUrl": "https://magiceden.io/item-details/2QxZS87i7f8Fk7KxJzvaEjZKXnu7zoD9LdSh7QNG1eiP"
+      "tensorUrl": "https://www.tensor.trade/item/2QxZS87i7f8Fk7KxJzvaEjZKXnu7zoD9LdSh7QNG1eiP"
     },
     {
       "id": "0002-0102",
@@ -64,7 +64,7 @@
       "thumb": "img/thumb/0102.webp",
       "view": "img/view/0102.webp",
       "mintAddress": "5UZEA2vfz8Q8JKedPBFQPmrKBpWaboiGTyktwFdoBrCJ",
-      "magicEdenUrl": "https://magiceden.io/item-details/5UZEA2vfz8Q8JKedPBFQPmrKBpWaboiGTyktwFdoBrCJ"
+      "tensorUrl": "https://www.tensor.trade/item/5UZEA2vfz8Q8JKedPBFQPmrKBpWaboiGTyktwFdoBrCJ"
     },
     {
       "id": "0003-0103",
@@ -77,7 +77,7 @@
       "thumb": "img/thumb/0103.webp",
       "view": "img/view/0103.webp",
       "mintAddress": "Far2xGkuoqGYzbyejJKVwM6EXbAxSoUzcgZMyhm1k5tG",
-      "magicEdenUrl": "https://magiceden.io/item-details/Far2xGkuoqGYzbyejJKVwM6EXbAxSoUzcgZMyhm1k5tG"
+      "tensorUrl": "https://www.tensor.trade/item/Far2xGkuoqGYzbyejJKVwM6EXbAxSoUzcgZMyhm1k5tG"
     },
     {
       "id": "0004-0104",
@@ -90,7 +90,7 @@
       "thumb": "img/thumb/0104.webp",
       "view": "img/view/0104.webp",
       "mintAddress": "CKAXzUASEx6FZmeZfSLNhCBFymFERDqqCVUaUqAF6mvK",
-      "magicEdenUrl": "https://magiceden.io/item-details/CKAXzUASEx6FZmeZfSLNhCBFymFERDqqCVUaUqAF6mvK"
+      "tensorUrl": "https://www.tensor.trade/item/CKAXzUASEx6FZmeZfSLNhCBFymFERDqqCVUaUqAF6mvK"
     },
     {
       "id": "0005-0105",
@@ -103,7 +103,7 @@
       "thumb": "img/thumb/0105.webp",
       "view": "img/view/0105.webp",
       "mintAddress": "89Z83kw91ZQGP2EoUGJJFpd8YEjhCT5r6PF1sYiCyxRZ",
-      "magicEdenUrl": "https://magiceden.io/item-details/89Z83kw91ZQGP2EoUGJJFpd8YEjhCT5r6PF1sYiCyxRZ"
+      "tensorUrl": "https://www.tensor.trade/item/89Z83kw91ZQGP2EoUGJJFpd8YEjhCT5r6PF1sYiCyxRZ"
     },
     {
       "id": "0006-0106",
@@ -116,7 +116,7 @@
       "thumb": "img/thumb/0106.webp",
       "view": "img/view/0106.webp",
       "mintAddress": "HG4t3vTkUqTgNUvxE4m5zYHPRwofxk6cDLwyyZ6ZGjjH",
-      "magicEdenUrl": "https://magiceden.io/item-details/HG4t3vTkUqTgNUvxE4m5zYHPRwofxk6cDLwyyZ6ZGjjH"
+      "tensorUrl": "https://www.tensor.trade/item/HG4t3vTkUqTgNUvxE4m5zYHPRwofxk6cDLwyyZ6ZGjjH"
     },
     {
       "id": "0007-0107",
@@ -129,7 +129,7 @@
       "thumb": "img/thumb/0107.webp",
       "view": "img/view/0107.webp",
       "mintAddress": "HLd7J9CcCamxNferphYHSJbivWtxbvWZpSiJ97h2Wbn4",
-      "magicEdenUrl": "https://magiceden.io/item-details/HLd7J9CcCamxNferphYHSJbivWtxbvWZpSiJ97h2Wbn4"
+      "tensorUrl": "https://www.tensor.trade/item/HLd7J9CcCamxNferphYHSJbivWtxbvWZpSiJ97h2Wbn4"
     },
     {
       "id": "0008-0108",
@@ -142,7 +142,7 @@
       "thumb": "img/thumb/0108.webp",
       "view": "img/view/0108.webp",
       "mintAddress": "FeKhuVCvErCASQuQZ99FDUcPnvPzNEzsLJDW9CTnS61P",
-      "magicEdenUrl": "https://magiceden.io/item-details/FeKhuVCvErCASQuQZ99FDUcPnvPzNEzsLJDW9CTnS61P"
+      "tensorUrl": "https://www.tensor.trade/item/FeKhuVCvErCASQuQZ99FDUcPnvPzNEzsLJDW9CTnS61P"
     },
     {
       "id": "0009-0109",
@@ -155,7 +155,7 @@
       "thumb": "img/thumb/0109.webp",
       "view": "img/view/0109.webp",
       "mintAddress": "EYDyRmWq2RDuy46HzpGHXfAWFXUGVLTWvKttR13f63iC",
-      "magicEdenUrl": "https://magiceden.io/item-details/EYDyRmWq2RDuy46HzpGHXfAWFXUGVLTWvKttR13f63iC"
+      "tensorUrl": "https://www.tensor.trade/item/EYDyRmWq2RDuy46HzpGHXfAWFXUGVLTWvKttR13f63iC"
     },
     {
       "id": "0010-0110",
@@ -168,7 +168,7 @@
       "thumb": "img/thumb/0110.webp",
       "view": "img/view/0110.webp",
       "mintAddress": "6xtG3oUCyLtEDLGABo4QxKFqHeCwYJHJggEf2Jp7G5wt",
-      "magicEdenUrl": "https://magiceden.io/item-details/6xtG3oUCyLtEDLGABo4QxKFqHeCwYJHJggEf2Jp7G5wt"
+      "tensorUrl": "https://www.tensor.trade/item/6xtG3oUCyLtEDLGABo4QxKFqHeCwYJHJggEf2Jp7G5wt"
     },
     {
       "id": "0011-0201",
@@ -181,7 +181,7 @@
       "thumb": "img/thumb/0201.webp",
       "view": "img/view/0201.webp",
       "mintAddress": "AF54CnC6RBE5jrYXunUCNsoiby76e3RdFSV6JRVy9n2Y",
-      "magicEdenUrl": "https://magiceden.io/item-details/AF54CnC6RBE5jrYXunUCNsoiby76e3RdFSV6JRVy9n2Y"
+      "tensorUrl": "https://www.tensor.trade/item/AF54CnC6RBE5jrYXunUCNsoiby76e3RdFSV6JRVy9n2Y"
     },
     {
       "id": "0012-0202",
@@ -194,7 +194,7 @@
       "thumb": "img/thumb/0202.webp",
       "view": "img/view/0202.webp",
       "mintAddress": "3gzA9iAqzwaQV7E9sf7g8wn6h5DySfhcsaLXBS96nxTu",
-      "magicEdenUrl": "https://magiceden.io/item-details/3gzA9iAqzwaQV7E9sf7g8wn6h5DySfhcsaLXBS96nxTu"
+      "tensorUrl": "https://www.tensor.trade/item/3gzA9iAqzwaQV7E9sf7g8wn6h5DySfhcsaLXBS96nxTu"
     },
     {
       "id": "0013-0203",
@@ -207,7 +207,7 @@
       "thumb": "img/thumb/0203.webp",
       "view": "img/view/0203.webp",
       "mintAddress": "44WE6wh4nQEQPFSvcCHD7e6ipcjnCceNZuQfV3GJP2p6",
-      "magicEdenUrl": "https://magiceden.io/item-details/44WE6wh4nQEQPFSvcCHD7e6ipcjnCceNZuQfV3GJP2p6"
+      "tensorUrl": "https://www.tensor.trade/item/44WE6wh4nQEQPFSvcCHD7e6ipcjnCceNZuQfV3GJP2p6"
     },
     {
       "id": "0014-0204",
@@ -220,7 +220,7 @@
       "thumb": "img/thumb/0204.webp",
       "view": "img/view/0204.webp",
       "mintAddress": "975D89bZsA6qqsezU1E71u8K7o9HrJtpBfN8SdCmrccZ",
-      "magicEdenUrl": "https://magiceden.io/item-details/975D89bZsA6qqsezU1E71u8K7o9HrJtpBfN8SdCmrccZ"
+      "tensorUrl": "https://www.tensor.trade/item/975D89bZsA6qqsezU1E71u8K7o9HrJtpBfN8SdCmrccZ"
     },
     {
       "id": "0015-0205",
@@ -233,7 +233,7 @@
       "thumb": "img/thumb/0205.webp",
       "view": "img/view/0205.webp",
       "mintAddress": "2b8yrxvDFAYvkM7pj5T4NtWd1XqcZpCL6bLyZ6wxqFey",
-      "magicEdenUrl": "https://magiceden.io/item-details/2b8yrxvDFAYvkM7pj5T4NtWd1XqcZpCL6bLyZ6wxqFey"
+      "tensorUrl": "https://www.tensor.trade/item/2b8yrxvDFAYvkM7pj5T4NtWd1XqcZpCL6bLyZ6wxqFey"
     },
     {
       "id": "0016-0206",
@@ -246,7 +246,7 @@
       "thumb": "img/thumb/0206.webp",
       "view": "img/view/0206.webp",
       "mintAddress": "Ayv6pBkkL99nPak1m5pzdVoG2CYrC8Ed6peC4aj3dpYm",
-      "magicEdenUrl": "https://magiceden.io/item-details/Ayv6pBkkL99nPak1m5pzdVoG2CYrC8Ed6peC4aj3dpYm"
+      "tensorUrl": "https://www.tensor.trade/item/Ayv6pBkkL99nPak1m5pzdVoG2CYrC8Ed6peC4aj3dpYm"
     },
     {
       "id": "0017-0207",
@@ -259,7 +259,7 @@
       "thumb": "img/thumb/0207.webp",
       "view": "img/view/0207.webp",
       "mintAddress": "Feg2LjHaDNUHgwPmNDPcEFmjBvUhdBpS1Ewit4TqTuzW",
-      "magicEdenUrl": "https://magiceden.io/item-details/Feg2LjHaDNUHgwPmNDPcEFmjBvUhdBpS1Ewit4TqTuzW"
+      "tensorUrl": "https://www.tensor.trade/item/Feg2LjHaDNUHgwPmNDPcEFmjBvUhdBpS1Ewit4TqTuzW"
     },
     {
       "id": "0018-0208",
@@ -272,7 +272,7 @@
       "thumb": "img/thumb/0208.webp",
       "view": "img/view/0208.webp",
       "mintAddress": "2VBLioYEdwgrenQXEmEupk9vm7isDWzJto53QUzSxfAz",
-      "magicEdenUrl": "https://magiceden.io/item-details/2VBLioYEdwgrenQXEmEupk9vm7isDWzJto53QUzSxfAz"
+      "tensorUrl": "https://www.tensor.trade/item/2VBLioYEdwgrenQXEmEupk9vm7isDWzJto53QUzSxfAz"
     },
     {
       "id": "0019-0209",
@@ -285,7 +285,7 @@
       "thumb": "img/thumb/0209.webp",
       "view": "img/view/0209.webp",
       "mintAddress": "BDwAwx3rtEgJCzxQzRDaupAeXWqtWgzG7DkuPQ4LgUnB",
-      "magicEdenUrl": "https://magiceden.io/item-details/BDwAwx3rtEgJCzxQzRDaupAeXWqtWgzG7DkuPQ4LgUnB"
+      "tensorUrl": "https://www.tensor.trade/item/BDwAwx3rtEgJCzxQzRDaupAeXWqtWgzG7DkuPQ4LgUnB"
     },
     {
       "id": "0020-0210",
@@ -298,7 +298,7 @@
       "thumb": "img/thumb/0210.webp",
       "view": "img/view/0210.webp",
       "mintAddress": "BXEi3ZFzkiQpQN6PcxpBQ7jmtdFKS5KWqhyLHj7N2cw",
-      "magicEdenUrl": "https://magiceden.io/item-details/BXEi3ZFzkiQpQN6PcxpBQ7jmtdFKS5KWqhyLHj7N2cw"
+      "tensorUrl": "https://www.tensor.trade/item/BXEi3ZFzkiQpQN6PcxpBQ7jmtdFKS5KWqhyLHj7N2cw"
     },
     {
       "id": "0021-0301",
@@ -311,7 +311,7 @@
       "thumb": "img/thumb/0301.webp",
       "view": "img/view/0301.webp",
       "mintAddress": "6QNxvQPnMUvR9sNnZdK9ohvUCn8zfC6sviEKrWqE2rYL",
-      "magicEdenUrl": "https://magiceden.io/item-details/6QNxvQPnMUvR9sNnZdK9ohvUCn8zfC6sviEKrWqE2rYL"
+      "tensorUrl": "https://www.tensor.trade/item/6QNxvQPnMUvR9sNnZdK9ohvUCn8zfC6sviEKrWqE2rYL"
     },
     {
       "id": "0022-0302",
@@ -324,7 +324,7 @@
       "thumb": "img/thumb/0302.webp",
       "view": "img/view/0302.webp",
       "mintAddress": "GhewiUk5SHN7sRWs2rQDRGNmJRzXAx27aof588QJPPbZ",
-      "magicEdenUrl": "https://magiceden.io/item-details/GhewiUk5SHN7sRWs2rQDRGNmJRzXAx27aof588QJPPbZ"
+      "tensorUrl": "https://www.tensor.trade/item/GhewiUk5SHN7sRWs2rQDRGNmJRzXAx27aof588QJPPbZ"
     },
     {
       "id": "0023-0303",
@@ -337,7 +337,7 @@
       "thumb": "img/thumb/0303.webp",
       "view": "img/view/0303.webp",
       "mintAddress": "Cang14Y4hVANiaSFzEJdwEB1aHEeLSCrpKhDHuiPRN9c",
-      "magicEdenUrl": "https://magiceden.io/item-details/Cang14Y4hVANiaSFzEJdwEB1aHEeLSCrpKhDHuiPRN9c"
+      "tensorUrl": "https://www.tensor.trade/item/Cang14Y4hVANiaSFzEJdwEB1aHEeLSCrpKhDHuiPRN9c"
     },
     {
       "id": "0024-0304",
@@ -350,7 +350,7 @@
       "thumb": "img/thumb/0304.webp",
       "view": "img/view/0304.webp",
       "mintAddress": "2vxqDLF9qXpq4DrsHusLSavzQHPFPP6GiswvNtHFJ8g8",
-      "magicEdenUrl": "https://magiceden.io/item-details/2vxqDLF9qXpq4DrsHusLSavzQHPFPP6GiswvNtHFJ8g8"
+      "tensorUrl": "https://www.tensor.trade/item/2vxqDLF9qXpq4DrsHusLSavzQHPFPP6GiswvNtHFJ8g8"
     },
     {
       "id": "0025-0305",
@@ -363,7 +363,7 @@
       "thumb": "img/thumb/0305.webp",
       "view": "img/view/0305.webp",
       "mintAddress": "CCK8LC9k8FH5UQM94h3tsykNssqumxctvfoNYLSBQVPP",
-      "magicEdenUrl": "https://magiceden.io/item-details/CCK8LC9k8FH5UQM94h3tsykNssqumxctvfoNYLSBQVPP"
+      "tensorUrl": "https://www.tensor.trade/item/CCK8LC9k8FH5UQM94h3tsykNssqumxctvfoNYLSBQVPP"
     },
     {
       "id": "0026-0306",
@@ -376,7 +376,7 @@
       "thumb": "img/thumb/0306.webp",
       "view": "img/view/0306.webp",
       "mintAddress": "Bx68rBhZSxhmh1eBn2y2YKYPiNWxFvfZuocNHCWGFvdU",
-      "magicEdenUrl": "https://magiceden.io/item-details/Bx68rBhZSxhmh1eBn2y2YKYPiNWxFvfZuocNHCWGFvdU"
+      "tensorUrl": "https://www.tensor.trade/item/Bx68rBhZSxhmh1eBn2y2YKYPiNWxFvfZuocNHCWGFvdU"
     },
     {
       "id": "0027-0307",
@@ -389,7 +389,7 @@
       "thumb": "img/thumb/0307.webp",
       "view": "img/view/0307.webp",
       "mintAddress": "3M62Kav6ErQEjSmRh9GcpRfCrmACLFtnaMGRzRV6Tu7Y",
-      "magicEdenUrl": "https://magiceden.io/item-details/3M62Kav6ErQEjSmRh9GcpRfCrmACLFtnaMGRzRV6Tu7Y"
+      "tensorUrl": "https://www.tensor.trade/item/3M62Kav6ErQEjSmRh9GcpRfCrmACLFtnaMGRzRV6Tu7Y"
     },
     {
       "id": "0028-0308",
@@ -402,7 +402,7 @@
       "thumb": "img/thumb/0308.webp",
       "view": "img/view/0308.webp",
       "mintAddress": "EAAsBn7YYnk4jRJw44HPnhRSCUxcG4kRgExqrbLV5H3Y",
-      "magicEdenUrl": "https://magiceden.io/item-details/EAAsBn7YYnk4jRJw44HPnhRSCUxcG4kRgExqrbLV5H3Y"
+      "tensorUrl": "https://www.tensor.trade/item/EAAsBn7YYnk4jRJw44HPnhRSCUxcG4kRgExqrbLV5H3Y"
     },
     {
       "id": "0029-0309",
@@ -415,7 +415,7 @@
       "thumb": "img/thumb/0309.webp",
       "view": "img/view/0309.webp",
       "mintAddress": "42Dv833RfTKaed6FcusiKd3j8xBH3A11jneDyMYUzmet",
-      "magicEdenUrl": "https://magiceden.io/item-details/42Dv833RfTKaed6FcusiKd3j8xBH3A11jneDyMYUzmet"
+      "tensorUrl": "https://www.tensor.trade/item/42Dv833RfTKaed6FcusiKd3j8xBH3A11jneDyMYUzmet"
     },
     {
       "id": "0030-0310",
@@ -428,7 +428,7 @@
       "thumb": "img/thumb/0310.webp",
       "view": "img/view/0310.webp",
       "mintAddress": "4P63R7mq4VszEu7x1TdDk7qRSrJVHzKJg4z4HQp9iUn7",
-      "magicEdenUrl": "https://magiceden.io/item-details/4P63R7mq4VszEu7x1TdDk7qRSrJVHzKJg4z4HQp9iUn7"
+      "tensorUrl": "https://www.tensor.trade/item/4P63R7mq4VszEu7x1TdDk7qRSrJVHzKJg4z4HQp9iUn7"
     },
     {
       "id": "0031-0311",
@@ -441,7 +441,7 @@
       "thumb": "img/thumb/0311.webp",
       "view": "img/view/0311.webp",
       "mintAddress": "RJDqKVsfsg6Q7kLKc4tikNV9cZK9sM3LK6LAiUdubFH",
-      "magicEdenUrl": "https://magiceden.io/item-details/RJDqKVsfsg6Q7kLKc4tikNV9cZK9sM3LK6LAiUdubFH"
+      "tensorUrl": "https://www.tensor.trade/item/RJDqKVsfsg6Q7kLKc4tikNV9cZK9sM3LK6LAiUdubFH"
     },
     {
       "id": "0032-0312",
@@ -454,7 +454,7 @@
       "thumb": "img/thumb/0312.webp",
       "view": "img/view/0312.webp",
       "mintAddress": "GMuooVQghed2NdjjJPxyhf4g2am8YRaEeXeAj1kDNFcg",
-      "magicEdenUrl": "https://magiceden.io/item-details/GMuooVQghed2NdjjJPxyhf4g2am8YRaEeXeAj1kDNFcg"
+      "tensorUrl": "https://www.tensor.trade/item/GMuooVQghed2NdjjJPxyhf4g2am8YRaEeXeAj1kDNFcg"
     }
   ]
 }
