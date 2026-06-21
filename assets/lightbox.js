@@ -1,7 +1,7 @@
 /* =========================================================================
    401jK — lightbox.js
-   Shared lightbox module. Single source of truth used by the main gallery
-   (app.js) and NFT Watch (/nft-watch/). Any edit here applies to both.
+   Lightbox module for the main gallery (app.js). Renders each NFT's detail
+   view, including its mint address and current holder wallet.
    ========================================================================= */
 
 export const PLACEHOLDER = 'PLACEHOLDER';
