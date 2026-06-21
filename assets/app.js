@@ -2,7 +2,7 @@
    401jK NFT Collection — app.js  (ES module; lightbox logic in lightbox.js)
    ========================================================================= */
 import {
-  isLive, wireTensor,
+  isLive, wireTensor, setHolders,
   initLightbox, openLightboxFor, setLightboxData,
 } from './lightbox.js';
 
@@ -327,16 +327,18 @@ async function init() {
   initCopy();
   initLightbox();
   try {
-    const [collection, raffle, winners] = await Promise.all([
+    const [collection, raffle, winners, holdersData] = await Promise.all([
       loadJSON('data/collection.json'),
       loadJSON('data/raffle.json'),
       loadJSON('data/winners.json'),
+      loadJSON('data/holders.json').catch(() => null),
     ]);
     state.lines   = collection.lines;
     state.nfts    = collection.nfts;
     state.lineById = new Map(collection.lines.map((l) => [l.id, l]));
 
     setLightboxData(state.lineById);
+    if (holdersData?.holders) setHolders(holdersData.holders);
 
     renderReadout(collection);
     wireTensor($('#hero-me'), collection.collection.tensorUrl, 'View on Tensor');
