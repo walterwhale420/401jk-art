@@ -6,6 +6,54 @@
 
 export const PLACEHOLDER = 'PLACEHOLDER';
 
+const COPY_SVG = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1"/></svg>`;
+const CHECK_SVG = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 9 6 13 14 3"/></svg>`;
+const EXT_SVG  = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V9"/><polyline points="10 1 15 1 15 6"/><line x1="15" y1="1" x2="7" y2="9"/></svg>`;
+
+const _holders = new Map(); // mintAddress → owner wallet
+
+/** Call after loading holders.json so the lightbox can show the current holder. */
+export function setHolders(holdersMap) {
+  Object.entries(holdersMap).forEach(([mint, info]) => _holders.set(mint, info.owner));
+}
+
+function trunc(addr) { return addr.slice(0, 5) + '…' + addr.slice(-5); }
+
+function makeAddrBlock(label, addr, solscanPath) {
+  const wrap = document.createElement('div');
+  wrap.className = 'lb-addr-block';
+  const lbl = document.createElement('div');
+  lbl.className = 'lb-addr-label';
+  lbl.textContent = label;
+  const row = document.createElement('div');
+  row.className = 'lb-addr-row';
+  const val = document.createElement('span');
+  val.className = 'lb-addr-val';
+  val.textContent = trunc(addr);
+  val.title = addr;
+  const copyBtn = document.createElement('button');
+  copyBtn.className = 'lb-addr-btn';
+  copyBtn.innerHTML = COPY_SVG;
+  copyBtn.setAttribute('aria-label', `Copy ${label}`);
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(addr).then(() => {
+      copyBtn.innerHTML = CHECK_SVG;
+      copyBtn.classList.add('copied');
+      setTimeout(() => { copyBtn.innerHTML = COPY_SVG; copyBtn.classList.remove('copied'); }, 1600);
+    });
+  });
+  const ext = document.createElement('a');
+  ext.className = 'lb-addr-ext';
+  ext.href = `https://solscan.io/${solscanPath}/${addr}`;
+  ext.target = '_blank';
+  ext.rel = 'noopener';
+  ext.setAttribute('aria-label', 'View on Solscan');
+  ext.innerHTML = EXT_SVG;
+  row.append(val, copyBtn, ext);
+  wrap.append(lbl, row);
+  return wrap;
+}
+
 export const isLive = (url) =>
   typeof url === 'string' && url && url !== PLACEHOLDER && /^https?:\/\//i.test(url);
 
@@ -59,7 +107,8 @@ export function initLightbox() {
   lb.desc    = $('#lb-desc');
   lb.tagLine = $('#lb-tag-line');
   lb.tagId   = $('#lb-tag-id');
-  lb.me      = $('#lb-me');
+  lb.me        = $('#lb-me');
+  lb.addresses = $('#lb-addresses');
   lb.counter = $('#lb-counter');
 
   $('#lb-close').addEventListener('click', closeLightbox);
@@ -107,6 +156,14 @@ function paintLightbox() {
   lb.desc.textContent    = n.description;
   lb.tagLine.textContent = `Series ${n.line} · ${lineName(n.line)}`;
   lb.tagId.textContent   = `#${n.id}`;
+  if (lb.addresses) {
+    lb.addresses.innerHTML = '';
+    if (n.mintAddress) {
+      lb.addresses.appendChild(makeAddrBlock('Mint', n.mintAddress, 'token'));
+      const owner = _holders.get(n.mintAddress);
+      if (owner) lb.addresses.appendChild(makeAddrBlock('Holder', owner, 'address'));
+    }
+  }
   wireTensor(lb.me, n.tensorUrl, 'View NFT on Tensor');
   lb.counter.textContent = `${state.lbIndex + 1} / ${state.visible.length}`;
 }
