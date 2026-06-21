@@ -1,7 +1,7 @@
 name: Update NFT holders and trades
 
 # Refreshes data/holders.json (current on-chain holder) and data/trades.json
-# (last Magic Eden secondary sale) for every 401jK NFT. Runs daily; can also be
+# (last on-chain marketplace sale) for every 401jK NFT. Runs daily; can also be
 # triggered manually from the Actions tab. Committing the updated JSON triggers
 # Vercel to redeploy automatically.
 
@@ -35,11 +35,10 @@ jobs:
         run: node scripts/update-holders.mjs
 
       - name: Refresh trades
-        # Last on-chain marketplace sale (Tensor / Magic Eden) per NFT, read
-        # from the Solana RPC — no marketplace API key needed. Makes many
-        # getTransaction calls, so a private SOLANA_RPC_URL is recommended;
-        # falls back to the public endpoint. A transient RPC error must not
-        # fail the holder commit.
+        # Last on-chain marketplace sale per NFT, read from the Solana RPC —
+        # no API key needed, venue-agnostic (covers Tensor, ME, any marketplace).
+        # Makes many getTransaction calls; a private SOLANA_RPC_URL is recommended.
+        # A transient RPC error must not fail the holder commit.
         continue-on-error: true
         env:
           SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
