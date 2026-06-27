@@ -126,8 +126,9 @@ export function initLightbox() {
  */
 export function openLightboxFor(id, members) {
   state.visible = members.slice();
-  const idx = state.visible.findIndex((n) => n.id === id);
-  openLightbox(Math.max(0, idx));
+  const idx = state.visible.findIndex((n) => String(n.id) === String(id));
+  if (idx === -1) return;
+  openLightbox(idx);
 }
 
 /** Open by index; the caller must have set state.visible first via openLightboxFor. */
