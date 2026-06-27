@@ -3,7 +3,7 @@
    ========================================================================= */
 import {
   isLive, wireTensor, setHolders,
-  initLightbox, openLightboxFor, setLightboxData,
+  initLightbox, openLightboxFor, openLightboxFromHash, setLightboxData,
 } from './lightbox.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -348,6 +348,7 @@ async function init() {
     renderGrid();
     renderRaffle(raffle);
     renderWinners(winners, raffle);
+    openLightboxFromHash(state.nfts);
   } catch (err) {
     console.error('Failed to load collection data', err);
     const grid = $('#grid');
