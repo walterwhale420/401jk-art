@@ -140,6 +140,21 @@ export function openLightbox(index) {
   lb.el.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
   $('#lb-close').focus();
+  const id = state.visible[index]?.id;
+  if (id) history.replaceState(null, '', `#nft-${id}`);
+}
+
+/**
+ * If the URL hash is #nft-<id>, open that NFT's lightbox.
+ * Call after collection data has been rendered.
+ * @param {Array} allNfts - full list of NFT objects
+ */
+export function openLightboxFromHash(allNfts) {
+  const m = location.hash.match(/^#nft-(.+)$/);
+  if (!m) return;
+  const id = m[1];
+  const nft = allNfts.find((n) => n.id === id);
+  if (nft) openLightboxFor(id, allNfts);
 }
 
 function paintLightbox() {
@@ -172,6 +187,8 @@ function step(dir) {
   if (!state.visible.length) return;
   state.lbIndex = (state.lbIndex + dir + state.visible.length) % state.visible.length;
   paintLightbox();
+  const id = state.visible[state.lbIndex]?.id;
+  if (id) history.replaceState(null, '', `#nft-${id}`);
 }
 
 function closeLightbox() {
@@ -179,6 +196,7 @@ function closeLightbox() {
   lb.el.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   if (state.lastFocus?.focus) state.lastFocus.focus();
+  history.replaceState(null, '', '#gallery');
 }
 
 function onKey(e) {
