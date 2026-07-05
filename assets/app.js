@@ -358,6 +358,23 @@ function initCopy() {
   });
 }
 
+/** Section content (grid, lines, winners) renders after an async fetch, so the
+ * browser's one-shot native anchor scroll can land short — the page is much
+ * shorter at that point than once everything's painted. Re-snap to the hash
+ * target once render + layout have actually settled. */
+function fixHashScroll() {
+  const id = location.hash.slice(1);
+  if (!id || id.startsWith('nft-')) return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  // Force instant scroll regardless of the page's `scroll-behavior: smooth`;
+  // this is a load-time correction, not a user-driven nav click.
+  const prevBehavior = document.documentElement.style.scrollBehavior;
+  document.documentElement.style.scrollBehavior = 'auto';
+  el.scrollIntoView({ block: 'start' });
+  document.documentElement.style.scrollBehavior = prevBehavior;
+}
+
 function initReveal() {
   const els = $$('.reveal');
   if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -400,6 +417,9 @@ async function init() {
     renderRaffle(raffle);
     renderWinners(winners, raffle, state.nfts);
     openLightboxFromHash(state.nfts);
+
+    requestAnimationFrame(() => requestAnimationFrame(fixHashScroll));
+    document.fonts?.ready?.then(fixHashScroll);
   } catch (err) {
     console.error('Failed to load collection data', err);
     const grid = $('#grid');
