@@ -333,11 +333,40 @@ button { font-family: inherit; cursor: pointer; color: inherit; }
 }
 .win:last-child { border-bottom: 1px solid var(--border); }
 .win-when { font-family: var(--font-mono); font-size: 0.82rem; color: var(--green); letter-spacing: 0.03em; padding-top: 3px; }
-.win-handle { font-family: var(--font-display); font-size: clamp(1.15rem, 2.4vw, 1.6rem); font-weight: 800; color: var(--text-primary); }
+.win-thumb {
+  display: block; width: 92px; aspect-ratio: 1; border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--border); background: var(--surface-muted); padding: 0; margin-bottom: 14px;
+  transition: border-color 160ms var(--ease);
+}
+.win-thumb:hover, .win-thumb:focus-visible { border-color: var(--accent); }
+.win-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.win-nft { font-family: var(--font-display); font-size: clamp(1.1rem, 2.2vw, 1.4rem); font-weight: 800; color: var(--text-primary); }
+.win-nft-id { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; color: var(--text-muted); }
 .win-prize { margin-top: 4px; font-family: var(--font-mono); font-size: 0.84rem; color: var(--text-body); }
+.win-wallet { margin-top: 16px; max-width: 420px; }
+.win-wallet-note { margin-top: 8px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
 .win-actions { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
 .win-embed { margin-top: 16px; max-width: 550px; }
 .win-embed blockquote { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+
+.win-details { margin-top: 18px; }
+.win-details summary {
+  list-style: none; cursor: pointer; user-select: none; display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--text-muted); transition: color 140ms;
+}
+.win-details summary::-webkit-details-marker { display: none; }
+.win-details summary::before { content: '+'; font-size: 0.95rem; transition: transform 200ms var(--ease); }
+.win-details[open] summary::before { transform: rotate(45deg); }
+.win-details:hover summary, .win-details[open] summary { color: var(--accent); }
+.draw-steps { margin-top: 14px; display: grid; gap: 9px; max-width: 620px; }
+.draw-steps li {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 14px; align-items: baseline;
+  font-size: 0.82rem; padding-bottom: 9px; border-bottom: 1px solid var(--border);
+}
+.draw-steps li:last-child { border-bottom: none; }
+.draw-steps li span { color: var(--text-muted); }
+.draw-steps li code { font-family: var(--font-mono); font-size: 0.76rem; color: var(--green); word-break: break-all; }
 
 /* ------------------------------------------------------------------ CONTRACT */
 .contract-block {
