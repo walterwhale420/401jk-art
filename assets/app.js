@@ -2,7 +2,7 @@
    401jK NFT Collection — app.js  (ES module; lightbox logic in lightbox.js)
    ========================================================================= */
 import {
-  isLive, wireTensor, setHolders,
+  isLive, wireTensor, setHolders, makeAddrBlock,
   initLightbox, openLightboxFor, openLightboxFromHash, setLightboxData,
 } from './lightbox.js';
 
@@ -198,7 +198,7 @@ function renderRaffle(r) {
 }
 
 /* --------------------------------------------------------------- winners */
-function renderWinners(winnersData, raffle) {
+function renderWinners(winnersData, raffle, nfts) {
   const winners = Array.isArray(winnersData) ? winnersData : (winnersData.winners || []);
   const root = $('#winners-body');
   root.innerHTML = '';
@@ -215,24 +215,70 @@ function renderWinners(winnersData, raffle) {
     return;
   }
 
+  const nftById = new Map((nfts || []).map((n) => [n.id, n]));
   const sorted = winners.slice().sort((a, b) => String(b.month).localeCompare(String(a.month)));
   const tl = document.createElement('div');
   tl.className = 'timeline';
   sorted.forEach((w) => {
+    const nft = nftById.get(w.nftId);
     const row = document.createElement('article');
     row.className = 'win reveal';
     const annLabel = w.platform === 'reddit' ? 'See announcement on Reddit' : 'See announcement on X';
     const actions = isLive(w.announcementUrl)
       ? `<a class="btn btn-outline btn-sm" href="${w.announcementUrl}" target="_blank" rel="noopener">${annLabel} <span class="arr">&#8599;</span></a>`
       : '';
-    row.innerHTML = `
-      <div class="win-when">${w.label || w.month}</div>
-      <div>
-        <div class="win-handle">${w.handle || 'Winner'}</div>
-        ${w.prize ? `<div class="win-prize">Prize: ${w.prize}</div>` : ''}
+
+    let thumbBtn = null;
+    if (nft) {
+      thumbBtn = document.createElement('button');
+      thumbBtn.className = 'win-thumb';
+      thumbBtn.setAttribute('aria-label', `View ${nft.title}`);
+      thumbBtn.innerHTML = `<img src="${nft.thumb}" alt="${escapeAttr(nft.alt)}" loading="lazy" decoding="async">`;
+      thumbBtn.addEventListener('click', () => openLightboxFor(nft.id, nfts));
+    }
+    const nftLine = nft ? `<div class="win-nft">${nft.title} <span class="win-nft-id">#${nft.id.split('-')[0]}</span></div>` : '';
+
+    const walletBlock = document.createElement('div');
+    walletBlock.className = 'win-wallet';
+    if (w.wallet) {
+      walletBlock.appendChild(makeAddrBlock('Winning wallet', w.wallet, 'account'));
+      const note = document.createElement('p');
+      note.className = 'win-wallet-note';
+      note.textContent = 'Locked in at draw time — this stays the record even if the NFT is later sold or moved.';
+      walletBlock.appendChild(note);
+    }
+
+    const d = w.draw;
+    const details = d ? `
+      <details class="win-details">
+        <summary>Details</summary>
+        <ol class="draw-steps">
+          <li><span>First Solana block at/after 12:00 PM UTC</span><a class="text-link" href="${d.blockUrl}" target="_blank" rel="noopener">${d.blockNumber}</a></li>
+          <li><span>Block hash</span><code>${d.blockHash}</code></li>
+          <li><span>Converted to hex</span><code>${d.hex}</code></li>
+          <li><span>Calculate winner</span><code>mod(0x${d.hex}, 32) + 1 = ${d.winnerNumber}</code></li>
+          <li><span>Winner</span><code>NFT #${String(d.winnerNumber).padStart(4, '0')}</code></li>
+        </ol>
+      </details>` : '';
+
+    const when = document.createElement('div');
+    when.className = 'win-when';
+    when.textContent = `Winner: ${w.label || w.month}`;
+
+    const content = document.createElement('div');
+    content.innerHTML = `
+      ${nftLine}
+      ${w.prize ? `<div class="win-prize">Prize: ${w.prize}</div>` : ''}`;
+    if (thumbBtn) content.prepend(thumbBtn);
+    content.appendChild(walletBlock);
+    if (actions || isLive(w.reactionEmbedUrl)) {
+      content.insertAdjacentHTML('beforeend', `
         <div class="win-actions">${actions}</div>
-        ${isLive(w.reactionEmbedUrl) ? `<div class="win-embed" data-embed="${w.platform || 'x'}" data-url="${w.reactionEmbedUrl}"></div>` : ''}
-      </div>`;
+        ${isLive(w.reactionEmbedUrl) ? `<div class="win-embed" data-embed="${w.platform || 'x'}" data-url="${w.reactionEmbedUrl}"></div>` : ''}`);
+    }
+    content.insertAdjacentHTML('beforeend', details);
+
+    row.append(when, content);
     tl.appendChild(row);
   });
   root.appendChild(tl);
@@ -347,7 +393,7 @@ async function init() {
     renderFilters();
     renderGrid();
     renderRaffle(raffle);
-    renderWinners(winners, raffle);
+    renderWinners(winners, raffle, state.nfts);
     openLightboxFromHash(state.nfts);
   } catch (err) {
     console.error('Failed to load collection data', err);

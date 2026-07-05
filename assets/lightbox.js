@@ -19,7 +19,7 @@ export function setHolders(holdersMap) {
 
 function trunc(addr) { return addr.slice(0, 5) + '…' + addr.slice(-5); }
 
-function makeAddrBlock(label, addr, solscanPath) {
+export function makeAddrBlock(label, addr, solscanPath) {
   const wrap = document.createElement('div');
   wrap.className = 'lb-addr-block';
   const lbl = document.createElement('div');
