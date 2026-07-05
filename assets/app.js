@@ -231,22 +231,22 @@ function renderWinners(winnersData, raffle, nfts) {
     let thumbBtn = null;
     if (nft) {
       thumbBtn = document.createElement('button');
-      thumbBtn.className = 'win-thumb';
+      thumbBtn.className = 'tile win-thumb';
+      thumbBtn.type = 'button';
+      thumbBtn.dataset.accent = 'green';
       thumbBtn.setAttribute('aria-label', `View ${nft.title}`);
-      thumbBtn.innerHTML = `<img src="${nft.thumb}" alt="${escapeAttr(nft.alt)}" loading="lazy" decoding="async">`;
+      thumbBtn.innerHTML = `
+        <div class="tile-img">
+          <span class="tile-id">#${nft.id.split('-')[0]}</span>
+          <img src="${nft.thumb}" alt="${escapeAttr(nft.alt)}" loading="lazy" decoding="async">
+        </div>`;
       thumbBtn.addEventListener('click', () => openLightboxFor(nft.id, nfts));
     }
     const nftLine = nft ? `<div class="win-nft">${nft.title} <span class="win-nft-id">#${nft.id.split('-')[0]}</span></div>` : '';
 
     const walletBlock = document.createElement('div');
     walletBlock.className = 'win-wallet';
-    if (w.wallet) {
-      walletBlock.appendChild(makeAddrBlock('Winning wallet', w.wallet, 'account'));
-      const note = document.createElement('p');
-      note.className = 'win-wallet-note';
-      note.textContent = 'Locked in at draw time — this stays the record even if the NFT is later sold or moved.';
-      walletBlock.appendChild(note);
-    }
+    if (w.wallet) walletBlock.appendChild(makeAddrBlock('Winning wallet', w.wallet, 'account'));
 
     const d = w.draw;
     const details = d ? `
@@ -261,15 +261,19 @@ function renderWinners(winnersData, raffle, nfts) {
         </ol>
       </details>` : '';
 
-    const when = document.createElement('div');
-    when.className = 'win-when';
-    when.textContent = `Winner: ${w.label || w.month}`;
+    const head = document.createElement('div');
+    head.className = 'win-head';
+    head.innerHTML = `<span class="eyebrow">Winner</span><h3 class="win-when">${w.label || w.month}</h3>`;
+
+    const body = document.createElement('div');
+    body.className = 'win-body';
+    if (thumbBtn) body.appendChild(thumbBtn);
 
     const content = document.createElement('div');
+    content.className = 'win-content';
     content.innerHTML = `
       ${nftLine}
       ${w.prize ? `<div class="win-prize">Prize: ${w.prize}</div>` : ''}`;
-    if (thumbBtn) content.prepend(thumbBtn);
     content.appendChild(walletBlock);
     if (actions || isLive(w.reactionEmbedUrl)) {
       content.insertAdjacentHTML('beforeend', `
@@ -277,8 +281,9 @@ function renderWinners(winnersData, raffle, nfts) {
         ${isLive(w.reactionEmbedUrl) ? `<div class="win-embed" data-embed="${w.platform || 'x'}" data-url="${w.reactionEmbedUrl}"></div>` : ''}`);
     }
     content.insertAdjacentHTML('beforeend', details);
+    body.appendChild(content);
 
-    row.append(when, content);
+    row.append(head, body);
     tl.appendChild(row);
   });
   root.appendChild(tl);
