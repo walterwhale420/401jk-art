@@ -3,9 +3,9 @@
   "winners": [
     {
       "month": "2026-07",
-      "label": "July",
+      "label": "July 2026",
       "nftId": "0005-0105",
-      "wallet": "6yxpLU2sQYemscf5DAkkCyn2qSbqoQEBaJ5xsWvTMRBE",
+      "wallet": "BrXqqXQKVUz7AkqKo4f2DsKLqyA1eW7R31YL93syFABX",
       "draw": {
         "blockNumber": 430944946,
         "blockUrl": "https://explorer.solana.com/block/430944946",
