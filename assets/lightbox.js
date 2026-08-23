@@ -74,7 +74,7 @@ export function wireTensor(el, url, baseLabel) {
 }
 
 const ARTIST_X = {
-  'Shadow':       'https://x.com/OthersideShad0w',
+  'Shadow':       'https://x.com/_Dark_Shad0w',
   'Walter Whale': 'https://x.com/Walter_Whale420',
 };
 
