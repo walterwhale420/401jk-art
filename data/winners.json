@@ -2,6 +2,23 @@
   "_readme": "Append one object to 'winners' each month (newest first). The site renders newest-to-oldest automatically. Object shape: { \"month\": \"2026-07\", \"label\": \"July\", \"nftId\": \"0005-0105\" (must match an id in collection.json — thumb/title are looked up from there), \"wallet\": \"the wallet holding the NFT at draw time (rendered as a static, non-updating record)\", \"draw\": { \"blockNumber\": 430944946, \"blockUrl\": \"https://explorer.solana.com/block/...\", \"blockHash\": \"...\", \"hex\": \"block hash converted to hex\", \"winnerNumber\": 5 }, \"prize\": \"optional, e.g. 40,100 $401jK\", \"announcementUrl\": \"optional https://x.com/... or Reddit post URL\", \"platform\": \"optional 'x' or 'reddit'\", \"reactionEmbedUrl\": \"optional X/Reddit post URL to embed inline\" }. While 'winners' is empty, the site shows a 'first draw' coming-soon state using firstDraw from raffle.json.",
   "winners": [
     {
+      "month": "2026-08",
+      "label": "August 2026",
+      "nftId": "0008-0108",
+      "wallet": "64sDayNLsd4HTAvGh2UJiaTqAiqGe8k8eDGoREAQqxcq",
+      "draw": {
+        "blockNumber": 436761933,
+        "blockUrl": "https://www.oklink.com/solana/block/436761933",
+        "blockHash": "FgXRVQNb5qguyM628KvEVfeqNLmzANu9mV5nTtYXr86a",
+        "hex": "da23aac41ff488078bfcf755f8fc2653842ecf735fa8d7dbedd3de4fca5db9e7",
+        "winnerNumber": 8
+      },
+      "prize": "40,100 $401jK",
+      "announcementUrl": "https://x.com/401_JK/status/2084070637350289761",
+      "platform": "x",
+      "reactionEmbedUrl": "https://x.com/401_JK/status/2084070637350289761"
+    },
+    {
       "month": "2026-07",
       "label": "July 2026",
       "nftId": "0005-0105",
@@ -12,7 +29,10 @@
         "blockHash": "9NczKCKm3a27ckyQxcsnW5AoY5MYtd58FM2WAgHxFDjH",
         "hex": "09779508975f08bb032588ad0ea1c4267d0f3a583a6435e13335d0830cf444",
         "winnerNumber": 5
-      }
+      },
+      "announcementUrl": "https://x.com/401_JK/status/2073874144714989978",
+      "platform": "x",
+      "reactionEmbedUrl": "https://x.com/401_JK/status/2073874144714989978"
     }
   ]
 }
