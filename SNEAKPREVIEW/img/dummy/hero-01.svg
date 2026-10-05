@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+<defs><pattern id="p" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="28" fill="#080914" opacity=".08"/></pattern></defs>
+<rect width="800" height="1000" fill="#F47B09"/><rect width="800" height="1000" fill="url(#p)"/>
+<circle cx="544" cy="380" r="176" fill="none" stroke="#080914" stroke-width="16" opacity=".35"/>
+<text x="56.00000000000001" y="120" font-family="Courier New,monospace" font-weight="700" font-size="36" fill="#080914">DUMMY // HERO-01</text>
+<text x="56.00000000000001" y="840" font-family="Montserrat,Arial Black,sans-serif" font-weight="900" font-size="88" fill="#080914" letter-spacing="-2">NFT ART</text>
+<text x="56.00000000000001" y="920" font-family="Courier New,monospace" font-weight="700" font-size="32" fill="#080914">4:5 · 1200x1500</text></svg>

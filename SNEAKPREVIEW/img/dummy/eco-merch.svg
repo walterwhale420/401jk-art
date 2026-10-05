@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+<defs><pattern id="p" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="28" fill="#080914" opacity=".08"/></pattern></defs>
+<rect width="600" height="800" fill="#F47B09"/><rect width="600" height="800" fill="url(#p)"/>
+<circle cx="408.00000000000006" cy="304" r="132" fill="none" stroke="#080914" stroke-width="12" opacity=".35"/>
+<text x="42.00000000000001" y="96" font-family="Courier New,monospace" font-weight="700" font-size="27" fill="#080914">DUMMY // ECO-MERCH</text>
+<text x="42.00000000000001" y="672" font-family="Montserrat,Arial Black,sans-serif" font-weight="900" font-size="66" fill="#080914" letter-spacing="-2">MERCH</text>
+<text x="42.00000000000001" y="736" font-family="Courier New,monospace" font-weight="700" font-size="24" fill="#080914">3:4 · 900x1200</text></svg>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>401jK Sneak Preview</title>
+  <meta name="robots" content="noindex">
+  <script>
+    // Hide reveal targets only when motion will run; never leave them hidden if the motion script fails.
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('js-motion');
+      setTimeout(function () { if (!window.__motionReady) document.documentElement.classList.remove('js-motion'); }, 3000);
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.css">
+  <link rel="stylesheet" href="/SNEAKPREVIEW/css/tokens.css">
+  <link rel="stylesheet" href="/SNEAKPREVIEW/css/base.css">
+  <link rel="stylesheet" href="/SNEAKPREVIEW/css/motion.css">
+</head>
+<body>
+
+<!-- Top bar: hides on scroll down, returns on scroll up -->
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a class="topbar__logo" href="#home" aria-label="401jK home"><img src="/SNEAKPREVIEW/img/logo.png" alt="401jK"></a>
+    <nav class="topbar__links" aria-label="Main">
+      <a href="#manifesto">Manifesto</a>
+      <a href="#memes">Memes</a>
+      <a href="#milestones">Milestones</a>
+      <a href="#buy">How to Buy</a>
+      <a href="#token">Token</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#socials">Socials</a>
+    </nav>
+    <button class="topbar__toggle" type="button" aria-expanded="false" aria-controls="nav-panel" aria-label="Menu"><span></span><span></span></button>
+  </div>
+  <nav class="topbar__panel" id="nav-panel" aria-label="Main (mobile)">
+    <ul>
+      <li><a href="#manifesto">Manifesto <span>02</span></a></li>
+      <li><a href="#memes">Memes <span>03</span></a></li>
+      <li><a href="#milestones">Milestones <span>04</span></a></li>
+      <li><a href="#buy">How to Buy <span>05</span></a></li>
+      <li><a href="#token">Token <span>06</span></a></li>
+      <li><a href="#ecosystem">Ecosystem <span>07</span></a></li>
+      <li><a href="#socials">Socials <span>08</span></a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="stack">
+
+  <!-- 01 · HOME -->
+  <header class="block block--red" id="home">
+    <div class="wrap">
+      <span class="index">01 // Resist &amp; Retire</span>
+      <h1 class="display" data-reveal>Retirement is a joke. <span class="text-navy">We refuse to be the punchline.</span></h1>
+      <div class="grid" style="margin-top:32px;align-items:start">
+        <div class="col-5">
+          <p class="lead" data-reveal style="font-weight:700;max-width:60ch">The pension deal is simple. You give it forty years. It gives you the bad news at 65.</p>
+          <p class="lead" data-reveal style="font-weight:700;max-width:60ch;margin-top:16px">401jK is for those who won't play along: a community-owned meme coin, a moonshot for those who need a plan B, and a place to mock the system while you plot your escape.</p>
+        </div>
+        <div class="col-7">
+          <!-- Intro video: plays muted on hover and pauses when the pointer leaves; a click toggles the sound (ui.js).
+               Touch screens: a tap plays it with sound, the next tap pauses it. -->
+          <figure class="intro" data-intro>
+            <div class="intro__screen">
+              <video src="/SNEAKPREVIEW/img/intro.mp4" poster="/SNEAKPREVIEW/img/intro-poster.jpg" muted playsinline preload="none" aria-label="401jK intro video"></video>
+              <button class="intro__sound" type="button" aria-pressed="false" aria-label="Turn sound on"><span data-intro-sound>Sound off</span></button>
+              <span class="intro__progress" aria-hidden="true"><i></i></span>
+            </div>
+            <figcaption class="intro__bar"><strong>Watch the intro</strong><span data-intro-hint>Hover to play · Click for sound</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 02 · MANIFESTO -->
+  <section class="block block--paper block--fill" id="manifesto">
+    <div class="wrap grid manifesto-grid" style="align-items:center">
+      <div class="col-7">
+        <span class="index">02 // The Thesis</span>
+        <blockquote class="h2" data-reveal style="margin:0">Tech got smarter. Somehow we work longer.</blockquote>
+        <p class="lead" data-reveal style="margin-top:32px;max-width:58ch">Pensions used to be a promise. Now they're a bet: you carry the risk, Wall Street milks you for fees, and politicians raise the retirement age to keep you working.</p>
+        <p class="lead" data-reveal style="margin-top:16px;max-width:58ch">Our answer is the oldest weapon there is: jokes that tell the truth.</p>
+        <div class="btn-row"><a class="btn" href="/SNEAKPREVIEW/manifesto.html">Read the manifesto</a></div>
+      </div>
+      <!-- Mona sits on the bottom edge of the section, so the next section slides over her with no gap.
+           Her speech bubble pops in once the "Read the manifesto" button scrolls into view (ui.js). -->
+      <div class="col-5 mona-col">
+        <figure class="mona" data-mona>
+          <span class="mona__bubble">Manifesto? TL;DR</span>
+          <img src="/SNEAKPREVIEW/img/cutouts/mona-lisa.png" alt="The Mona Lisa, with a smug look, saying: Manifesto? TL;DR">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · MEMES -->
+  <section class="block block--orange" id="memes">
+    <div class="wrap">
+      <span class="index">03 // Mock &amp; Mog</span>
+      <h2 class="h2" data-reveal>Make the system the punchline.</h2>
+      <p class="lead" data-reveal style="margin-top:24px;max-width:60ch">Laugh, post, repeat. Memes let you spread the word while having fun.</p>
+      <p class="lead" data-reveal style="margin-top:16px;max-width:60ch">Make your own with the meme generator, or grab one from the library.</p>
+      <div class="btn-row" style="margin:28px 0 40px"><a class="btn" href="#memes">Make a meme</a><a class="btn btn--paper" href="#memes">Meme library</a></div>
+      <!-- Memes: the no-text version fills the narrow tile in greyscale; the full meme (with text, in color) fades in
+           when the tile expands. Frodo's text version is a video that plays only while hovered (ui.js, data-hover-video).
+           ui.js sizes this strip so an expanded tile is exactly 3:2, the memes' shape. -->
+      <div class="strip strip--memes">
+        <a class="strip__item strip__item--meme" href="#memes" aria-label="Meme: Scorsese, &quot;Absolute retirement&quot;"><img class="strip__plain" src="/SNEAKPREVIEW/img/memes/scorsese-plain.jpg" alt=""><img class="strip__full" src="/SNEAKPREVIEW/img/memes/scorsese-text.jpg" alt="Meme: Scorsese, &quot;Absolute retirement&quot;"></a>
+        <a class="strip__item strip__item--meme" href="#memes" aria-label="Meme: Frodo, Precious" data-hover-video><img class="strip__plain" src="/SNEAKPREVIEW/img/memes/frodo-plain.jpg" alt=""><video class="strip__full" muted loop playsinline preload="metadata" src="/SNEAKPREVIEW/img/memes/frodo-text.mp4"></video></a>
+        <a class="strip__item strip__item--meme" href="#memes" aria-label="Meme: &quot;It ain't much but it's honest work&quot;"><img class="strip__plain" src="/SNEAKPREVIEW/img/memes/honest-work-plain.jpg" alt=""><img class="strip__full" src="/SNEAKPREVIEW/img/memes/honest-work-text.jpg" alt="Meme: &quot;It ain't much but it's honest work&quot;"></a>
+        <a class="strip__item strip__item--meme" href="#memes" aria-label="Meme: Mona Lisa, &quot;No ragrets&quot;"><img class="strip__plain" src="/SNEAKPREVIEW/img/memes/mona-lisa-plain.jpg" alt=""><img class="strip__full" src="/SNEAKPREVIEW/img/memes/mona-lisa-text.jpg" alt="Meme: Mona Lisa, &quot;No ragrets&quot;"></a>
+        <a class="strip__item strip__item--meme" href="#memes" aria-label="Meme: Chuck Norris, &quot;Stop gambling, start retiring.&quot;"><img class="strip__plain" src="/SNEAKPREVIEW/img/memes/chuck-norris-plain.jpg" alt=""><img class="strip__full" src="/SNEAKPREVIEW/img/memes/chuck-norris-text.jpg" alt="Meme: Chuck Norris, &quot;Stop gambling, start retiring.&quot;"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · MILESTONES -->
+  <section class="block block--yellow" id="milestones">
+    <div class="wrap grid" style="align-items:center">
+      <div class="col-5">
+        <span class="index">04 // The Log</span>
+        <h2 class="h2 h2--side" data-reveal>No roadmap. Still shipping.</h2>
+        <p class="lead" data-reveal style="margin-top:24px">This is what a community takeover looks like: the dev left, and the community kept cooking and giving back.</p>
+      </div>
+      <div class="col-7">
+        <div class="cards" role="button" tabindex="0" aria-label="Milestones. Click or press Enter for the next milestone.">
+          <article class="cards__card">
+            <div class="cards__img"><img src="/SNEAKPREVIEW/img/dummy/milestone-01.svg" alt=""></div>
+            <div class="cards__body"><div class="cards__meta"><span>01</span><span>Date TBC</span></div><h3>Community take-over</h3><p>The original dev walked away and the community picked up the keys. No founder, no team bag, nobody waiting to dump.</p></div>
+          </article>
+          <article class="cards__card">
+            <div class="cards__img"><img src="/SNEAKPREVIEW/img/dummy/milestone-02.svg" alt=""></div>
+            <div class="cards__body"><div class="cards__meta"><span>02</span><span>Date TBC</span></div><h3>Real-world billboards</h3><p>The joke left the timeline and went up on actual billboards. Location and details to come.</p></div>
+          </article>
+          <article class="cards__card">
+            <div class="cards__img"><img src="/SNEAKPREVIEW/img/dummy/milestone-03.svg" alt=""></div>
+            <div class="cards__body"><div class="cards__meta"><span>03</span><span>Jun 2026</span></div><h3>Staking launch</h3><p>More than 7.5% of the supply staked in the first 24 hours. Voluntary lockups. HR could never.</p></div>
+          </article>
+          <article class="cards__card">
+            <div class="cards__img"><img src="/SNEAKPREVIEW/img/dummy/milestone-04.svg" alt=""></div>
+            <div class="cards__body"><div class="cards__meta"><span>04</span><span>Jun 20, 2026</span></div><h3>NFT launch</h3><p>32 hand-made pieces by three community artists, sold out in under an hour.</p></div>
+          </article>
+          <article class="cards__card">
+            <div class="cards__img"><img src="/SNEAKPREVIEW/img/dummy/milestone-05.svg" alt=""></div>
+            <div class="cards__body"><div class="cards__meta"><span>05</span><span>Jul – Sep 2026</span></div><h3>Community rewards paid out</h3><p>Three monthly raffles, 40,100 tokens each, paid on time. More than your pension can promise.</p></div>
+          </article>
+        </div>
+        <div class="cards-hint"><span data-cards-counter>01 / 05</span><span>Click the card for the next one →</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · HOW TO BUY -->
+  <section class="block block--green" id="buy">
+    <div class="wrap">
+      <div class="grid" style="align-items:center">
+        <div class="col-8">
+          <span class="index">05 // How to Buy</span>
+          <h2 class="h2" data-reveal>How to buy without getting played.</h2>
+          <p class="lead" data-reveal style="margin-top:24px;max-width:60ch;font-weight:600"><strong>Buy safe:</strong> copy the contract address from this page. Fakes can copy our name and logo, never our exact address.</p>
+          <p class="lead" data-reveal style="margin-top:12px;max-width:60ch;font-weight:600"><strong>Buy responsibly:</strong> put in only what you can lose without losing sleep.</p>
+        </div>
+      </div>
+      <div class="buy-row">
+        <div class="ca">
+          <span class="ca__label">CA</span>
+          <span class="ca__value">Cz7LGKdZPpAxonXx23ZYPW3RtDQvjcf17ZDCZEzFpump</span>
+          <button class="ca__copy" data-copy-ca type="button">Copy</button>
+        </div>
+        <div class="find-us">
+          <span class="find-us__label">Find us here</span>
+          <a href="https://www.coingecko.com/en/coins/401jk" title="CoinGecko" target="_blank" rel="noopener"><img src="/SNEAKPREVIEW/img/logos/coingecko.png" alt=""><span class="find-us__name">CoinGecko</span></a>
+          <a href="https://coinmarketcap.com/currencies/401jk/" title="CoinMarketCap" target="_blank" rel="noopener"><img src="/SNEAKPREVIEW/img/logos/coinmarketcap.svg" alt=""><span class="find-us__name">CoinMarketCap</span></a>
+          <a href="https://dexscreener.com/solana/7om3hr4rhmj4mwe7bvdsqmspkm3tjcyzplvtin6munfz" title="DEX Screener" target="_blank" rel="noopener"><img src="/SNEAKPREVIEW/img/logos/dexscreener.png" alt=""><span class="find-us__name">DEX Screener</span></a>
+        </div>
+      </div>
+      <ol class="xsteps">
+        <li class="xstep" tabindex="0"><span class="xstep__num">01</span><h3>Get Phantom</h3><p>Install the Phantom wallet. Write the seed phrase on paper and never share it with anyone.</p></li>
+        <li class="xstep" tabindex="0"><span class="xstep__num">02</span><h3>Add SOL</h3><p>Buy SOL inside Phantom. Keep about 0.05 SOL extra for fees.</p></li>
+        <li class="xstep" tabindex="0"><span class="xstep__num">03</span><h3>Paste the CA</h3><p>Open Swap and paste the address above. Never search by name: fake tickers exist.</p></li>
+        <li class="xstep" tabindex="0"><span class="xstep__num">04</span><h3>Swap</h3><p>Check that the token shows as 401jk, set the amount and confirm.</p></li>
+        <li class="xstep" tabindex="0"><span class="xstep__num">05</span><h3>HODL safe</h3><p>Enjoy the 401jK. For a safe hold, move it into a hardware wallet. Whatever you do, don't be a jeet.</p></li>
+        <li class="xstep xstep--guy" tabindex="0" aria-label="401jK character with a heart, pointing at you">
+          <span class="xstep__guy"><span class="xstep__figure"><span class="xstep__bubble">Stay safe, fam!</span><img src="/SNEAKPREVIEW/img/cutouts/hair-guy-love.png" alt="401jK character in sunglasses making a heart with his hands"><img src="/SNEAKPREVIEW/img/cutouts/hair-guy-point.png" alt="" aria-hidden="true"></span></span>
+        </li>
+      </ol>
+      <div class="warning scam" tabindex="0">
+        <h3>Scam check</h3>
+        <div class="scam__body"><ul>
+          <li>No mod or team member will ever DM you first or ask you to "verify your holding" by connecting your wallet to an app.</li>
+          <li>Always copy the contract address from 401jk.fun and verify it before buying.</li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 · TOKEN -->
+  <section class="block block--cyan" id="token" data-distribution>
+    <div class="wrap">
+      <div class="grid" style="align-items:center">
+        <div class="col-7">
+          <span class="index">06 // Token · Solana · Ticker 401jk</span>
+          <h2 class="h2" data-reveal>More transparent than your pension fund.</h2>
+          <p class="lead" data-reveal style="margin-top:24px;max-width:60ch">Most coins won't tell you who's holding the bag. We will.</p>
+          <p class="lead" data-reveal style="margin-top:16px;max-width:60ch">About 15% of the supply is locked, staked or pooled. That's conviction. The top 100 wallets hold around 60%. Good start. We want it flatter as we grow.</p>
+          <div class="stats" style="margin-top:40px">
+            <div class="stat stat--wide"><div class="stat__num" data-count="999339601">999,339,601</div><div class="stat__label">Total 401jK token supply</div></div>
+            <div class="stat"><div class="stat__num" data-count="14.8" data-decimals="1" data-suffix="%">14.8%</div><div class="stat__label">Locked, staked or pooled</div></div>
+          </div>
+          <p class="mono" style="font-size:.75rem;font-weight:700;margin-top:16px">Source: Solscan · wallet balances 03 Oct 2026 · top 100 holder wallets 05 Oct 2026</p>
+        </div>
+        <div class="col-5">
+          <div class="donut-wrap">
+            <svg class="donut" viewBox="0 0 200 200" role="img" aria-label="Token distribution chart; hover a slice or a list row for details">
+              <circle class="donut__base" cx="100" cy="100" r="80"/>
+            </svg>
+            <div class="donut-center" data-donut-center aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+      <ol class="wallets" data-wallets></ol>
+    </div>
+  </section>
+
+  <!-- 07 · ECOSYSTEM -->
+  <section class="block block--paper" id="ecosystem">
+    <div class="wrap">
+      <span class="index">07 // The Ecosystem</span>
+      <h2 class="h2" data-reveal>There's more than just holding</h2>
+      <p class="lead" data-reveal style="margin-top:24px;max-width:60ch">Got your 401jK bag? Good. But there's more.</p>
+      <p class="lead" data-reveal style="margin-top:16px;margin-bottom:40px;max-width:60ch">Stake it, collect the art, wear the merch, smash the daily rocket or study up at the Academy.</p>
+      <div class="strip strip--eco">
+        <a class="strip__item" href="https://staking.401jk.fun/"><img src="/SNEAKPREVIEW/img/ecosystem/staking.jpg" alt="" loading="lazy"><span class="strip__label"><strong>Staking</strong><span>staking.401jk.fun ↗</span></span></a>
+        <a class="strip__item" href="https://www.401jk.art/"><img src="/SNEAKPREVIEW/img/ecosystem/nft.jpg" alt="" loading="lazy"><span class="strip__label"><strong>NFT</strong><span>401jk.art ↗</span></span></a>
+        <a class="strip__item" href="https://401jkmerch.com/"><img src="/SNEAKPREVIEW/img/ecosystem/merch.jpg" alt="" loading="lazy"><span class="strip__label"><strong>Merch</strong><span>401jkmerch.com ↗</span></span></a>
+        <a class="strip__item" href="https://401jk.today/"><img src="/SNEAKPREVIEW/img/ecosystem/smash.jpg" alt="" loading="lazy"><span class="strip__label"><strong>Daily Smash</strong><span>401jk.today ↗</span></span></a>
+        <a class="strip__item" href="https://401jk.academy/"><img src="/SNEAKPREVIEW/img/ecosystem/academy.jpg" alt="" loading="lazy"><span class="strip__label"><strong>Academy</strong><span>401jk.academy ↗</span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 · SOCIALS (last block: scrolls away to reveal the footer) -->
+  <section class="block block--purple" id="socials">
+    <div class="wrap grid socials-grid">
+      <div class="col-5">
+        <span class="index">08 // Lock In &amp; Engage</span>
+        <h2 class="h2 h2--side" data-reveal>Loud in all the right places.</h2>
+        <p class="lead" data-reveal style="margin-top:24px">Reply, repost, upvote and post the meme that made you laugh.</p>
+        <p class="lead" data-reveal style="margin-top:16px">The system counts on our silence. Be loud.</p>
+        <div class="smash"><video data-autoplay autoplay muted loop playsinline preload="metadata" src="/SNEAKPREVIEW/img/smash.mp4" aria-label="Meme: a girl in 401jK sunglasses shouting Smash"></video></div>
+      </div>
+      <div class="col-7">
+        <ul class="socials">
+          <li><a href="https://x.com/401_JK" target="_blank" rel="noopener"><img src="/SNEAKPREVIEW/img/logos/x.svg" alt=""><div><strong>X</strong><span>@401_JK</span></div></a></li>
+          <li><a href="https://www.reddit.com/r/401jK/" target="_blank" rel="noopener"><img src="/SNEAKPREVIEW/img/logos/reddit.svg" alt=""><div><strong>Reddit</strong><span>r/401jK</span></div></a></li>
+          <li><a href="https://t.me/+L3Q-9JBweq1kMWY0" target="_blank" rel="noopener"><img src="/SNEAKPREVIEW/img/logos/telegram.svg" alt=""><div><strong>Telegram</strong><span>Community chat</span></div></a></li>
+          <li><a href="https://www.tiktok.com/@official401jk" target="_blank" rel="noopener"><img src="/SNEAKPREVIEW/img/logos/tiktok.svg" alt=""><div><strong>TikTok</strong><span>@official401jk</span></div></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 09 · FOOTER -->
+<footer class="footer-reveal">
+  <div class="wrap">
+    <p class="footer-reveal__disclaimer">401jK is a meme coin on Solana. It has no intrinsic value and exists for entertainment. Nothing here is financial, investment or legal advice. Do your own research and only put in what you can afford to lose. Your retirement is still a joke though.</p>
+    <div class="wordmark" role="img" aria-label="401jK">
+      <span><span>4</span></span><span><span>0</span></span><span><span>1</span></span><span><span>J</span></span><span><span>K</span></span>
+    </div>
+  </div>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span class="marquee__item">Mock &amp; Mog the System<i>✦</i></span>
+      <span class="marquee__item">Resist &amp; Retire<i>✦</i></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="/SNEAKPREVIEW/js/copy-ca.js"></script>
+<script src="/SNEAKPREVIEW/data/distribution.js"></script>
+<script src="/SNEAKPREVIEW/js/ui.js"></script>
+<script src="/SNEAKPREVIEW/js/motion.js"></script>
+</body>
+</html>

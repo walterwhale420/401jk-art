@@ -1,0 +1,364 @@
+/* 401jK components and motion states. Requires tokens.css and base.css.
+   Behavior lives in js/motion.js (animation) and js/ui.js (interaction).
+   Everything renders complete without JavaScript; hidden start states apply only under html.js-motion. */
+
+:root { --ease-out: cubic-bezier(.5, 0, .1, 1); }
+
+/* ---------- Grain (texture, no motion) ---------- */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Top bar (hides on scroll down, returns on scroll up) ---------- */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 80;
+  background: var(--navy); color: var(--paper); border-bottom: 2px solid var(--paper);
+  transition: transform .5s var(--ease-out);
+}
+.topbar.is-hidden { transform: translateY(calc(-100% - 4px)); }
+.topbar__inner { display: flex; align-items: center; gap: 24px; min-height: 64px; }
+.topbar__logo img { height: 26px; width: auto; }
+.topbar__links { display: flex; gap: 22px; margin-left: auto; }
+.topbar__links a, .topbar__panel a {
+  font-family: var(--font-mono); font-size: var(--fs-mono); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; text-decoration: none;
+}
+.topbar__links a:hover, .topbar__panel a:hover { color: var(--yellow); }
+.topbar__toggle {
+  display: none; margin-left: auto; background: none; border: 0; color: inherit; cursor: pointer;
+  width: 40px; height: 40px; place-content: center; gap: 5px;
+}
+.topbar__toggle span { display: block; width: 20px; height: 2px; background: currentColor; transition: transform .35s var(--ease-out); }
+.topbar.is-open .topbar__toggle span:first-child { transform: translateY(3.5px) rotate(45deg); }
+.topbar.is-open .topbar__toggle span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+.topbar__panel { display: none; }
+@media (max-width: 960px) {
+  .topbar__links { display: none; }
+  .topbar__toggle { display: grid; }
+  .topbar__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s var(--ease-out); }
+  .topbar.is-open .topbar__panel { grid-template-rows: 1fr; }
+  .topbar__panel > ul { overflow: hidden; list-style: none; margin: 0; padding: 0 var(--gutter); }
+  .topbar.is-open .topbar__panel > ul { padding-bottom: 12px; }
+  .topbar__panel a { display: flex; justify-content: space-between; padding: 12px 0; border-top: 1px solid rgba(245,245,242,.18); }
+}
+
+/* ---------- Stacking sections ---------- */
+main { position: relative; z-index: 1; background: var(--navy); }
+.stack > .block:first-child { padding-top: calc(var(--section-pad) + 64px); }
+.stack > .block { border-top: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+.stack > .block::before {
+  content: ""; position: absolute; inset: 0; background: #000; opacity: var(--dim, 0);
+  pointer-events: none; z-index: 5;
+}
+.stack > .block > * { position: relative; }
+
+/* ---------- Line reveals ---------- */
+html.js-motion [data-reveal] { visibility: hidden; }
+.split-mask { overflow: clip; padding-bottom: .04em; margin-bottom: -.04em; }
+
+/* ---------- Marquee (always right to left) ---------- */
+.marquee { position: relative; z-index: 2; overflow: hidden; background: var(--navy); color: var(--paper); border-top: 3px solid var(--paper); padding: 18px 0; }
+.marquee__track { display: flex; width: max-content; will-change: transform; }
+.marquee__item {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase; letter-spacing: -.04em;
+  font-size: clamp(1.75rem, 4vw, 3.5rem); line-height: 1; white-space: nowrap; padding-right: .6em;
+}
+.marquee__item i { font-style: normal; color: var(--yellow); padding-left: .6em; }
+.footer-reveal .marquee { margin-top: 32px; }
+
+/* ---------- Stats & count-up ---------- */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0; border-top: 3px solid var(--navy); }
+.stat { padding: 20px 20px 20px 0; border-bottom: 3px solid var(--navy); }
+.stat--wide { grid-column: 1 / -1; }
+.stat__num { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.25rem, 4.5vw, 4rem); letter-spacing: -.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat__label { font-family: var(--font-mono); font-size: var(--fs-mono); font-weight: 700; text-transform: uppercase; margin-top: 8px; }
+
+/* ---------- Donut + wallet list ---------- */
+.donut-wrap { position: relative; width: 100%; max-width: 440px; margin-left: auto; }
+.donut { width: 100%; aspect-ratio: 1; display: block; transform: rotate(-90deg); overflow: visible; }
+.donut circle { fill: none; stroke-width: 22; transition: stroke-width .35s var(--ease-out); cursor: pointer; }
+.donut circle.is-active { stroke-width: 32; }
+.donut__base { stroke: rgba(8,9,20,.12); pointer-events: none; cursor: default; }
+.donut-center {
+  position: absolute; inset: 22%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; pointer-events: none;
+}
+.donut-center strong { font-family: var(--font-display); font-weight: 900; font-size: clamp(1.5rem, 3vw, 2.5rem); letter-spacing: -.04em; line-height: 1; }
+.donut-center span { font-family: var(--font-mono); font-weight: 700; font-size: .8rem; margin-top: 6px; }
+.donut-center em { font-style: normal; font-weight: 700; font-size: .8rem; text-transform: uppercase; margin-top: 4px; }
+
+.wallets { list-style: none; margin: 48px 0 0; padding: 0; border-top: 3px solid var(--navy); }
+.wallets li {
+  display: grid; grid-template-columns: 18px minmax(0, 1fr) 5rem 9.5rem 8.5rem; column-gap: 16px; row-gap: 4px; align-items: baseline;
+  padding: 14px 10px; border-bottom: 3px solid var(--navy); transition: background .25s, padding-left .35s var(--ease-out);
+}
+.wallets li.is-active { background: rgba(8,9,20,.08); padding-left: 18px; }
+.wallets i { width: 18px; height: 18px; border: 2px solid var(--navy); display: block; align-self: center; }
+.wallets__name { font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; font-size: 1.05rem; }
+.wallets__pct, .wallets__tokens { font-family: var(--font-mono); font-weight: 700; text-align: right; }
+.wallets__addr { font-family: var(--font-mono); font-weight: 700; font-size: .85rem; text-align: right; }
+.wallets__desc { grid-column: 2 / -1; margin: 0; font-size: .95rem; }
+@media (max-width: 700px) {
+  .wallets li { grid-template-columns: 18px minmax(0, 1fr) auto; }
+  .wallets__tokens { grid-column: 2; grid-row: 2; text-align: left; }
+  .wallets__addr { grid-column: 3; grid-row: 2; }
+  .wallets__desc { grid-row: 3; }
+}
+
+/* ---------- Milestone card stack (click for next) ---------- */
+.cards { position: relative; width: 100%; max-width: 440px; aspect-ratio: 4 / 5; margin: 24px 24px 24px auto; cursor: pointer; }
+.cards:focus-visible { outline-offset: 10px; }
+.cards__card {
+  position: absolute; inset: 0; display: flex; flex-direction: column; background: var(--paper); color: var(--navy);
+  border: 3px solid var(--navy); box-shadow: var(--shadow-lg); overflow: hidden;
+  transition: transform .6s var(--ease-out), opacity .35s;
+}
+.cards__card.is-leaving { transform: translate(60%, -8%) rotate(14deg) !important; opacity: 0; }
+.cards__img { aspect-ratio: 4 / 3; overflow: hidden; border-bottom: 3px solid var(--navy); background: var(--navy); }
+.cards__img img { width: 100%; height: 100%; object-fit: cover; }
+.cards__body { padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.cards__meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: .75rem; font-weight: 700; text-transform: uppercase; }
+.cards__body h3 { margin: 0; font-weight: 900; text-transform: uppercase; letter-spacing: -.03em; font-size: clamp(1.3rem, 2.2vw, 1.75rem); line-height: 1; }
+.cards__body p { margin: 0; font-weight: 500; font-size: .98rem; }
+.cards-hint { display: flex; justify-content: space-between; align-items: center; max-width: 440px; margin: 28px 24px 0 auto; font-family: var(--font-mono); font-size: .8rem; font-weight: 700; text-transform: uppercase; }
+
+/* ---------- Hover-expand strips ---------- */
+.strip { display: flex; gap: 12px; height: clamp(380px, 58vh, 600px); }
+.strip__item {
+  position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; border: 3px solid var(--navy); background: var(--navy);
+  color: var(--paper); text-decoration: none; transition: flex-grow .7s var(--ease-out);
+}
+.strip:hover .strip__item { flex-grow: .75; }
+.strip .strip__item:hover, .strip .strip__item:focus-visible { flex-grow: 3; }
+.strip__item img, .strip__item video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.strip__label {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 14px; background: var(--navy);
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px; white-space: nowrap;
+}
+.strip__label strong { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; letter-spacing: -.03em; font-size: 1.15rem; overflow: hidden; text-overflow: ellipsis; }
+.strip__label span { font-family: var(--font-mono); font-size: .75rem; font-weight: 700; text-transform: uppercase; opacity: 0; transition: opacity .3s; }
+.strip__item:hover .strip__label span { opacity: 1; }
+/* Memes strip: fixed height. ui.js sets --meme-grow so an expanded tile is exactly 3:2. */
+.strip--memes { height: clamp(300px, 42vh, 460px); }
+.strip--memes .strip__item:hover, .strip--memes .strip__item:focus-visible { flex-grow: var(--meme-grow, 3.5); }
+.strip__item--meme { background: var(--paper); }
+.strip__item--meme .strip__plain { filter: grayscale(1); }  /* the color version (with text) fades in on hover */
+.strip__full { opacity: 0; transition: opacity .35s .12s; }
+.strip__item--meme:hover .strip__full, .strip__item--meme:focus-visible .strip__full { opacity: 1; }
+/* Ecosystem: site screenshots, anchored at the top of the page */
+.strip--eco .strip__item img { object-position: top center; }
+@media (max-width: 860px) {
+  .strip { overflow-x: auto; scroll-snap-type: x mandatory; height: 440px; padding-bottom: 8px; }
+  .strip__item, .strip:hover .strip__item, .strip .strip__item:hover { flex: 0 0 72%; scroll-snap-align: start; }
+  .strip__label { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .strip--memes { height: auto; }  /* phones: tiles get their own 3:2 ratio below */
+  .strip--memes .strip__item, .strip--memes:hover .strip__item, .strip--memes .strip__item:hover { flex: 0 0 88%; aspect-ratio: 3 / 2; }
+  .strip__label span { opacity: 1; }
+}
+
+/* ---------- How to Buy: expanding step cards ---------- */
+.xsteps { display: flex; gap: 12px; height: 300px; list-style: none; margin: 0; padding: 0; }
+.xstep {
+  flex: 1 1 0; min-width: 0; background: var(--paper); color: var(--navy); border: 3px solid var(--navy); padding: 20px;
+  display: flex; flex-direction: column; overflow: hidden; transition: flex-grow .6s var(--ease-out), background .2s;
+}
+.xsteps:hover .xstep, .xsteps:focus-within .xstep { flex-grow: .8; }
+.xsteps .xstep:hover, .xsteps .xstep:focus-within { flex-grow: 2.6; background: var(--navy); color: var(--paper); }
+.xstep__num { font-family: var(--font-display); font-weight: 900; font-size: 3rem; line-height: 1; letter-spacing: -.05em; }
+.xstep h3 { margin: 10px 0 0; font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; font-size: 1.15rem; line-height: 1.05; }
+.xstep p { margin: 12px 0 0; min-width: 22ch; opacity: 0; transform: translateY(8px); transition: opacity .3s, transform .45s var(--ease-out); }
+.xstep:hover p, .xstep:focus-within p { opacity: 1; transform: none; transition-delay: .18s; }
+.xstep:focus { outline: none; }
+.xstep:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+/* Sixth card: the clock guy in a transparent card. He sits below the number line, never wider than a fully
+   condensed card (--xstep-condensed, set by ui.js), and keeps his size when the card expands. He uses the condensed
+   card's full width (no side margin; the 12px gap between cards keeps him clear of his neighbor). */
+.xstep--guy { position: relative; background: transparent; border-color: transparent; }
+.xsteps .xstep--guy:hover, .xsteps .xstep--guy:focus-within { background: transparent; color: var(--navy); }
+.xstep__guy {
+  position: absolute; left: 0; right: 0; bottom: 0; top: calc(20px + 3rem);
+  display: flex; align-items: flex-end; justify-content: center; pointer-events: none;
+}
+.xstep--guy { overflow: visible; }
+.xstep__figure { position: relative; display: block; }
+.xstep__guy img {
+  display: block; width: auto; height: auto; max-height: var(--xstep-guy-h, 170px); max-width: var(--xstep-condensed, 130px);
+}
+/* Two poses share the same spot: Love while the card is condensed, Point (with the bubble) when it expands. */
+.xstep__figure img + img { position: absolute; left: 0; bottom: 0; opacity: 0; transition: opacity .25s; }
+.xstep--guy:hover .xstep__figure img:first-child, .xstep--guy:focus-within .xstep__figure img:first-child { opacity: 0; }
+.xstep--guy:hover .xstep__figure img + img, .xstep--guy:focus-within .xstep__figure img + img { opacity: 1; }
+.xstep__bubble {
+  position: absolute; bottom: calc(100% + 16px); left: 50%; z-index: 2; white-space: nowrap;
+  background: var(--paper); color: var(--navy); border: 3px solid var(--navy); border-radius: 22px; padding: 10px 16px;
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; font-size: .95rem;
+  opacity: 0; transform: translateX(-50%) rotate(-4deg) scale(.7); transform-origin: 50% 120%;
+  transition: opacity .25s, transform .45s cubic-bezier(.34, 1.56, .64, 1); pointer-events: none;
+}
+/* Tail at the bottom center, pointing down at the guy's head */
+.xstep__bubble::after {
+  content: ""; position: absolute; left: 50%; bottom: -11px; width: 18px; height: 18px; margin-left: -9px;
+  background: var(--paper); border-right: 3px solid var(--navy); border-bottom: 3px solid var(--navy); transform: rotate(45deg);
+}
+.xstep--guy:hover .xstep__bubble, .xstep--guy:focus-within .xstep__bubble { opacity: 1; transform: translateX(-50%) rotate(-4deg) scale(1); }
+@media (max-width: 860px), (hover: none) {
+  .xstep--guy { min-height: 324px; }
+  .xstep__guy { top: 72px; }
+  .xstep__guy img { max-width: 70%; }
+}
+@media (hover: none), (max-width: 860px) { .strip__full { opacity: 1; } }
+@media (hover: none) {
+  .xstep__bubble { opacity: 1; transform: translateX(-50%) rotate(-4deg) scale(1); }
+  .xstep__figure img:first-child { opacity: 0; }
+  .xstep__figure img + img { opacity: 1; }
+}
+@media (max-width: 860px), (hover: none) {
+  .xsteps { flex-direction: column; height: auto; }
+  .xstep, .xsteps:hover .xstep, .xsteps .xstep:hover { flex: none; }
+  .xstep p { opacity: 1; transform: none; }
+}
+
+/* ---------- How to Buy: listings panel and scam check ---------- */
+.buy-row { display: flex; align-items: stretch; gap: 16px; margin: 36px 0 40px; }
+.buy-row .ca { flex: 1 1 auto; min-width: 0; }
+.find-us { flex: 0 0 auto; display: flex; align-items: center; gap: 10px 22px; background: var(--navy); color: var(--paper); border: 3px solid var(--navy); padding: 12px 18px; box-shadow: var(--shadow); }
+/* Between tablet and wide desktop, listings show as logos only so the row stays on one line. */
+@media (max-width: 1279px) and (min-width: 861px) {
+  .find-us__name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+@media (max-width: 860px) { .buy-row { flex-direction: column; } .find-us { flex-wrap: wrap; } }
+.find-us__label { font-family: var(--font-mono); font-size: .8rem; font-weight: 700; text-transform: uppercase; color: var(--yellow); }
+.find-us a { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; }
+.find-us a:hover { color: var(--yellow); }
+.find-us img { height: 28px; width: auto; }
+.scam { margin-top: 40px; }
+.scam ul { margin: 0; }
+/* Scam check stays a one-line bar; hover or focus drops the two bullets down from it. The drop-down overlays the
+   section's bottom padding, so opening it never shifts the layout. Touch devices show it open (below). */
+.scam { position: relative; z-index: 3; }
+.scam h3 { margin: 0; }
+.scam h3::after { content: "+"; float: right; font-family: var(--font-mono); transition: transform .35s var(--ease-out); }
+.scam__body {
+  position: absolute; left: -3px; right: -3px; top: 100%; background: var(--navy); border: var(--border); border-top: 0;
+  padding: 0 24px; visibility: hidden; opacity: 0; clip-path: inset(0 0 100% 0);
+  transition: clip-path .45s var(--ease-out), opacity .25s, visibility 0s .45s;
+}
+.scam__body > ul { padding: 4px 0 20px 1.1em; }
+.scam:hover .scam__body, .scam:focus-within .scam__body { visibility: visible; opacity: 1; clip-path: inset(0); transition-delay: 0s; }
+.scam:hover h3::after, .scam:focus-within h3::after { transform: rotate(45deg); }
+.scam:focus { outline: none; }
+.scam:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+@media (hover: none) {
+  .scam__body { position: static; border: 0; padding: 0; visibility: visible; opacity: 1; clip-path: none; }
+  .scam__body > ul { padding: 10px 0 0 1.1em; }
+  .scam h3::after { content: none; }
+}
+
+/* ---------- Manifesto: Mona Lisa with a speech bubble ---------- */
+/* The grid fills the section's height so her column can sit on the section's bottom edge (no gap to the next
+   section). The negative margin cancels the section's bottom padding. .block--fill repeats the flex layout of
+   .stack > .block because GSAP wraps pinned sections in a pin-spacer, which breaks that child selector. */
+.block--fill { display: flex; flex-direction: column; min-height: 100vh; }
+.manifesto-grid { flex: 1; }
+.mona-col { align-self: end; display: flex; justify-content: center; margin-bottom: calc(-1 * var(--section-pad)); }
+.mona { position: relative; margin: 0; width: min(330px, 100%); }
+.mona img { display: block; width: 100%; height: auto; max-height: 54vh; object-fit: contain; object-position: bottom; }
+/* The bubble sits above her head and only touches the top of her hair. ui.js sets data-bubble="wait" and removes it
+   once the "Read the manifesto" button scrolls into view, so the bubble pops in then. Without JavaScript it shows. */
+.mona__bubble {
+  position: absolute; bottom: 97%; left: -16%; z-index: 2; white-space: nowrap;
+  background: var(--paper); color: var(--navy); border: 3px solid var(--navy); border-radius: 22px; padding: 10px 16px;
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; font-size: clamp(.95rem, 1.6vw, 1.25rem);
+  transform: rotate(-4deg); transform-origin: 62% 130%;
+  transition: opacity .25s, transform .5s cubic-bezier(.34, 1.56, .64, 1);
+}
+.mona[data-bubble="wait"] .mona__bubble { opacity: 0; transform: rotate(-4deg) scale(.6); }
+/* Stacked layout: room above her head for the bubble, which stays inside the screen. */
+@media (max-width: 860px) {
+  .mona-col { margin-top: 64px; }
+  .mona__bubble { left: 0; }
+}
+/* Tail at the bottom, pointing down at her face */
+.mona__bubble::after {
+  content: ""; position: absolute; left: 62%; bottom: -11px; width: 18px; height: 18px; margin-left: -9px;
+  background: var(--paper); border-right: 3px solid var(--navy); border-bottom: 3px solid var(--navy); transform: rotate(45deg);
+}
+
+/* ---------- Home: intro video (plays muted on hover, click for sound; behavior in ui.js) ---------- */
+.intro { margin: 0; border: 3px solid var(--navy); background: var(--navy); color: var(--paper); }
+.intro__screen { position: relative; aspect-ratio: 16 / 9; overflow: hidden; cursor: pointer; }
+.intro__screen video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Play badge while paused */
+.intro__screen::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 76px; height: 76px; margin: -38px 0 0 -38px; border-radius: 50%;
+  background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%23080914'/%3E%3C/svg%3E") 56% 50% / 34px no-repeat;
+  border: 3px solid var(--navy); pointer-events: none; transition: opacity .25s, transform .35s var(--ease-out);
+}
+.intro.is-playing .intro__screen::after { opacity: 0; transform: scale(.7); }
+.intro__sound {
+  position: absolute; top: 12px; right: 12px; z-index: 2; cursor: pointer; padding: 7px 11px;
+  background: var(--navy); color: var(--paper); border: 2px solid var(--paper);
+  font-family: var(--font-mono); font-size: .75rem; font-weight: 700; text-transform: uppercase;
+}
+.intro__sound:hover { background: var(--paper); color: var(--navy); }
+.intro.is-sound .intro__sound { background: var(--yellow); color: var(--navy); border-color: var(--navy); }
+.intro__progress { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: rgba(245,245,242,.25); }
+.intro__progress i { display: block; height: 100%; background: var(--yellow); transform-origin: 0 50%; transform: scaleX(var(--progress, 0)); }
+.intro__bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; padding: 12px 14px; border-top: 3px solid var(--navy); white-space: nowrap; }
+.intro__bar strong { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; letter-spacing: -.03em; font-size: 1.15rem; }
+.intro__bar span { font-family: var(--font-mono); font-size: .75rem; font-weight: 700; text-transform: uppercase; text-align: right; }
+
+/* ---------- Image zoom in frames ---------- */
+.frame { overflow: hidden; }
+.frame img { will-change: transform; }
+
+/* ---------- Socials ---------- */
+.socials { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.socials a {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 180px; padding: 20px;
+  border: 3px solid var(--paper); text-decoration: none; transition: background .2s, color .2s;
+}
+.socials a:hover { background: var(--navy); border-color: var(--navy); }
+.socials img { width: 40px; height: 40px; }
+.socials strong { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; letter-spacing: -.03em; font-size: clamp(1.4rem, 2.4vw, 2rem); line-height: 1; display: block; }
+.socials span { font-family: var(--font-mono); font-size: .8rem; font-weight: 700; }
+@media (max-width: 500px) { .socials { grid-template-columns: 1fr; } .socials a { min-height: 0; gap: 20px; } }
+/* The Smash video sits under the text. On wider screens the four socials stack as full-width rows that share the
+   height of that column. */
+.socials-grid { align-items: stretch; }
+.socials-grid > .col-7 { display: flex; flex-direction: column; }
+@media (min-width: 861px) {
+  .socials { flex: 1; grid-template-columns: 1fr; grid-auto-rows: 1fr; }
+  .socials a { flex-direction: row; align-items: center; justify-content: flex-start; gap: 28px; min-height: 0; height: 100%; padding: 16px 28px; }
+  .socials img { width: 48px; height: 48px; flex: none; }
+  .socials a > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex: 1; }
+}
+.smash { margin-top: 32px; width: min(100%, 340px); aspect-ratio: 1; border: 3px solid var(--paper); background: var(--navy); overflow: hidden; }
+.smash video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---------- Footer reveal + wordmark ---------- */
+.footer-reveal {
+  position: sticky; bottom: 0; z-index: 0; background: var(--navy); color: var(--paper);
+  min-height: 70vh; display: flex; flex-direction: column; padding: 48px 0 0;
+}
+.footer-reveal > .wrap { flex: 1; display: flex; flex-direction: column; }
+.footer-reveal__disclaimer { margin: 0; font-size: .9rem; color: var(--beige); }
+.wordmark {
+  display: flex; justify-content: flex-start; margin-top: auto; padding-top: 48px; user-select: none; white-space: nowrap;
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase; line-height: .8; color: var(--paper);
+  font-size: 22vw; letter-spacing: -.04em; /* refined by fitWordmark() in ui.js */
+}
+.wordmark > span { display: inline-block; }
+.wordmark > span > span { display: inline-block; transform-origin: 50% 100%; will-change: transform; }
+
+/* ---------- Manifesto page ---------- */
+.reader { max-width: 68ch; }
+.reader h2 { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; letter-spacing: -.03em; font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1; margin: 56px 0 16px; }
+.reader p, .reader li { font-size: 1.15rem; line-height: 1.65; }
+.reader ul { padding-left: 1.1em; }
+
+/* ---------- Reduced motion: static, complete page ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .topbar, .strip__item, .topbar__panel, .topbar__toggle span, .xstep__bubble, .xstep, .xstep p, .cards__card, .donut circle, .wallets li, .scam__body, .scam h3::after, .xstep__figure img, .mona__bubble, .intro__screen::after { transition: none; }
+}
