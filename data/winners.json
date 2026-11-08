@@ -2,6 +2,20 @@
   "_readme": "Append one object to 'winners' each month (newest first). The site renders newest-to-oldest automatically. Object shape: { \"month\": \"2026-07\", \"label\": \"July\", \"nftId\": \"0005-0105\" (must match an id in collection.json — thumb/title are looked up from there), \"wallet\": \"the wallet holding the NFT at draw time (rendered as a static, non-updating record)\", \"draw\": { \"blockNumber\": 430944946, \"blockUrl\": \"https://explorer.solana.com/block/...\", \"blockHash\": \"...\", \"hex\": \"block hash converted to hex\", \"winnerNumber\": 5 }, \"prize\": \"optional, e.g. 40,100 $401jK\", \"announcementUrl\": \"optional https://x.com/... or Reddit post URL\", \"platform\": \"optional 'x' or 'reddit'\", \"reactionEmbedUrl\": \"optional X/Reddit post URL to embed inline\" }. While 'winners' is empty, the site shows a 'first draw' coming-soon state using firstDraw from raffle.json.",
   "winners": [
     {
+      "month": "2026-11",
+      "label": "November 2026",
+      "nftId": "0030-0310",
+      "wallet": "6rKk7v84VATxHJxKh8Ush1wYduFMzEX7VpZQ1Mc4fkGy",
+      "draw": {
+        "blockNumber": 464084183,
+        "blockUrl": "https://explorer.solana.com/block/464084183",
+        "blockHash": "G9WgnrqswG7QRKySZqepLLXaLTjJxRzULMHGfREe484k",
+        "hex": "e10d8438833e2c7a0c24a921d14f5a73646da8ecd57303afccc46318dfb093bd",
+        "winnerNumber": 30
+      },
+      "prize": "40,100 $401jK"
+    },
+    {
       "month": "2026-10",
       "label": "October 2026",
       "nftId": "0024-0304",
